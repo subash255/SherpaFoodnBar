@@ -1,17 +1,36 @@
 @extends('layouts.master')
 @section('content')
+<!-- Hero Section -->
+<section class="relative bg-cover bg-center h-screen" style="background-image: url('{{ asset('images/bg.jpg') }}');">
+  <div class="absolute inset-0 bg-black opacity-75"></div> <!-- Darker overlay -->
+  <div class="relative z-10 flex items-center justify-center h-full text-center text-white">
+    <div class="px-4 md:px-8"> <!-- Adds padding on larger screens, reduces on mobile -->
+      <!-- Responsive Heading and Subheading -->
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-4 sm:mb-6">
+        Welcome to Sherpa Food N' Bar
+      </h1>
+      <p class="text-lg sm:text-xl md:text-2xl mb-8 sm:mb-10">
+        Enjoy exquisite meals and drinks in a cozy atmosphere
+      </p>
 
-  <!-- Hero Section -->
-  <section class="relative bg-cover bg-center h-screen" style="background-image: url('{{ asset('images/bg.jpg') }}');">
-    <div class="absolute inset-0 bg-black opacity-50"></div>
-    <div class="relative z-10 flex items-center justify-center h-full text-center text-white">
-      <div>
-        <h1 class="text-5xl font-bold leading-tight mb-4">Welcome to Sherpa Food N' Bar</h1>
-        <p class="text-xl mb-6">Enjoy exquisite meals and drinks in a cozy atmosphere</p>
-        <a href="#reservation" class="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-6 rounded-full text-lg">Reserve a Table</a>
+      <!-- Button container with flexbox and responsiveness -->
+      <div class="flex flex-col sm:flex-row justify-evenly sm:space-x-4 space-y-6 sm:space-y-0"> <!-- Increased space-y on mobile -->
+        <a href="#menu" class="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-6 rounded-full text-lg transition-all transform hover:scale-102 hover:translate-y-0.5 duration-300 ease-in-out">
+          Lunch Menu
+        </a>
+        <a href="#delivery" class="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-6 rounded-full text-lg transition-all transform hover:scale-102 hover:translate-y-0.5 duration-300 ease-in-out">
+          Home Delivery/Takeaway
+        </a>
+        <a href="#reservation" class="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-6 rounded-full text-lg transition-all transform hover:scale-102 hover:translate-y-0.5 duration-300 ease-in-out">
+          Reserve a Table
+        </a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+
+
 
   <!-- Menu Section -->
   <section id="menu" class="py-20 bg-white text-center">
