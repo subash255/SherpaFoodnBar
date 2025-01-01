@@ -9,7 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap"
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
@@ -44,7 +45,7 @@
             <!-- Navigation Links -->
             <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
                 <a href="/" class="text-gray-800 hover:text-red-600 font-bold">HOME</a>
-                <a href="/about" class="text-gray-800 hover:text-red-600 font-bold">ABOUT</a>
+                <a href="/about" class="text-gray-800 hover:text-red-600 font-bold">ABOUT US</a>
                 <a href="#" class="text-gray-800 hover:text-red-600 font-bold">ONLINE MENU</a>
                 <a href="#" class="text-gray-800 hover:text-red-600 font-bold">CATEGORY</a>
                 <a href="#" class="text-gray-800 hover:text-red-600 font-bold">GALLERY</a>
@@ -64,7 +65,7 @@
     <div id="mobile-menu" class="md:hidden hidden bg-white shadow-md">
         <div class="container mx-auto py-4 px-6 space-y-4">
             <a href="/" class="block text-red-600 hover:text-red-700">HOME</a>
-            <a href="/about" class="block text-gray-600 hover:text-red-600">ABOUT</a>
+            <a href="/about" class="block text-gray-600 hover:text-red-600">ABOUT US</a>
             <a href="#" class="block text-gray-600 hover:text-red-600">ONLINE MENU</a>
             <a href="#" class="block text-gray-600 hover:text-red-600">CATEGORY</a>
             <a href="#" class="block text-gray-600 hover:text-red-600">GALLERY</a>
@@ -134,6 +135,39 @@
             menu.classList.toggle('hidden');
         });
     </script>
+
+
+<!-- Swiper Script -->
+<script>
+    // Initialize Swiper
+    var swiper = new Swiper('.swiper-container', {
+      slidesPerView: 3,
+      spaceBetween: 20,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      autoplay: {
+        delay: 3000,  // 3 seconds
+        disableOnInteraction: true,  // Keep autoplay after user interaction
+      },
+      breakpoints: {
+        400: {
+          slidesPerView: 1,
+        },
+        640: {
+          slidesPerView: 1,
+        },
+        768: {
+          slidesPerView: 2,
+        },
+        1024: {
+          slidesPerView: 3,
+        },
+      }
+    });
+  </script>
+
 
 </body>
 
