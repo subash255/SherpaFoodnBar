@@ -43,9 +43,9 @@
             </div>
     
             <!-- Navigation Links -->
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+            <div  class="hidden md:flex items-center space-x-6 text-sm font-medium">
                 <a href="/" class="text-gray-800 hover:text-red-600 font-bold">HOME</a>
-                <a href="/about" class="text-gray-800 hover:text-red-600 font-bold">ABOUT US</a>
+                <a href="{{ route('about') }}" class="text-gray-800 hover:text-red-600 font-bold @if(request()->routeIs('about')) text-red-600 @endif">ABOUT US</a>
                 <a href="#" class="text-gray-800 hover:text-red-600 font-bold">ONLINE MENU</a>
                 <a href="#" class="text-gray-800 hover:text-red-600 font-bold">CATEGORY</a>
                 <a href="#" class="text-gray-800 hover:text-red-600 font-bold">GALLERY</a>
