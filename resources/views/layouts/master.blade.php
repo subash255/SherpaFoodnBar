@@ -44,8 +44,8 @@
     
             <!-- Navigation Links -->
             <div  class="hidden md:flex items-center space-x-6 text-sm font-medium">
-                <a href="/" class="text-gray-800 hover:text-red-600 font-bold">HOME</a>
-                <a href="{{ route('about') }}" class="text-gray-800 hover:text-red-600 font-bold @if(request()->routeIs('about')) text-red-600 @endif">ABOUT US</a>
+                <a href="{{route('welcome')}}" class=" hover:text-red-600 font-bold  {{ request()->routeIs('welcome') ? 'text-red-600' : 'text-gray-800' }}">HOME</a>
+                <a href="{{ route('about') }}" class=" hover:text-red-600 font-bold {{ request()->routeIs('about') ? 'text-red-600' : 'text-gray-800' }}">ABOUT US</a>
                 <a href="#" class="text-gray-800 hover:text-red-600 font-bold">ONLINE MENU</a>
                 <a href="#" class="text-gray-800 hover:text-red-600 font-bold">CATEGORY</a>
                 <a href="#" class="text-gray-800 hover:text-red-600 font-bold">GALLERY</a>
@@ -69,11 +69,12 @@
         </div>
         <div class="flex flex-col items-start space-y-6 pt-8 h-full px-6">
             <!-- Menu Items aligned to the top -->
-            <a href="/" class="text-red-600 text-2xl hover:text-red-700 font-bold">HOME</a>
-            <a href="/about" class="text-gray-600 text-2xl hover:text-red-600">ABOUT US</a>
-            <a href="#" class="text-gray-600 text-2xl hover:text-red-600">ONLINE MENU</a>
-            <a href="#" class="text-gray-600 text-2xl hover:text-red-600">CATEGORY</a>
-            <a href="#" class="text-gray-600 text-2xl hover:text-red-600">GALLERY</a>
+
+            <a href="{{route('welcome')}}" class=" text-2xl hover:text-red-700 font-semibold {{ request()->routeIs('welcome') ? 'text-red-600' : 'text-gray-800' }}">HOME</a>
+            <a href="{{route('about')}}" class=" text-2xl hover:text-red-600 font-semibold {{ request()->routeIs('about') ? 'text-red-600' : 'text-gray-800' }}">ABOUT US</a>
+            <a href="#" class="text-gray-800 text-2xl hover:text-red-600 font-semibold">ONLINE MENU</a>
+            <a href="#" class="text-gray-800 text-2xl hover:text-red-600 font-semibold">CATEGORY</a>
+            <a href="#" class="text-gray-800 text-2xl hover:text-red-600 font-semibold">GALLERY</a>
         </div>
     </div>
     <main>
@@ -83,7 +84,6 @@
 <!-- Footer Section -->
 <footer class="bg-[#2e211b] text-white py-8">
     <div class="container mx-auto px-4 mt-5">
-        <!-- Main Footer Content (Map, Contact, Quick Links, Social Links in one row) -->
         <div class="flex flex-wrap justify-evenly gap-8">
             <!-- Map Section -->
             <div class="flex-1 min-w-[350px] p-4">
@@ -128,14 +128,17 @@
                         <a href="#" class="text-white hover:text-red-500 font-semibold">About Us</a>
                     </li>
                     <li>
-                        <a href="#" class="text-white hover:text-red-500 font-semibold">Menu</a>
-                    </li>
-                    <li>
                         <a href="#" class="text-white hover:text-red-500 font-semibold">Reservations</a>
                     </li>
                     <li>
-                        <a href="#" class="text-white hover:text-red-500 font-semibold">Gallery</a>
+                        <a href="{{route('login')}}" class="text-white hover:text-red-500 font-semibold">Admin Login</a>
                     </li>
+                    {{-- <li>
+                        <a href="#" class="text-white hover:text-red-500 font-semibold">Menu</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white hover:text-red-500 font-semibold">Gallery</a>
+                    </li> --}}
                 </ul>
             </div>
             

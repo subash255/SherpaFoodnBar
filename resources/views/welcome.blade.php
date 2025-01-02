@@ -20,7 +20,7 @@
             Lunch Menu
         </a>
         <a href="#delivery" class="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-6 rounded-full text-lg transition-all transform hover:scale-102 hover:translate-y-0.5 duration-300 ease-in-out">
-            Dashboard Delivery/Takeaway
+            Home Delivery / Takeaway
         </a>
         <a href="#reservation" class="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-6 rounded-full text-lg transition-all transform hover:scale-102 hover:translate-y-0.5 duration-300 ease-in-out">
             Reserve a Table

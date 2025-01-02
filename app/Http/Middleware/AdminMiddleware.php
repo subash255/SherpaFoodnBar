@@ -21,6 +21,6 @@ class AdminMiddleware
         }
 
         // If not an admin or not authenticated, redirect to the home page
-        return redirect('/');
+        return redirect('welcome');
     }
 }
