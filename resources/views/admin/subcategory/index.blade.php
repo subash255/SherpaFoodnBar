@@ -33,26 +33,20 @@
         <div class="bg-white rounded-lg p-6 w-full max-w-lg relative shadow-xl overflow-auto max-h-[90vh]">
             <h2 class="text-2xl font-semibold text-center text-gray-900 mb-8">Add Subcategory</h2>
     
-            <form action="{{ route('admin.subcategory.store') }}" method="POST">
+            <form action="{{ route('admin.subcategory.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                
     
                 <!-- Category Selection -->
                 <div class="mb-6">
-                    <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-                    <select name="category_id" id="category" 
-                            class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" 
-                            required>
-                        <option value="">Select a category</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
-                        @endforeach
-                    </select>
+                    <label for="category" class="block text-sm font-medium text-gray-700">{{$categories->name}}</label>
+                    <input type="hidden" name="category_id" value="{{ $categories->id }}">
                 </div>
     
                 <!-- Subcategory Name Input -->
                 <div class="mb-6">
                     <label for="subcategory_name" class="block text-sm font-medium text-gray-700">Subcategory Name</label>
-                    <input type="text" name="subcategory_name" id="subcategory_name" 
+                    <input type="text" name="name" id="subcategory_name" 
                            class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" 
                            required oninput="generateSlug()" />
                 </div>
@@ -65,13 +59,13 @@
                            readonly required>
                 </div>
     
-                <!-- Description -->
-                <div class="mb-6">
-                    <label for="paragraph" class="block text-sm font-medium text-gray-700">Description (Optional)</label>
-                    <textarea name="paragraph" id="paragraph" 
-                              class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" 
-                              rows="4"></textarea>
+               <!--input image -->
+               <div class="mb-6">
+                    <label for="image" class="block text-sm font-medium text-gray-700">Upload Image</label>
+                    <input type="file" id="image" name="image" accept="image/*" required
+                        class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
                 </div>
+               
     
                 <!-- Button Container -->
                 <div class="flex justify-between gap-4 mt-8">

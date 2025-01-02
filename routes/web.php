@@ -33,10 +33,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('admin/category', [CategoryController::class, 'store'])->name('admin.category.store');  
     Route::get('admin/category/{id}/edit', [CategoryController::class, 'edit'])->name('admin.category.edit');
     Route::patch('admin/category/{id}', [CategoryController::class, 'update'])->name('admin.category.update');
-    Route::delete('admin/category/{id}', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
+    Route::delete('admin/category/{id}', [CategoryController::class, 'destroy'])->name('admin.category.delete');
 
     //subcategory routes
-    Route::get('admin/subcategory', [SubcategoryController::class, 'index'])->name('admin.subcategory.index');  
+    Route::get('admin/subcategory/{id}', [SubcategoryController::class, 'index'])->name('admin.subcategory.index');  
     Route::get('admin/subcategory/create', [SubcategoryController::class, 'create'])->name('admin.subcategory.create');
     Route::post('admin/subcategory', [SubcategoryController::class, 'store'])->name('admin.subcategory.store');
     Route::get('admin/subcategory/{id}/edit', [SubcategoryController::class, 'edit'])->name('admin.subcategory.edit');

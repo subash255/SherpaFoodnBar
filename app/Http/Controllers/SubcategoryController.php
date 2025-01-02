@@ -8,11 +8,13 @@ use Illuminate\Http\Request;
 
 class SubcategoryController extends Controller
 {
-    public function index()
+    public function index($id)
     {
         // Fetch the subcategories and categories
-        $subcategories = Subcategory::paginate(5);
-        $categories = Category::all(); // Fetch all categories
+        
+        $categories = Category::findorfail($id); // Fetch all categories
+        $subcategories = $categories->subcategories()->paginate(10); // 10 items per page
+        // Fetch subcategories for the selected category  
     
         // Pass both variables to the view
         return view('admin.subcategory.index', compact('subcategories', 'categories'), [
@@ -32,24 +34,30 @@ class SubcategoryController extends Controller
     // Store the new subcategory
     public function store(Request $request)
     {
+
         // Validate the incoming data
         $data = $request->validate([
             'category_id' => 'required|exists:categories,id', // Ensure category exists
-            'subcategory_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:subcategories,slug', // Check uniqueness in subcategories table
-            'paragraph' => 'nullable|string',
+            'image' => 'required|image',
         ]);
+        $image = time() . '.' . $request->file('image')->getClientOriginalExtension();
+        $request->file('image')->move(public_path('images/brand'), $image);
+        $data['image'] = $image;
 
         // Create the subcategory and save it to the database
         Subcategory::create([
             'category_id' => $data['category_id'],
-            'subcategory_name' => $data['subcategory_name'],
+            'name' => $data['name'],
             'slug' => $data['slug'], // Save the generated or provided slug
-            'paragraph' => $data['paragraph'],
+            'image' => $data['image'],
+            
         ]);
+       
 
         // Redirect to the index page with a success message
-        return redirect()->route('admin.subcategory.index')->with('success', 'Subcategory created successfully!');
+        return redirect()->route('admin.subcategory.index',['id' => $request->category_id])->with('success', 'Subcategory created successfully!');
     }
 
     public function edit($id)
