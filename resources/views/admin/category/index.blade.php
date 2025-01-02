@@ -1,7 +1,19 @@
 @extends('layouts.app')
-
 @section('content')
 
+
+<style>
+    /* Hide the modal */
+.modal-hidden {
+    display: none !important;
+}
+
+/* Show the modal with flex */
+.modal-visible {
+    display: flex !important;
+}
+
+</style>
 {{-- Flash Message --}}
 @if(session('success'))
   <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
@@ -27,7 +39,7 @@
     </div>
     
     <!-- Modal Structure -->
-    <div id="categoryModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50 backdrop-blur-[1px]">
+    <div id="categoryModal" class="fixed inset-0 bg-black bg-opacity-70 modal-hidden items-center justify-center z-50 backdrop-blur-[1px]">
         <div class="bg-white rounded-lg p-6 w-full max-w-lg relative">
             <h2 class="text-xl font-semibold text-center">Create New Category</h2>
             <form action="{{ route('admin.category.store') }}" method="POST" enctype="multipart/form-data">
@@ -228,16 +240,19 @@ document.querySelectorAll('.toggle-switch').forEach(toggle => {
         document.getElementById('slug').value = slug;
     }
 
-    // Open the modal
-    document.getElementById('openModalButton').addEventListener('click', function () {
-        document.getElementById('categoryModal').classList.remove('hidden');
-        document.body.classList.add('overflow-hidden'); // Disable scrolling when modal is open
-    });
+// Open the modal
+document.getElementById('openModalButton').addEventListener('click', function () {
+    document.getElementById('categoryModal').classList.remove('modal-hidden');
+    document.getElementById('categoryModal').classList.add('modal-visible');  // Show modal
+    document.body.classList.add('overflow-hidden'); // Disable scrolling when modal is open
+});
 
-    // Close the modal
-    document.getElementById('closeModalButton').addEventListener('click', function () {
-        document.getElementById('categoryModal').classList.add('hidden');
-        document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
-    });
+// Close the modal
+document.getElementById('closeModalButton').addEventListener('click', function () {
+    document.getElementById('categoryModal').classList.remove('modal-visible');
+    document.getElementById('categoryModal').classList.add('modal-hidden'); // Hide modal
+    document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
+});
+
 </script>
 @endsection

@@ -117,6 +117,10 @@
           <span class="ml-4 font-semibold">Food Items</span>
         </a>
         <a href="#" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+            <i class="ri-calendar-check-fill"></i>
+            <span class="ml-4 font-semibold">Reservations</span>
+          </a>
+        <a href="#" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-shopping-cart-2-fill"></i>
           <span class="ml-4 font-semibold">Orders</span>
         </a>
