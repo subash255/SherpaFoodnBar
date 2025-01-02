@@ -46,6 +46,8 @@ class SubcategoryController extends Controller
         $request->file('image')->move(public_path('images/brand'), $image);
         $data['image'] = $image;
 
+        
+
         // Create the subcategory and save it to the database
         Subcategory::create([
             'category_id' => $data['category_id'],
@@ -71,7 +73,7 @@ class SubcategoryController extends Controller
         // Pass only the necessary variables to the view
         return view('admin.subcategory.edit', compact('subcategory', 'categories'), [
             'title' => 'Manage SubCategory'
-        ]);
+        ] );
     }
     
     
@@ -85,28 +87,47 @@ class SubcategoryController extends Controller
 
     // Update an existing subcategory
     public function update(Request $request, $id)
-    {
-        // Validate the incoming data
-        $data = $request->validate([
-            'category_id' => 'required|exists:categories,id', // Ensure category exists
-            'subcategory_name' => 'required|string|max:255',
-            'paragraph' => 'nullable|string',
-        ]);
+{
+    // Find the subcategory by ID or fail
+    $subcategory = Subcategory::findOrFail($id);
+    
+    // Validate the incoming data
+    $data = $request->validate([
+        'category_id' => 'required|exists:categories,id', // Ensure category exists
+        'name' => 'required|string|max:255',
+        'slug' => 'required|string|max:255|unique:subcategories,slug,' . $id, // Check uniqueness in subcategories table   
+        'image' => 'nullable|image', // Validate image is either null or an image file
+    ]);
 
-        // Find the subcategory by ID or fail
-        $subcategory = Subcategory::findOrFail($id);
+    // Initialize $imageName to keep the old image name if no new image is uploaded
+    $imageName = $subcategory->image;
 
-        // Update the subcategory with the validated data
-        $subcategory->category_id = $data['category_id'];
-        $subcategory->subcategory_name = $data['subcategory_name'];
-        $subcategory->paragraph = $data['paragraph'];
+    if ($request->hasFile('image')) {
+        // Delete old image if exists
+        $oldImagePath = public_path('images/brand/' . $subcategory->image);
+        if (file_exists($oldImagePath)) {
+            unlink($oldImagePath);
+        }
 
-        // Save the updated subcategory
-        $subcategory->save();
-
-        // Redirect back with a success message
-        return redirect()->route('admin.subcategory.index')->with('success', 'Subcategory updated successfully!');
+        // Upload new image
+        $image = $request->file('image');
+        $imageName = time() . '.' . $image->extension();  // Generate a unique name for the image
+        $image->move(public_path('images/brand'), $imageName);  // Move the image to the directory
     }
+
+    // Update the subcategory with the validated data
+    $subcategory->category_id = $data['category_id'];
+    $subcategory->name = $data['name'];
+    $subcategory->slug = $data['slug'];
+    $subcategory->image = $imageName; // Update the image name (old or new)
+
+    // Save the updated subcategory
+    $subcategory->save();
+
+    // Redirect back with a success message
+    return redirect()->route('admin.subcategory.index',['id' => $request->category_id])->with('success', 'Subcategory updated successfully!');
+}
+
 
     // Delete a subcategory
     public function destroy($id)
