@@ -36,12 +36,12 @@
 
     <!-- Main Navbar (Logo & Navigation) -->
     <div class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+        <div class="container mx-auto flex justify-between items-center px-6">
             <!-- Logo -->
             <div class="flex items-center">
-                <img src="{{ asset('images/logo.jpg') }}" alt="Sherpa Food & Bar Logo" class="h-16 sm:h-20">
+                <a href="/"> <img src="{{ asset('images/logo.jpg') }}" alt="Sherpa Food & Bar Logo" class="h-16 sm:h-20"></a>
             </div>
-
+    
             <!-- Navigation Links -->
             <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
                 <a href="/" class="text-gray-800 hover:text-red-600 font-bold">HOME</a>
@@ -50,28 +50,32 @@
                 <a href="#" class="text-gray-800 hover:text-red-600 font-bold">CATEGORY</a>
                 <a href="#" class="text-gray-800 hover:text-red-600 font-bold">GALLERY</a>
             </div>
-
+    
             <!-- Mobile Navigation (Hamburger Menu) -->
             <div class="md:hidden">
                 <button id="mobile-menu-toggle" class="text-red-600 focus:outline-none">
                     <i class="ri-menu-line w-6 h-6"></i> 
                 </button>
             </div>
-
         </div>
     </div>
-
+    
     <!-- Mobile Menu (Hidden by default) -->
-    <div id="mobile-menu" class="md:hidden hidden bg-white shadow-md">
-        <div class="container mx-auto py-4 px-6 space-y-4">
-            <a href="/" class="block text-red-600 hover:text-red-700">HOME</a>
-            <a href="/about" class="block text-gray-600 hover:text-red-600">ABOUT US</a>
-            <a href="#" class="block text-gray-600 hover:text-red-600">ONLINE MENU</a>
-            <a href="#" class="block text-gray-600 hover:text-red-600">CATEGORY</a>
-            <a href="#" class="block text-gray-600 hover:text-red-600">GALLERY</a>
+    <div id="mobile-menu" class="fixed top-16 right-0 bg-white shadow-md w-full sm:w-3/4 max-w-md h-full transform translate-x-full transition-transform duration-300 ease-in-out md:hidden z-50">
+        <div class="flex justify-end p-4">
+            <button id="close-menu" class="text-red-600 focus:outline-none">
+                <i class="ri-close-line w-6 h-6"></i>
+            </button>
+        </div>
+        <div class="flex flex-col items-start space-y-6 pt-8 h-full px-6">
+            <!-- Menu Items aligned to the top -->
+            <a href="/" class="text-red-600 text-2xl hover:text-red-700 font-bold">HOME</a>
+            <a href="/about" class="text-gray-600 text-2xl hover:text-red-600">ABOUT US</a>
+            <a href="#" class="text-gray-600 text-2xl hover:text-red-600">ONLINE MENU</a>
+            <a href="#" class="text-gray-600 text-2xl hover:text-red-600">CATEGORY</a>
+            <a href="#" class="text-gray-600 text-2xl hover:text-red-600">GALLERY</a>
         </div>
     </div>
-
     <main>
         @yield('content')
     </main>
@@ -82,14 +86,14 @@
         <!-- Main Footer Content (Map, Contact, Quick Links, Social Links in one row) -->
         <div class="flex flex-wrap justify-evenly gap-8">
             <!-- Map Section -->
-            <div class="flex-1 min-w-[250px] p-4">
+            <div class="flex-1 min-w-[350px] p-4">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2436.9235423896794!2d-0.11954318413908667!3d51.50330821752643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604cbf7aa02f3%3A0xa752f5ebfdd3cf4!2slastminute.com%20London%20Eye!5e0!3m2!1sen!2suk!4v1603282368274!5m2!1sen!2suk"
                     width="100%" height="200" class="border-0 rounded" allowfullscreen="" loading="lazy"></iframe>
             </div>
             <!-- Address Section -->
             <div class="flex-1 min-w-[250px] p-4">
-                <h3 class="text-yellow-400 font-bold text-lg mb-4">Contact Us</h3>
+                <h3 class="text-yellow-400 font-extrabold text-lg mb-4">Contact Us</h3>
                 <ul class="space-y-4">
                     
                     <li class="flex items-start space-x-3"> 
@@ -115,7 +119,7 @@
             
             <!-- Quick Links Section -->
             <div class="flex-1 min-w-[250px] p-4">
-                <h3 class="text-yellow-400 font-bold text-lg mb-4">Quick Links</h3>
+                <h3 class="text-yellow-400 font-extrabold text-lg mb-4">Quick Links</h3>
                 <ul class="space-y-2">
                     <li>
                         <a href="#" class="text-white hover:text-red-500 font-semibold">Home</a>
@@ -137,19 +141,20 @@
             
             <!-- Social Links Section -->
             <div class="flex-1 min-w-[250px] p-4">
-                <h3 class="text-yellow-400 font-bold text-lg mb-4">Follow Us</h3>
+                <h3 class="text-yellow-400 font-extrabold text-lg mb-4">Follow Us</h3>
                 <div class="flex space-x-4">
-                    <a href="#" class="text-white hover:text-blue-400">
-                        <i class="ri-facebook-circle-fill text-3xl"></i>
+                    <a href="#" class="bg-white w-12 h-12 flex items-center justify-center rounded-full text-orange-800">
+                        <i class="ri-facebook-fill text-2xl"></i>
                     </a>
-                    <a href="#" class="text-white hover:text-blue-400">
-                        <i class="ri-linkedin-fill text-3xl"></i>
+                    <a href="#" class="bg-white w-12 h-12 flex items-center justify-center rounded-full text-orange-800">
+                        <i class="ri-instagram-fill text-2xl"></i>
                     </a>
-                    <a href="#" class="text-white hover:text-blue-400">
-                        <i class="ri-twitter-x-fill text-3xl"></i>
+                    <a href="#" class="bg-white w-12 h-12 flex items-center justify-center rounded-full text-orange-800">
+                        <i class="ri-twitter-x-fill text-2xl"></i>
                     </a>
                 </div>
             </div>
+            
         </div>
         <!-- Footer Bottom (Copyright) -->
         <div class="mt-8 border-t border-gray-600 pt-4 text-center">
@@ -161,14 +166,23 @@
 </footer>
 
 
+<script>
+    // Mobile Menu Toggle
+    document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
+        const menu = document.getElementById('mobile-menu');
+        // Toggle the mobile menu with animation
+        menu.classList.toggle('translate-x-full');
+        menu.classList.toggle('translate-x-0');
+    });
 
-    <script>
-        // Mobile Menu Toggle
-        document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        });
-    </script>
+    // Close Menu Button
+    document.getElementById('close-menu').addEventListener('click', function() {
+        const menu = document.getElementById('mobile-menu');
+        // Close the mobile menu
+        menu.classList.add('translate-x-full');
+        menu.classList.remove('translate-x-0');
+    });
+</script>
 
 
 <!-- Swiper Script -->
