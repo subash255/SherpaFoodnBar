@@ -22,12 +22,12 @@
         <div class="container mx-auto flex justify-between items-center py-2 px-4">
             <!-- Contact Information -->
             <div class="flex items-center space-x-4">
-                <div class="flex items-center space-x-2">
-                    <i class="ri-phone-fill"></i>
+                <div class="flex items-center space-x-2 border-r-2 h-5 pr-4 border-gray-300">
+                    <i class="ri-phone-fill text-gray-700 text-xl"></i>
                     <span>9800001111</span>
                 </div>
                 <div class="flex items-center space-x-2">
-                    <i class="ri-mail-open-fill"></i>
+                    <i class="ri-mail-open-fill text-gray-400 text-xl"></i>
                     <span>SherpaFoodnBar@gmail.com</span>
                 </div>
             </div>
@@ -76,56 +76,90 @@
         @yield('content')
     </main>
 
-    <!-- Footer Section -->
-    <footer class="bg-[#2e211b] text-white py-8">
-        <div class="container mx-auto px-4 mt-5">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Map Section -->
-                <div>
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2436.9235423896794!2d-0.11954318413908667!3d51.50330821752643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604cbf7aa02f3%3A0xa752f5ebfdd3cf4!2slastminute.com%20London%20Eye!5e0!3m2!1sen!2suk!4v1603282368274!5m2!1sen!2suk"
-                        width="100%" height="200" class="border-0 rounded" allowfullscreen=""
-                        loading="lazy"></iframe>
-                </div>
-                <!-- Address Section -->
-                <div>
-                    <h3 class="text-yellow-400 font-bold text-lg mb-4">Address</h3>
-                    <p>96 East Central Park Road,</p>
-                    <p>New York, USA</p>
-                </div>
-                <!-- Details Section -->
-                <div>
-                    <h3 class="text-yellow-400 font-bold text-lg mb-4">Details</h3>
-                    <p>Menu</p>
-                    <p>Reservations</p>
-                    <p>Time</p>
-                </div>
-                <!-- Contact Section -->
-                <div>
-                    <h3 class="text-yellow-400 font-bold text-lg mb-4">Contact Us</h3>
-                    <p>9811100000</p>
-                    <p>SherpaFoodnBar@gmail.com</p>
-                </div>
+<!-- Footer Section -->
+<footer class="bg-[#2e211b] text-white py-8">
+    <div class="container mx-auto px-4 mt-5">
+        <!-- Main Footer Content (Map, Contact, Quick Links, Social Links in one row) -->
+        <div class="flex flex-wrap justify-evenly gap-8">
+            <!-- Map Section -->
+            <div class="flex-1 min-w-[250px] p-4">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2436.9235423896794!2d-0.11954318413908667!3d51.50330821752643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604cbf7aa02f3%3A0xa752f5ebfdd3cf4!2slastminute.com%20London%20Eye!5e0!3m2!1sen!2suk!4v1603282368274!5m2!1sen!2suk"
+                    width="100%" height="200" class="border-0 rounded" allowfullscreen="" loading="lazy"></iframe>
             </div>
-            <!-- Footer Bottom -->
-            <div class="mt-8 border-t border-gray-600 pt-4 text-center">
-                <p class="text-sm">
-                    &copy; 2024 SherpaFoodnBar. All Rights Reserved.
-                </p>
-                <div class="flex justify-center space-x-4 mt-4">
-                    <a href="#" class="text-gray-500 hover:text-blue-400">
-                        <i class="ri-facebook-circle-fill text-2xl"></i>
+            <!-- Address Section -->
+            <div class="flex-1 min-w-[250px] p-4">
+                <h3 class="text-yellow-400 font-bold text-lg mb-4">Contact Us</h3>
+                <ul class="space-y-4">
+                    
+                    <li class="flex items-start space-x-3"> 
+                        <i class="ri-phone-line text-yellow-400 text-xl"></i>
+                        <a href="tel:+19811100000" class="text-white font-semibold hover:text-red-500">9811100000</a>
+                    </li>
+                    
+                    <!-- Email with Icon -->
+                    <li class="flex items-start space-x-3"> 
+                        <i class="ri-mail-line text-yellow-400 text-xl"></i>
+                        <a href="mailto:SherpaFoodnBar@gmail.com" class="text-white font-semibold hover:text-red-500">SherpaFoodnBar@gmail.com</a>
+                    </li>
+                    
+                    <!-- Address with Icon -->
+                    <li class="flex items-start space-x-3"> 
+                        <i class="ri-map-pin-line text-yellow-400 text-xl"></i>
+                        <p class="text-white font-semibold">96 East Central Park Road,<br class="sm:hidden"/> New York, USA</p> <!-- Break line for mobile view -->
+                    </li>
+                </ul>
+            </div>
+            
+            
+            
+            <!-- Quick Links Section -->
+            <div class="flex-1 min-w-[250px] p-4">
+                <h3 class="text-yellow-400 font-bold text-lg mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="#" class="text-white hover:text-red-500 font-semibold">Home</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white hover:text-red-500 font-semibold">About Us</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white hover:text-red-500 font-semibold">Menu</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white hover:text-red-500 font-semibold">Reservations</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white hover:text-red-500 font-semibold">Gallery</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Social Links Section -->
+            <div class="flex-1 min-w-[250px] p-4">
+                <h3 class="text-yellow-400 font-bold text-lg mb-4">Follow Us</h3>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-white hover:text-blue-400">
+                        <i class="ri-facebook-circle-fill text-3xl"></i>
                     </a>
-                    <a href="#" class="text-gray-500 hover:text-blue-400">
-                        <i class="ri-linkedin-fill text-2xl"></i>
+                    <a href="#" class="text-white hover:text-blue-400">
+                        <i class="ri-linkedin-fill text-3xl"></i>
                     </a>
-                    <a href="#" class="text-gray-500 hover:text-blue-400">
-                        <i class="ri-twitter-x-fill text-2xl"></i>
+                    <a href="#" class="text-white hover:text-blue-400">
+                        <i class="ri-twitter-x-fill text-3xl"></i>
                     </a>
                 </div>
             </div>
         </div>
-    </footer>
+        <!-- Footer Bottom (Copyright) -->
+        <div class="mt-8 border-t border-gray-600 pt-4 text-center">
+            <p class="text-sm">
+                &copy; 2024 SherpaFoodnBar. All Rights Reserved.
+            </p>
+        </div>
+    </div>
+</footer>
+
 
 
     <script>
