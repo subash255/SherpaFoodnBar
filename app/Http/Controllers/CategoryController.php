@@ -26,7 +26,7 @@ class CategoryController extends Controller
     {
         // Validate category name and image, but handle slug on client-side
         $data = $request->validate([
-            'category_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:categories,slug',  // Allow slug to be nullable
             'image' => 'required|image',
         ]);

@@ -36,7 +36,7 @@
                 <!-- Category Name Input -->
                 <div class="mb-6">
                     <label for="category" class="block text-sm font-medium text-gray-700">Category Name</label>
-                    <input type="text" id="category" name="category_name" placeholder="Enter category name"
+                    <input type="text" id="category" name="name" placeholder="Enter category name"
                         class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" oninput="generateSlug()">
                 </div>
     
@@ -122,7 +122,7 @@
                                 <i class="ri-edit-box-line text-white"></i>
                             </a>
                             <!-- Delete Icon -->
-                            <form action="{{ route('admin.category.deletecategory', ['id' => $category->id]) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this category?');">
+                            <form action="{{ route('admin.category.delete', ['id' => $category->id]) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this category?');">
                                 @csrf
                                 @method('delete')
                                 <button class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
@@ -131,9 +131,13 @@
                             </form>
 
                             <!-- Settings Icon -->
-                            <a href="{{ route('admin.subcategory.index') }}" class="bg-green-500 hover:bg-green-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                            <form action="{{route('admin.subcategory.index', ['id' => $category->id]) }}" method="get" >
+                                @csrf
+                               
+                            <button class="bg-green-500 hover:bg-green-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                                 <i class="ri-settings-5-line text-white"></i>
-                            </a>
+</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
