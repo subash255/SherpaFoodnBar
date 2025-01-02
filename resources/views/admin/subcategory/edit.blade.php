@@ -21,7 +21,7 @@
 <div class="max-w-4xl mx-auto bg-white p-10 rounded-xl shadow-lg mt-[7rem] relative z-10">
 
     <!-- Form -->
-    <form action="{{ route('admin.subcategory.update', $subcategory->id) }}" method="POST" class="space-y-8">
+    <form action="{{ route('admin.subcategory.update', $subcategory->id) }}" method="POST"  class="space-y-8" enctype="multipart/form-data"> 
         @csrf
         @method('PATCH')
 
@@ -38,32 +38,18 @@
 
         <!-- Category Dropdown -->
         <div class="mb-6">
-            <label for="category_id" class="block text-lg font-medium text-gray-700">Category</label>
-            <select name="category_id" id="category_id"
-                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white text-gray-700 z-50">
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }} "
-                        {{ old('category_id', $subcategory->category_id) == $category->id ? 'selected' : '' }}>
-                        {{ $category->name }}
-                    </option>
-                @endforeach
-            </select>
+            <label for="category_id" class="block text-lg font-medium text-gray-700">{{$subcategory->category->name}}</label>
+            <input type="hidden" name="category_id" value="{{ $subcategory->category->id }}">
+            
         </div>
 
         <!-- Subcategory Dropdown -->
-        <div class="mb-6">
-            <label for="subcategory_id" class="block text-lg font-medium text-gray-700">Subcategory</label>
-            <select name="subcategory_id" id="subcategory_id"
-                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white text-gray-700 z-50">
-                <option value="">Select Subcategory</option>
-                <!-- Options will be populated with JS -->
-            </select>
-        </div>
+        
 
         <!-- Subcategory Name Input -->
         <div class="mb-6">
             <label for="subcategory_name" class="block text-lg font-medium text-gray-700">Subcategory Name</label>
-            <input type="text" name="subcategory_name" id="subcategory_name"
+            <input type="text" name="name" id="subcategory_name"
                 class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                 value="{{ old('name', $subcategory->name) }}" required   oninput="generateSlug()" >
         </div>
@@ -104,49 +90,13 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Initial load of subcategories for the selected category
-        let categoryId = document.getElementById('category_id').value;
-        loadSubcategories(categoryId);
+    function generateSlug() {
+        const title = document.getElementById('subcategory_name').value;
+        const slug = title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+        document.getElementById('slug').value = slug;
+    }
 
-        // Event listener for category change
-        document.getElementById('category_id').addEventListener('change', function () {
-            let selectedCategoryId = this.value;
-            loadSubcategories(selectedCategoryId);
-        });
 
-        // Function to load subcategories based on the selected category
-        function loadSubcategories(categoryId) {
-            if (categoryId) {
-                fetch(`/admin/subcategories/${categoryId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        let subcategorySelect = document.getElementById('subcategory_id');
-                        subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
-
-                        data.forEach(subcategory => {
-                            let option = document.createElement('option');
-                            option.value = subcategory.id;
-                            option.textContent = subcategory.name;
-                            subcategorySelect.appendChild(option);
-                        });
-
-                        // Set the subcategory dropdown value to the existing subcategory
-                        let selectedSubcategoryId = {{ $subcategory->id }};
-                        if (selectedSubcategoryId) {
-                            subcategorySelect.value = selectedSubcategoryId;
-                        }
-                    })
-                    .catch(error => console.error('Error fetching subcategories:', error));
-            } else {
-                document.getElementById('subcategory_id').innerHTML =
-                    '<option value="">Select Subcategory</option>';
-            }
-        }
-    });
-</script>
-
-<script>
     // Close the modal or go back to the previous page
     document.getElementById('closeModalButton').addEventListener('click', function () {
         window.history.back(); // Go back to the previous page
