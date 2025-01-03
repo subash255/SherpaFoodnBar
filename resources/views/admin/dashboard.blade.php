@@ -17,11 +17,11 @@
         <!-- Processing Orders Card -->
         <div class="bg-white p-6 rounded-lg text-left hover:shadow-2xl transition-shadow duration-300 flex flex-row items-center justify-between w-full h-20 transform sm:-translate-y-8 lg:-translate-y-12 shadow-lg">
             <div>
-                <h2 class="text-gray-700 font-medium mb-2">Processing Orders</h2>
+                <h2 class="text-gray-700 font-medium mb-2">Total Reservations</h2>
                 <p class="text-gray-700 font-medium">1</p>
             </div>
             <div class="bg-yellow-600 text-white w-12 h-12 flex items-center justify-center rounded-full">
-                <i class="ri-settings-2-line text-2xl"></i>
+                <i class="ri-calendar-check-fill text-2xl"></i>
             </div>
         </div>
 

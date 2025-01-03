@@ -3,17 +3,15 @@
 
 
 <style>
-    /* Hide the modal */
 .modal-hidden {
     display: none !important;
 }
 
-/* Show the modal with flex */
 .modal-visible {
     display: flex !important;
 }
-
 </style>
+
 {{-- Flash Message --}}
 @if(session('success'))
   <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">

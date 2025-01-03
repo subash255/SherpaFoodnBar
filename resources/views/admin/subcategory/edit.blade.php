@@ -57,17 +57,22 @@
           <!-- Slug Input (auto-generated) -->
           <div class="mb-6">
                     <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
-                    <input type="text" name="slug" id="slug" placeholder="Generated slug" 
+                    <input type="text" name="slug" id="slug" value="{{ old('slug', $subcategory->slug) }}" placeholder="Generated slug" 
                            class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" 
                            readonly required>
                 </div>
         
         
-
+                @if($subcategory->image)
+                <div class="mb-8">
+                  <label class="block text-lg font-medium text-gray-700">Current Image</label>
+                  <img src="{{ asset('images/brand/' . $subcategory->image) }}" alt="SubCategory Image" class="mt-3 w-64 h-auto mx-auto border border-gray-300 rounded-lg shadow-md">
+                </div>
+              @endif
         <!-- image Input -->
         <div class="mb-6">
                     <label for="image" class="block text-sm font-medium text-gray-700">Upload Image</label>
-                    <input type="file" id="image" name="image" accept="image/*" required
+                    <input type="file" id="image" name="image" accept="image/*" 
                         class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
                 </div>
         

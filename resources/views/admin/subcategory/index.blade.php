@@ -1,6 +1,15 @@
 @extends('layouts.app')
-
 @section('content')
+
+<style>
+.modal-hidden {
+    display: none !important;
+}
+
+.modal-visible {
+    display: flex !important;
+}
+</style>
 
 <!-- Flash Messages (if any) -->
 @if(session('success'))
@@ -29,7 +38,7 @@
     </div>
     
     <!-- Modal Structure -->
-    <div id="subcategoryModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50 backdrop-blur-[1px]">
+    <div id="categoryModal" class="fixed inset-0 bg-black bg-opacity-70 modal-hidden items-center justify-center z-50 backdrop-blur-[1px]">
         <div class="bg-white rounded-lg p-6 w-full max-w-lg relative shadow-xl overflow-auto max-h-[90vh]">
             <h2 class="text-2xl font-semibold text-center text-gray-900 mb-8">Add Subcategory</h2>
     
@@ -214,16 +223,18 @@
         document.getElementById('slug').value = slug;
     }
 
-    // Open the modal
-    document.getElementById('openModalButton').addEventListener('click', function () {
-        document.getElementById('subcategoryModal').classList.remove('hidden');
-        document.body.classList.add('overflow-hidden'); // Disable scrolling when modal is open
-    });
+// Open the modal
+document.getElementById('openModalButton').addEventListener('click', function () {
+    document.getElementById('categoryModal').classList.remove('modal-hidden');
+    document.getElementById('categoryModal').classList.add('modal-visible');  // Show modal
+    document.body.classList.add('overflow-hidden'); // Disable scrolling when modal is open
+});
 
-    // Close the modal
-    document.getElementById('closeModalButton').addEventListener('click', function () {
-        document.getElementById('subcategoryModal').classList.add('hidden');
-        document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
-    });
+// Close the modal
+document.getElementById('closeModalButton').addEventListener('click', function () {
+    document.getElementById('categoryModal').classList.remove('modal-visible');
+    document.getElementById('categoryModal').classList.add('modal-hidden'); // Hide modal
+    document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
+});
 </script>
 @endsection

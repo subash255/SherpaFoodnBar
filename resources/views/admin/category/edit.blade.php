@@ -21,7 +21,7 @@
   <div class="max-w-4xl mx-auto bg-white p-10 rounded-xl shadow-lg mt-[7rem] relative z-10">
 
     <!-- Form -->
-    <form action="{{ route('admin.category.updatecategory', $category->id) }}" method="POST" enctype="multipart/form-data" class="space-y-8">
+    <form action="{{ route('admin.category.update', $category->id) }}" method="POST" enctype="multipart/form-data" class="space-y-8">
       @csrf
       @method('PATCH')
 
@@ -39,7 +39,7 @@
       <!-- Category Name Input -->
       <div class="mb-6">
         <label for="category" class="block text-lg font-medium text-gray-700">Category Name</label>
-        <input type="text" id="category" name="category_name" value="{{ old('category_name', $category->category_name) }}" placeholder="Enter category name"
+        <input type="text" id="category" name="name" value="{{ old('name', $category->name) }}" placeholder="Enter category name"
                class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none text-lg" oninput="generateSlug()">
       </div>
 
