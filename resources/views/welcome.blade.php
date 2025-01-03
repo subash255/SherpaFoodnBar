@@ -1,5 +1,22 @@
 @extends('layouts.master')
 @section('content')
+<!-- Flash Messages (if any) -->
+@if(session('success'))
+    <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
+        {{ session('success') }}
+    </div>
+@endif
+
+<script>
+  if (document.getElementById('flash-message')) {
+      setTimeout(() => { 
+          const msg = document.getElementById('flash-message'); 
+          msg.style.opacity = 0; 
+          msg.style.transition = "opacity 0.5s ease-out"; 
+          setTimeout(() => msg.remove(), 500); 
+      }, 3000);
+  }
+</script>
 
 <!-- Hero Section -->
 <section class="relative bg-cover bg-center h-screen" style="background-image: url('{{ asset('images/bg.jpg') }}');">
@@ -68,17 +85,24 @@
   <div class="relative z-10">
     <h1 class="text-4xl font-extrabold mb-6">Reserve a Table</h1>
     <p class="text-lg mb-8">Book a table now and enjoy a fantastic dining experience.</p>
-    <form action="#" class="max-w-lg mx-auto">
-      <div class="mb-4">
-        <input type="text" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-md text-gray-700">
-      </div>
-      <div class="mb-4">
-        <input type="number" placeholder="Number of People" class="w-full p-3 border border-gray-300 rounded-md text-gray-700">
-      </div>
-      <div class="mb-4">
-        <input type="datetime-local" class="w-full p-3 border border-gray-300 rounded-md text-gray-700">
-      </div>
-      <button type="submit" class="bg-white hover:bg-gray-200 text-indigo-600 py-2 px-6 rounded-md text-lg">Book Now</button>
+    <form action="{{ route('booking.store') }}" method="POST" class="max-w-lg mx-auto">
+        @csrf
+        <div class="mb-4">
+            <input type="text" name="name" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
+        </div>
+        <div class="mb-4">
+            <input type="email" name="email" placeholder="Your email" class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
+        </div>
+        <div class="mb-4">
+            <input type="tel" name="phone" placeholder="Your number" class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
+        </div>
+        <div class="mb-4">
+            <input type="number" name="number_of_people" placeholder="Number of People" class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
+        </div>
+        <div class="mb-4">
+            <input type="datetime-local" name="booking_date" class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
+        </div>
+        <button type="submit" class="bg-white hover:bg-gray-200 text-indigo-600 py-2 px-6 rounded-md text-lg">Book Now</button>
     </form>
   </div>
 </section>
