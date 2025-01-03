@@ -40,42 +40,17 @@
 <div class="swiper swiper-container mx-auto mt-10 max-w-7xl px-4">
   <div class="swiper-wrapper">
 <!-- Product 1 -->
+@foreach($categories as $category)
 <div class="swiper-slide flex flex-col items-center justify-center p-4 mb-6 bg-white rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out">
   <a href="{{ route('menu.index') }}">
-      <img src="{{ asset('images/rolls.jpg') }}" alt="Starters" class="w-52 h-52 object-cover rounded-lg mb-4">
-      <div class="product-name text-xl font-bold text-gray-900 text-center">Starters</div>
+      <img src="{{ asset('images/brand/ . $category->image') }}" alt="Starters" class="w-52 h-52 object-cover rounded-lg mb-4">
+      <div class="product-name text-xl font-bold text-gray-900 text-center">{{ $category->name }}</div>
   </a>
 </div>
+@endforeach
 
     <!-- Product 2 -->
-    <div class="swiper-slide flex flex-col items-center justify-center p-4 mb-6 bg-white rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out">
-      <img src="{{ asset('images/chow.jpg') }}" alt="Ready To be Served" class="w-52 h-52 object-cover rounded-lg mb-4">
-      <div class="product-name text-xl font-bold text-gray-900">Ready To be Served</div>
-    </div>
-
-    <!-- Product 3 -->
-    <div class="swiper-slide flex flex-col items-center justify-center p-4 mb-6 bg-white rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out">
-      <img src="{{ asset('images/mango.jpg') }}" alt="Deserts" class="w-52 h-52 object-cover rounded-lg mb-4">
-      <div class="product-name text-xl font-bold text-gray-900">Deserts</div>
-    </div>
-
-    <!-- Product 4 -->
-    <div class="swiper-slide flex flex-col items-center justify-center p-4 mb-6 bg-white rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out">
-      <img src="{{ asset('images/momo.png') }}" alt="Momo" class="w-52 h-52 object-cover rounded-lg mb-4">
-      <div class="product-name text-xl font-bold text-gray-900">Momo</div>
-    </div>
-
-    <!-- Product 5 -->
-    <div class="swiper-slide flex flex-col items-center justify-center p-4 mb-6 bg-white rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out">
-      <img src="{{ asset('images/thukpa.jpg') }}" alt="Thukpa and Soup" class="w-52 h-52 object-cover rounded-lg mb-4">
-      <div class="product-name text-xl font-bold text-gray-900">Thukpa and Soup</div>
-    </div>
-
-    <!-- Product 6 -->
-    <div class="swiper-slide flex flex-col items-center justify-center p-4 mb-6 bg-white rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out">
-      <img src="{{ asset('images/beer.jpg') }}" alt="Drinks" class="w-52 h-52 object-cover rounded-lg mb-4">
-      <div class="product-name text-xl font-bold text-gray-900">Drinks</div>
-    </div>
+    
     
   </div>
 

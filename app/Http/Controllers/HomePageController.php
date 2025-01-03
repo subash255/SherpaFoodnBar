@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class HomePageController extends Controller
 {
     public function index()
     {
-        return view('welcome');
+        $categories = Category::all();
+        return view('welcome' , compact('categories'));
     }
     
     public function about()
