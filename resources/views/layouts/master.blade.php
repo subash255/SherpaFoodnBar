@@ -122,23 +122,20 @@
                 <h3 class="text-yellow-400 font-extrabold text-lg mb-4">Quick Links</h3>
                 <ul class="space-y-2">
                     <li>
-                        <a href="#" class="text-white hover:text-red-500 font-semibold">Home</a>
+                        <a href="{{route('welcome')}}" class="text-white hover:text-red-500 font-semibold">Home</a>
                     </li>
                     <li>
-                        <a href="#" class="text-white hover:text-red-500 font-semibold">About Us</a>
+                        <a href="{{route('about')}}" class="text-white hover:text-red-500 font-semibold">About Us</a>
                     </li>
+                    {{-- <li>
+                        <a href="#" class="text-white hover:text-red-500 font-semibold">Menu</a>
+                    </li> --}}
                     <li>
-                        <a href="#" class="text-white hover:text-red-500 font-semibold">Reservations</a>
+                        <a href="#" class="text-white hover:text-red-500 font-semibold">Gallery</a>
                     </li>
                     <li>
                         <a href="{{route('login')}}" class="text-white hover:text-red-500 font-semibold">Admin Login</a>
                     </li>
-                    {{-- <li>
-                        <a href="#" class="text-white hover:text-red-500 font-semibold">Menu</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-white hover:text-red-500 font-semibold">Gallery</a>
-                    </li> --}}
                 </ul>
             </div>
             

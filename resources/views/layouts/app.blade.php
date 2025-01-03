@@ -124,7 +124,7 @@
           <i class="ri-shopping-cart-2-fill"></i>
           <span class="ml-4 font-semibold">Orders</span>
         </a>
-        <a href="#" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{route('admin.banner.index')}}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-image-fill"></i>
           <span class="ml-4 font-semibold">Banners</span>
         </a>
