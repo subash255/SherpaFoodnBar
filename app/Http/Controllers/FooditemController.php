@@ -103,6 +103,21 @@ class FooditemController extends Controller
         return redirect()->route('admin.fooditems.index')->with('success', 'Food Item deleted successfully');
     }
 
+    public function updateToggleStatus(Request $request, $foodItemId)
+    {
+        // Retrieve the food item by ID from the database
+        $fooditem = FoodItem::findOrFail($foodItemId);
+        
+        // Update the status field with the new value
+        $fooditem->status = $request->state; // 'state' is 1 (checked) or 0 (unchecked)
+        
+        // Save the updated food item back to the database
+        $fooditem->save();
+        
+        // Return a JSON response indicating success
+        return response()->json(['success' => true]);
+    }
+
     
 
 }
