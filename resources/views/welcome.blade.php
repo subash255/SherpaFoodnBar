@@ -44,7 +44,6 @@
 <div class="swiper-slide flex flex-col items-center justify-center p-4 mb-6 bg-white rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out">
   <a href="{{ route('menu.index') }}">
       <img src="{{ asset('images/brand/' . $category->image) }}" alt="Starters" class="w-52 h-52 object-cover rounded-lg mb-4">
-      <img src="{{ asset('images/brand/' . $category->image) }}" alt="Starters" class="w-52 h-52 object-cover rounded-lg mb-4">
       <div class="product-name text-xl font-bold text-gray-900 text-center">{{ $category->name }}</div>
   </a>
 </div>
