@@ -46,9 +46,10 @@
             <div  class="hidden md:flex items-center space-x-6 text-sm font-medium">
                 <a href="{{route('welcome')}}" class=" hover:text-red-600 font-bold  {{ request()->routeIs('welcome') ? 'text-red-600' : 'text-gray-800' }}">HOME</a>
                 <a href="{{ route('about') }}" class=" hover:text-red-600 font-bold {{ request()->routeIs('about') ? 'text-red-600' : 'text-gray-800' }}">ABOUT US</a>
-                <a href="#" class="text-gray-800 hover:text-red-600 font-bold">ONLINE MENU</a>
-                <a href="#" class="text-gray-800 hover:text-red-600 font-bold">CATEGORY</a>
-                <a href="#" class="text-gray-800 hover:text-red-600 font-bold">GALLERY</a>
+                <a href="{{route('menu.index')}}" class="text-gray-800 hover:text-red-600 font-bold {{ request()->routeIs('menu.index') ? 'text-red-600' : 'text-gray-800' }}">MENU</a>
+                <a href="#" class="text-gray-800 hover:text-red-600 font-bold">RESERVATION</a>
+            {{-- <a href="#" class="text-gray-800 hover:text-red-600 font-bold">GALLERY</a> --}}
+            <a href="#" class="text-gray-800 hover:text-red-600 font-bold">CONTACT US</a>
             </div>
     
             <!-- Mobile Navigation (Hamburger Menu) -->
@@ -72,9 +73,10 @@
 
             <a href="{{route('welcome')}}" class=" text-2xl hover:text-red-700 font-semibold {{ request()->routeIs('welcome') ? 'text-red-600' : 'text-gray-800' }}">HOME</a>
             <a href="{{route('about')}}" class=" text-2xl hover:text-red-600 font-semibold {{ request()->routeIs('about') ? 'text-red-600' : 'text-gray-800' }}">ABOUT US</a>
-            <a href="#" class="text-gray-800 text-2xl hover:text-red-600 font-semibold">ONLINE MENU</a>
-            <a href="#" class="text-gray-800 text-2xl hover:text-red-600 font-semibold">CATEGORY</a>
+            <a href="{{route('menu.index')}}" class="text-gray-800 text-2xl hover:text-red-600 font-semibold {{ request()->routeIs('menu.index') ? 'text-red-600' : 'text-gray-800' }}">MENU</a>
+            <a href="#" class="text-gray-800 text-2xl hover:text-red-600 font-semibold">RESERVATION</a>
             <a href="#" class="text-gray-800 text-2xl hover:text-red-600 font-semibold">GALLERY</a>
+            <a href="#" class="text-gray-800 text-2xl hover:text-red-600 font-semibold">CONTACT US</a>
         </div>
     </div>
     <main>
