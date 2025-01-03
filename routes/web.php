@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FooditemController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProfileController;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [HomePageController::class, 'index'])->name('welcome');
+Route::get('/',[HomePageController::class, 'index'])->name('welcome');
 Route::get('about', [HomePageController::class, 'about'])->name('about');
 Route::get('menu',[MenuController::class,'index'])->name('menu.index');
 
@@ -44,14 +45,22 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::patch('subcategory/{id}', [SubcategoryController::class, 'update'])->name('admin.subcategory.update');
     Route::delete('subcategory/{id}', [SubcategoryController::class, 'destroy'])->name('admin.subcategory.destroy');
 
+    //fooditem routes
+    Route::get('fooditem', [FooditemController::class, 'index'])->name('admin.fooditems.index');
+    Route::get('fooditem/create', [FooditemController::class, 'create'])->name('admin.fooditems.create');
+    Route::post('fooditem', [FooditemController::class, 'store'])->name('admin.fooditems.store');
+    Route::get('fooditem/{id}/edit', [FooditemController::class, 'edit'])->name('admin.fooditems.edit');
+    Route::patch('fooditem/{id}', [FooditemController::class, 'update'])->name('admin.fooditems.update');
+    Route::delete('fooditem/{id}', [FooditemController::class, 'destroy'])->name('admin.fooditems.destroy');
+
     //banner routes
     Route::get('banner', [BannerController::class, 'index'])->name('admin.banner.index');
     Route::get('banner/create', [BannerController::class, 'create'])->name('admin.banner.create');
     Route::post('banner', [BannerController::class, 'store'])->name('admin.banner.store');
-    Route::get('banner/{id}', [BannerController::class, 'show'])->name('admin.banner.show');
     Route::get('banner/{id}/edit', [BannerController::class, 'edit'])->name('admin.banner.edit');
     Route::patch('banner/{id}', [BannerController::class, 'update'])->name('admin.banner.update');
     Route::delete('banner/{id}', [BannerController::class, 'destroy'])->name('admin.banner.destroy');
+
 
 });
 
