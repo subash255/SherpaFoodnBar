@@ -32,8 +32,6 @@
 </section>
 
 
-
-
 <!-- Swiper Slider -->
 <h1 class="text-4xl font-extrabold text-center mt-10 mb-6 text-gray-900">Our Menus</h1>
 <p class="text-lg text-gray-600 text-center mb-12">A Taste of Perfection in Every Bite.</p>
@@ -99,7 +97,7 @@
     @if($fooditem->status == 1)
     <div class="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-transform transform hover:scale-105">
       <!-- Dynamically displaying the food item's image -->
-      <img src="{{ asset('images/'.$fooditem->image) }}" alt="{{ $fooditem->name }}" class="w-full h-56 object-cover rounded-lg mb-6 transition-all duration-500 ease-in-out hover:opacity-90">
+      <img src="{{ asset('images/fooditem/'.$fooditem->image) }}" alt="{{ $fooditem->name }}" class="w-full h-56 object-cover rounded-lg mb-6 transition-all duration-500 ease-in-out hover:opacity-90">
       
       <!-- Dynamically displaying the food item's name -->
       <h3 class="text-2xl font-bold text-gray-800 mb-2">{{ $fooditem->name }}</h3>
