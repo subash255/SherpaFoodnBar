@@ -28,7 +28,7 @@
                 </div>
                 <div class="flex items-center space-x-2">
                     <i class="ri-mail-open-fill text-gray-400 text-xl"></i>
-                    <span>SherpaFoodnBar@gmail.com</span>
+                    <a href="mailto:SherpaFoodnBar@gmail.com">SherpaFoodnBar@gmail.com</a>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
                 <a href="{{route('menu.index')}}" class="text-gray-800 hover:text-red-600 font-bold {{ request()->routeIs('menu.index') ? 'text-red-600' : 'text-gray-800' }}">MENU</a>
                 <a href="#" class="text-gray-800 hover:text-red-600 font-bold">RESERVATION</a>
             {{-- <a href="#" class="text-gray-800 hover:text-red-600 font-bold">GALLERY</a> --}}
-            <a href="#" class="text-gray-800 hover:text-red-600 font-bold">CONTACT US</a>
+            <a href="{{route('contact')}}" class="text-gray-800 hover:text-red-600 font-bold  {{ request()->routeIs('contact') ? 'text-red-600' : 'text-gray-800' }}">CONTACT US</a>
             </div>
     
             <!-- Mobile Navigation (Hamburger Menu) -->
@@ -76,7 +76,7 @@
             <a href="{{route('menu.index')}}" class="text-gray-800 text-2xl hover:text-red-600 font-semibold {{ request()->routeIs('menu.index') ? 'text-red-600' : 'text-gray-800' }}">MENU</a>
             <a href="#" class="text-gray-800 text-2xl hover:text-red-600 font-semibold">RESERVATION</a>
             <a href="#" class="text-gray-800 text-2xl hover:text-red-600 font-semibold">GALLERY</a>
-            <a href="#" class="text-gray-800 text-2xl hover:text-red-600 font-semibold">CONTACT US</a>
+            <a href="{{route('contact')}}" class="text-gray-800 text-2xl hover:text-red-600 font-semibold {{ request()->routeIs('contact') ? 'text-red-600' : 'text-gray-800' }}">CONTACT US</a>
         </div>
     </div>
     <main>
@@ -100,7 +100,7 @@
                     
                     <li class="flex items-start space-x-3"> 
                         <i class="ri-phone-line text-yellow-400 text-xl"></i>
-                        <a href="tel:+19811100000" class="text-white font-semibold hover:text-red-500">9811100000</a>
+                        <a href="tel:9800001111" class="text-white font-semibold hover:text-red-500">9800001111</a>
                     </li>
                     
                     <!-- Email with Icon -->

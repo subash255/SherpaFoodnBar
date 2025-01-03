@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',[HomePageController::class, 'index'])->name('welcome');
 Route::get('about', [HomePageController::class, 'about'])->name('about');
 Route::get('menu',[MenuController::class,'index'])->name('menu.index');
+Route::get('contact',[HomePageController::class,'contact'])->name('contact');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
