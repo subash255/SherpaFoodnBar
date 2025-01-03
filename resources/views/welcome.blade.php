@@ -44,6 +44,7 @@
 <div class="swiper-slide flex flex-col items-center justify-center p-4 mb-6 bg-white rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out">
   <a href="{{ route('menu.index') }}">
       <img src="{{ asset('images/brand/' . $category->image) }}" alt="Starters" class="w-52 h-52 object-cover rounded-lg mb-4">
+      <img src="{{ asset('images/brand/' . $category->image) }}" alt="Starters" class="w-52 h-52 object-cover rounded-lg mb-4">
       <div class="product-name text-xl font-bold text-gray-900 text-center">{{ $category->name }}</div>
   </a>
 </div>
@@ -95,34 +96,27 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 max-w-7xl mx-auto px-4">
     
     <!-- Menu Item 1: Jhol Momo -->
+    @foreach($fooditems as $fooditem)
+    @if($fooditem->status == 1)
     <div class="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-transform transform hover:scale-105">
-      <img src="{{ asset('images/momo.png') }}" alt="Jhol Momo" class="w-full h-56 object-cover rounded-lg mb-6 transition-all duration-500 ease-in-out hover:opacity-90">
-      <h3 class="text-2xl font-bold text-gray-800 mb-2">Jhol Momo</h3>
-      <p class="text-lg text-gray-600 mb-4">$15.00</p>
+      <!-- Dynamically displaying the food item's image -->
+      <img src="{{ asset('images/'.$fooditem->image) }}" alt="{{ $fooditem->name }}" class="w-full h-56 object-cover rounded-lg mb-6 transition-all duration-500 ease-in-out hover:opacity-90">
+      
+      <!-- Dynamically displaying the food item's name -->
+      <h3 class="text-2xl font-bold text-gray-800 mb-2">{{ $fooditem->name }}</h3>
+      
+      <!-- Dynamically displaying the food item's price -->
+      <p class="text-lg text-gray-600 mb-4">${{ number_format($fooditem->price, 2) }}</p>
+      
+      <!-- Order button -->
       <button class="bg-indigo-600 text-white py-3 px-8 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:bg-indigo-700 hover:scale-105">
         Order Now
       </button>
     </div>
+    @endif
+@endforeach
 
-    <!-- Menu Item 2: Cocktail Specials -->
-    <div class="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-transform transform hover:scale-105">
-      <img src="{{ asset('images/beer.jpg') }}" alt="Cocktail Specials" class="w-full h-56 object-cover rounded-lg mb-6 transition-all duration-500 ease-in-out hover:opacity-90">
-      <h3 class="text-2xl font-bold text-gray-800 mb-2">Cocktail Specials</h3>
-      <p class="text-lg text-gray-600 mb-4">$10.00</p>
-      <button class="bg-indigo-600 text-white py-3 px-8 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:bg-indigo-700 hover:scale-105">
-        Order Now
-      </button>
-    </div>
 
-    <!-- Menu Item 3: Chowmeen -->
-    <div class="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-transform transform hover:scale-105">
-      <img src="{{ asset('images/chow.jpg') }}" alt="Chowmeen" class="w-full h-56 object-cover rounded-lg mb-6 transition-all duration-500 ease-in-out hover:opacity-90">
-      <h3 class="text-2xl font-bold text-gray-800 mb-2">Chowmeen</h3>
-      <p class="text-lg text-gray-600 mb-4">$12.00</p>
-      <button class="bg-indigo-600 text-white py-3 px-8 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:bg-indigo-700 hover:scale-105">
-        Order Now
-      </button>
-    </div>
   </div>
 </section>
 

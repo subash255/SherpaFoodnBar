@@ -52,6 +52,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('fooditem/{id}/edit', [FooditemController::class, 'edit'])->name('admin.fooditems.edit');
     Route::patch('fooditem/{id}', [FooditemController::class, 'update'])->name('admin.fooditems.update');
     Route::delete('fooditem/{id}', [FooditemController::class, 'destroy'])->name('admin.fooditems.destroy');
+    Route::post('fooditem/update-toggle/{foodItemId}', [FooditemController::class, 'updateToggleStatus']);
+
 
     //banner routes
     Route::get('banner', [BannerController::class, 'index'])->name('admin.banner.index');

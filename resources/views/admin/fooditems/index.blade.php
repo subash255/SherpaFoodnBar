@@ -182,8 +182,8 @@
                             <td class="border border-gray-300 px-4 py-2">{{ $foodItem->price }}</td>
                             <td class="border border-gray-300 px-4 py-2">
                                 <label for="status{{ $foodItem->id }}" class="inline-flex items-center cursor-pointer">
-                                    <input id="status{{ $foodItem->id }}" type="checkbox" class="hidden toggle-switch"
-                                        data-id="{{ $foodItem->id }}" {{ $foodItem->status ? 'checked' : '' }} />
+                                <input id="status{{ $foodItem->id }}" type="checkbox" class="hidden toggle-switch" data-id="{{ $foodItem->id }}" {{ $foodItem->status ? 'checked' : '' }} />
+
                                     <div class="w-10 h-6 bg-gray-200 rounded-full relative">
                                         <div class="dot absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition">
                                         </div>
@@ -233,61 +233,63 @@
     </div>
 
     <script>
-        document.querySelectorAll('.toggle-switch').forEach(toggle => {
-            const dot = toggle.parentNode.querySelector('.dot');
+     document.querySelectorAll('.toggle-switch').forEach(toggle => {
+    const dot = toggle.parentNode.querySelector('.dot'); // The visual dot for the toggle switch
 
-            // Apply the correct initial state
-            if (toggle.checked) {
-                dot.style.transform = 'translateX(100%)';
-                dot.style.backgroundColor = 'green';
-            } else {
-                dot.style.transform = 'translateX(0)';
-                dot.style.backgroundColor = 'white';
+    // Apply the correct initial state (visual toggle)
+    if (toggle.checked) {
+        dot.style.transform = 'translateX(100%)';
+        dot.style.backgroundColor = 'green';
+    } else {
+        dot.style.transform = 'translateX(0)';
+        dot.style.backgroundColor = 'white';
+    }
+
+    // Add event listener to handle checkbox state change
+    toggle.addEventListener('change', function() {
+        const foodItemId = this.getAttribute('data-id'); // Get the FoodItem ID from the data-id attribute
+        const newState = this.checked ? 1 : 0; // 1 for checked, 0 for unchecked
+
+        // Toggle visual effect of the switch
+        if (this.checked) {
+            dot.style.transform = 'translateX(100%)';
+            dot.style.backgroundColor = 'green';
+        } else {
+            dot.style.transform = 'translateX(0)';
+            dot.style.backgroundColor = 'white';
+        }
+
+        // Send AJAX request to update the food item status
+        fetch(`/fooditem/update-toggle/${foodItemId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}', // CSRF token for security
+            },
+            body: JSON.stringify({
+                state: newState, // The new state (1 or 0)
+                type: 'status',  // Indicate we're updating the status
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.success) {
+                // If update fails, reset the toggle state
+                this.checked = !this.checked;
+                dot.style.transform = this.checked ? 'translateX(100%)' : 'translateX(0)';
+                dot.style.backgroundColor = this.checked ? 'green' : 'white';
             }
-
-            toggle.addEventListener('change', function() {
-                const foodItemId = this.getAttribute('data-id');
-                const newState = this.checked ? 1 : 0;
-
-                // Toggle visual effect
-                if (this.checked) {
-                    dot.style.transform = 'translateX(100%)';
-                    dot.style.backgroundColor = 'green';
-                } else {
-                    dot.style.transform = 'translateX(0)';
-                    dot.style.backgroundColor = 'white';
-                }
-
-                // Send AJAX request to update the food item status in the database
-                fetch(`/admin/fooditem/update-toggle/${foodItemId}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}', // CSRF token for security
-                        },
-                        body: JSON.stringify({
-                            state: newState,
-                            type: 'status',
-                        }),
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data.success) {
-                            // If the update fails, reset the toggle state
-                            this.checked = !this.checked;
-                            dot.style.transform = this.checked ? 'translateX(100%)' : 'translateX(0)';
-                            dot.style.backgroundColor = this.checked ? 'green' : 'white';
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        // Reset the toggle state in case of an error
-                        this.checked = !this.checked;
-                        dot.style.transform = this.checked ? 'translateX(100%)' : 'translateX(0)';
-                        dot.style.backgroundColor = this.checked ? 'green' : 'white';
-                    });
-            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Reset the toggle state in case of an error
+            this.checked = !this.checked;
+            dot.style.transform = this.checked ? 'translateX(100%)' : 'translateX(0)';
+            dot.style.backgroundColor = this.checked ? 'green' : 'white';
         });
+    });
+});
+
 
         // Function to generate slug from category name
         function generateSlug() {
