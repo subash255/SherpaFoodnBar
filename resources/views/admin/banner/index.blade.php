@@ -36,7 +36,7 @@
     </div>
     
     <!-- Modal Structure for Create Banner -->
-    <div id="categoryModal" class="fixed inset-0 bg-black bg-opacity-70 modal-hidden items-center justify-center z-50 backdrop-blur-[1px]">
+    <div id="bannerModal" class="fixed inset-0 bg-black bg-opacity-70 modal-hidden items-center justify-center z-50 backdrop-blur-[1px]">
         <div class="bg-white rounded-lg p-6 w-full max-w-lg relative">
             <h2 class="text-xl font-semibold text-center">Create New Banner</h2>
             <form action="{{ route('admin.banner.store') }}" method="POST" enctype="multipart/form-data">
@@ -152,15 +152,15 @@
 <script>
 // Open the modal
 document.getElementById('openModalButton').addEventListener('click', function () {
-    document.getElementById('categoryModal').classList.remove('modal-hidden');
-    document.getElementById('categoryModal').classList.add('modal-visible');  // Show modal
+    document.getElementById('bannerModal').classList.remove('modal-hidden');
+    document.getElementById('bannerModal').classList.add('modal-visible');  // Show modal
     document.body.classList.add('overflow-hidden'); // Disable scrolling when modal is open
 });
 
 // Close the modal
 document.getElementById('closeModalButton').addEventListener('click', function () {
-    document.getElementById('categoryModal').classList.remove('modal-visible');
-    document.getElementById('categoryModal').classList.add('modal-hidden'); // Hide modal
+    document.getElementById('bannerModal').classList.remove('modal-visible');
+    document.getElementById('bannerModal').classList.add('modal-hidden'); // Hide modal
     document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
 });
 </script>

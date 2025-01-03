@@ -29,6 +29,7 @@ class FooditemController extends Controller
         // Validate the incoming data
         $request->validate([
             'name' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:fooditems,slug',
             'category_id' => 'required|exists:categories,id',
             'subcategory_id' => 'required|exists:subcategories,id',
             'price' => 'required|numeric|min:0',
@@ -48,6 +49,7 @@ class FooditemController extends Controller
         // Create a new food item
         $foodItem = new FoodItem();
         $foodItem->name = $request->name;
+        $foodItem->slug = $request->slug;
         $foodItem->category_id = $request->category_id;
         $foodItem->subcategory_id = $request->subcategory_id;
         $foodItem->price = $request->price;
