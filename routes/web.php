@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FooditemController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProfileController;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('welcome', [HomePageController::class, 'index'])->name('welcome');
+Route::get('/',[HomePageController::class, 'index'])->name('welcome');
 Route::get('about', [HomePageController::class, 'about'])->name('about');
 Route::get('/menu',[MenuController::class,'index'])->name('menu.index');
 
@@ -42,6 +43,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin/subcategory/{id}/edit', [SubcategoryController::class, 'edit'])->name('admin.subcategory.edit');
     Route::patch('admin/subcategory/{id}', [SubcategoryController::class, 'update'])->name('admin.subcategory.update');
     Route::delete('admin/subcategory/{id}', [SubcategoryController::class, 'destroy'])->name('admin.subcategory.destroy');
+
+    //fooditem routes
+    Route::get('admin/fooditem', [FooditemController::class, 'index'])->name('admin.fooditems.index');
+    Route::get('admin/fooditem/create', [FooditemController::class, 'create'])->name('admin.fooditems.create');
+    Route::post('admin/fooditem', [FooditemController::class, 'store'])->name('admin.fooditems.store');
+    Route::get('admin/fooditem/{id}/edit', [FooditemController::class, 'edit'])->name('admin.fooditems.edit');
+    Route::patch('admin/fooditem/{id}', [FooditemController::class, 'update'])->name('admin.fooditems.update');
+    Route::delete('admin/fooditem/{id}', [FooditemController::class, 'destroy'])->name('admin.fooditems.destroy');
+
 });
 
 require __DIR__.'/auth.php';
