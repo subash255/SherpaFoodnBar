@@ -174,37 +174,36 @@
             function filterCategory(categoryId) {
                 const allCategorySections = document.querySelectorAll('.category-section');
 
-                // Loop through all category sections and show/hide based on the category ID
                 allCategorySections.forEach(section => {
-                    // If categoryId is 0, show all categories
+                    
                     if (categoryId === 0) {
                         section.style.display = 'block';
                     } else {
-                        // Show only the section that matches the selected category
+                        
                         if (section.classList.contains('category-' + categoryId)) {
-                            section.style.display = 'block'; // Show the selected category section
+                            section.style.display = 'block'; 
                         } else {
-                            section.style.display = 'none'; // Hide other category sections
+                            section.style.display = 'none'; 
                         }
                     }
                 });
 
-                // Handle button active class toggle
+                
                 const allButtons = document.querySelectorAll('.category-button');
 
-                // Remove active background from all buttons
+                
                 allButtons.forEach(button => {
                     button.classList.remove('bg-orange-600');
                 });
 
-                // Add active background to the clicked button
+                
                 const clickedButton = document.querySelector(`button[onclick="filterCategory(${categoryId})"]`);
                 clickedButton.classList.add('bg-orange-600');
             }
 
-            // Initially show all categories and food items when the page loads
+            
             window.onload = function() {
-                filterCategory(0); // Show all categories and items by default
+                filterCategory(0); 
             }
 
 
