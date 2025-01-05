@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('fooditems', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
-            $table->foreignId('subcategory_id')->constrained('subcategories')->onDelete('cascade');
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('image');
             $table->text('description');
             $table->decimal('price', 10, 2);
+            //type
+            $table->enum('type', ['veg', 'non-veg','drinks']);
+
             //make table for toggle status
             $table->boolean('status')->default(0);
             $table->timestamps();
