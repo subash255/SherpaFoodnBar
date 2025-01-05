@@ -47,7 +47,7 @@
                 <a href="{{route('welcome')}}" class=" hover:text-red-600 font-bold  {{ request()->routeIs('welcome') ? 'text-red-600' : 'text-gray-800' }}">HOME</a>
                 <a href="{{ route('about') }}" class=" hover:text-red-600 font-bold {{ request()->routeIs('about') ? 'text-red-600' : 'text-gray-800' }}">ABOUT US</a>
                 <a href="{{route('menu.index')}}" class="text-gray-800 hover:text-red-600 font-bold {{ request()->routeIs('menu.index') ? 'text-red-600' : 'text-gray-800' }}">MENU</a>
-                <a href="#" class="text-gray-800 hover:text-red-600 font-bold">RESERVATION</a>
+                <a href="{{ route('welcome') }}#reservation" class="text-gray-800 hover:text-red-600 font-bold">RESERVATION</a>
             {{-- <a href="#" class="text-gray-800 hover:text-red-600 font-bold">GALLERY</a> --}}
             <a href="{{route('contact')}}" class="text-gray-800 hover:text-red-600 font-bold  {{ request()->routeIs('contact') ? 'text-red-600' : 'text-gray-800' }}">CONTACT US</a>
             </div>
@@ -184,6 +184,34 @@
         menu.classList.add('translate-x-full');
         menu.classList.remove('translate-x-0');
     });
+
+    // Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent the default action
+
+        // Get the target section to scroll to
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth', // Smooth scrolling
+                block: 'start'      // Scroll to the top of the element
+            });
+        }
+    });
+});
+
+// Close the mobile menu after clicking an anchor link
+document.querySelectorAll('#mobile-menu a').forEach(anchor => {
+    anchor.addEventListener('click', function() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.add('translate-x-full');
+        menu.classList.remove('translate-x-0');
+    });
+});
+
 </script>
 
 
