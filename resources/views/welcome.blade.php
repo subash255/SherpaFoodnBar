@@ -86,24 +86,39 @@
     <h1 class="text-4xl font-extrabold mb-6">Reserve a Table</h1>
     <p class="text-lg mb-8">Book a table now and enjoy a fantastic dining experience.</p>
     <form action="{{ route('booking.store') }}" method="POST" class="max-w-lg mx-auto">
-        @csrf
-        <div class="mb-4">
-            <input type="text" name="name" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
+    @csrf
+    <!-- Display error message -->
+    @if(session('error'))
+        <div class="bg-red-500 text-white p-4 mb-4 rounded-md">
+            {{ session('error') }}
         </div>
-        <div class="mb-4">
-            <input type="email" name="email" placeholder="Your email" class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
+    @endif
+
+    <!-- Display success message -->
+    @if(session('success'))
+        <div class="bg-green-500 text-white p-4 mb-4 rounded-md">
+            {{ session('success') }}
         </div>
-        <div class="mb-4">
-            <input type="tel" name="phone" placeholder="Your number" class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
-        </div>
-        <div class="mb-4">
-            <input type="number" name="number_of_people" placeholder="Number of People" class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
-        </div>
-        <div class="mb-4">
-            <input type="datetime-local" name="booking_date" class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
-        </div>
-        <button type="submit" class="bg-white hover:bg-gray-200 text-indigo-600 py-2 px-6 rounded-md text-lg">Book Now</button>
-    </form>
+    @endif
+
+    <div class="mb-4">
+        <input type="text" name="name" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
+    </div>
+    <div class="mb-4">
+        <input type="email" name="email" placeholder="Your email" class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
+    </div>
+    <div class="mb-4">
+        <input type="tel" name="phone" placeholder="Your number" class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
+    </div>
+    <div class="mb-4">
+        <input type="number" name="number_of_people" placeholder="Number of People" class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
+    </div>
+    <div class="mb-4">
+        <input type="datetime-local" name="booking_date" class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
+    </div>
+    <button type="submit" class="bg-white hover:bg-gray-200 text-indigo-600 py-2 px-6 rounded-md text-lg">Book Now</button>
+</form>
+
   </div>
 </section>
 

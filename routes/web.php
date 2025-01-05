@@ -67,6 +67,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::patch('banner/{id}', [BannerController::class, 'update'])->name('admin.banner.update');
     Route::delete('banner/{id}', [BannerController::class, 'destroy'])->name('admin.banner.destroy');
 
+    //booking routes
+    Route::get('booking', [BookingController::class, 'index'])->name('admin.booking.index');
+    Route::delete('booking/{id}', [BookingController::class, 'destroy'])->name('admin.booking.destroy');
+
+
 
 });
 
