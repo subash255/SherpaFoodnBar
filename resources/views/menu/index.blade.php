@@ -134,14 +134,14 @@
                 </div>
                 <!-- Button Section -->
                 <div class="flex items-center justify-center mt-4 sm:mt-0 sm:ml-4">
-                    <form action="{{route('cart.add',$fooditem->id)}}" method="POST">
+                    <form action="{{ route('cart.add', $fooditem->id) }}" method="POST">
                         @csrf
-                        <input type="hidden" name="id" value="{{$fooditem->id}}">
-                        <input type="hidden" name="name" value="{{$fooditem->name}}">
-                        <input type="hidden" name="price" value="{{$fooditem->price}}">
-                        <input type="hidden" name="image" value="{{$fooditem->image}}">
+                        <input type="hidden" name="fooditem_id" value="{{ $fooditem->id }}">
+                        <input type="hidden" name="fooditem_name" value="{{ $fooditem->name }}">
+                        <input type="hidden" name="fooditem_price" value="{{ $fooditem->price }}">
                         <button class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded order-now-button">Order Now</button>
-                    </form>
+
+                    </form>                    
                 </div>
             </div>
             @endforeach
