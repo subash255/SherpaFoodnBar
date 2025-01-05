@@ -1,15 +1,15 @@
 @extends('layouts.master')
 @section('content')
 <style>
-/* Hide the modal */
-.modal-hidden {
-    display: none !important;
-}
+    /* Hide the modal */
+    .modal-hidden {
+        display: none !important;
+    }
 
-/* Show the modal with flex */
-.modal-visible {
-    display: flex !important;
-}
+    /* Show the modal with flex */
+    .modal-visible {
+        display: flex !important;
+    }
 
     /* Focus styles for buttons */
     .category-button:focus {
@@ -22,7 +22,6 @@
     .category-button:hover {
         transform: translateX(2px);
     }
-
 </style>
 
 <body class="bg-gray-100">
@@ -93,193 +92,191 @@
             </div>
         </aside>
 
-       <!-- Menu Items -->
-<div id="food-items" class="space-y-4 mt-6 w-full">
-    @foreach ($categories as $category)
-    <div class="category-section category-{{ $category->id }} w-full">
-        <!-- Category Title -->
-        <h2 class="text-2xl text-center mt-4 font-bold text-green-600 mb-4">{{ $category->name }}</h2>
-        <div class="space-y-4 w-full">
-            @foreach ($category->fooditems as $fooditem)
-            <!-- Menu Item -->
-            <div class="food-item flex flex-col sm:flex-row items-center bg-white rounded-lg shadow p-4 w-full" data-fooditem-id="{{ $fooditem->id }}">
-                <!-- Image Section -->
-                <div class="flex-shrink-0">
-                    <img src="{{ asset('images/fooditem/' . $fooditem->image) }}" alt="{{ $fooditem->name }}" class="w-24 h-24 object-cover rounded-lg">
-                </div>
-                <!-- Text and Price Section -->
-                <div class="ml-6 flex-grow">
-                    <h3 class="text-lg font-bold">{{ $fooditem->name }}</h3>
-                    <p class="text-sm text-gray-500">{{ $fooditem->description }}</p>
-                    <p class="text-lg font-bold text-gray-800 mt-2">
-                        €{{ number_format($fooditem->price, 2) }}</p>
-                </div>
-                <!-- Button Section -->
-                <div class="flex items-center justify-center mt-4 sm:mt-0 sm:ml-4">
-                    <button class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded order-now-button">Order Now</button>
+        <!-- Menu Items -->
+        <div id="food-items" class="space-y-4 mt-6 w-full">
+            @foreach ($categories as $category)
+            <div class="category-section category-{{ $category->id }} w-full">
+                <!-- Category Title -->
+                <h2 class="text-2xl text-center mt-4 font-bold text-green-600 mb-4">{{ $category->name }}</h2>
+                <div class="space-y-4 w-full">
+                    @foreach ($category->fooditems as $fooditem)
+                    <!-- Menu Item -->
+                    <div class="food-item flex flex-col sm:flex-row items-center bg-white rounded-lg shadow p-4 w-full" data-fooditem-id="{{ $fooditem->id }}">
+                        <!-- Image Section -->
+                        <div class="flex-shrink-0">
+                            <img src="{{ asset('images/fooditem/' . $fooditem->image) }}" alt="{{ $fooditem->name }}" class="w-24 h-24 object-cover rounded-lg">
+                        </div>
+                        <!-- Text and Price Section -->
+                        <div class="ml-6 flex-grow">
+                            <h3 class="text-lg font-bold">{{ $fooditem->name }}</h3>
+                            <p class="text-sm text-gray-500">{{ $fooditem->description }}</p>
+                            <p class="text-lg font-bold text-gray-800 mt-2">
+                                €{{ number_format($fooditem->price, 2) }}</p>
+                        </div>
+                        <!-- Button Section -->
+                        <div class="flex items-center justify-center mt-4 sm:mt-0 sm:ml-4">
+                            <button class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded order-now-button">Order Now</button>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
             </div>
             @endforeach
         </div>
+
+        <!-- Modal Structure -->
     </div>
-    @endforeach
-</div>
+    <div id="order-modal"
+        class="fixed inset-0 bg-black bg-opacity-70 modal-hidden flex items-center justify-center z-50 backdrop-blur-[1px]">
+        <div class="bg-white rounded-lg p-6 w-full sm:w-11/12 md:w-10/12 lg:w-3/4 xl:w-2/3 max-w-5xl relative">
+            <h3 class="text-xl font-bold mb-4">Order Now</h3>
 
-<!-- Modal Structure -->
-<div id="order-modal"
-class="fixed inset-0 bg-black bg-opacity-70 modal-hidden flex items-center justify-center z-50 backdrop-blur-[1px]">
-<div class="bg-white rounded-lg p-6 w-full sm:w-11/12 md:w-10/12 lg:w-3/4 xl:w-2/3 max-w-5xl relative">
-        <h3 class="text-xl font-bold mb-4">Order Now</h3>
-        
-        <!-- Order Form -->
-        <form action="#" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="flex flex-wrap gap-8 mb-6">
-                <!-- Left Side: User Information -->
-                <div class="flex-1 min-w-[250px]">
-                    <h4 class="text-lg font-semibold mb-2">Your Information</h4>
-                    <div class="mb-4">
-                        <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
-                        <input type="text" id="name" name="name" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+            <!-- Order Form -->
+            <form action="{{route('menu.store',$fooditem->id)}}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="flex flex-wrap gap-8 mb-6">
+                    <!-- Left Side: User Information -->
+                    <div class="flex-1 min-w-[250px]">
+                        <h4 class="text-lg font-semibold mb-2">Your Information</h4>
+                        <div class="mb-4">
+                            <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
+                            <input type="text" id="name" name="name" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="email" class="block text-sm font-medium text-gray-700">Your Email</label>
+                            <input type="email" id="email" name="email" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                        </div>
                     </div>
 
-                    <div class="mb-4">
-                        <label for="email" class="block text-sm font-medium text-gray-700">Your Email</label>
-                        <input type="email" id="email" name="email" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
-                    </div>
+                    <!-- Right Side: Order Information -->
+                    <div class="flex-1 min-w-[250px]">
+                        <h4 class="text-lg font-semibold mb-2">Order Information</h4>
+                        <div class="mb-4">
+                            <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+                            <input type="number" id="quantity" name="quantity" min="1" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                        </div>
 
-                    <div class="mb-4">
-                        <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                        <div class="mb-4">
+                            <label for="note" class="block text-sm font-medium text-gray-700">Special Instructions</label>
+                            <textarea id="note" name="notes" class="mt-1 p-2 border border-gray-300 rounded w-full"></textarea>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Right Side: Order Information -->
-                <div class="flex-1 min-w-[250px]">
-                    <h4 class="text-lg font-semibold mb-2">Order Information</h4>
-                    <div class="mb-4">
-                        <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
-                        <input type="number" id="quantity" name="quantity" min="1" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
-                    </div>
+                <!-- Hidden Fields for Food Item -->
+                <input type="hidden" id="fooditem-id" name="fooditem_id">
+                <input type="hidden" id="fooditem-name" name="fooditem_name">
+                <input type="hidden" id="fooditem-price" name="fooditem_price">
 
-                    <div class="mb-4">
-                        <label for="note" class="block text-sm font-medium text-gray-700">Special Instructions</label>
-                        <textarea id="note" name="note" class="mt-1 p-2 border border-gray-300 rounded w-full"></textarea>
-                    </div>
+                <!-- Action Buttons -->
+                <div class="flex justify-between gap-4 mt-8">
+                    <!-- Close Button -->
+                    <button type="button" id="close-modal"
+                        class="w-full md:w-auto font-semibold bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 focus:outline-none">
+                        Cancel
+                    </button>
+
+                    <!-- Submit Button -->
+                    <button type="submit"
+                        class="w-full md:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-105">
+                        Submit
+                    </button>
                 </div>
-            </div>
-
-            <!-- Hidden Fields for Food Item -->
-            <input type="hidden" id="fooditem-id" name="fooditem_id">
-            <input type="hidden" id="fooditem-name" name="fooditem_name">
-            <input type="hidden" id="fooditem-price" name="fooditem_price">
-            
-            <!-- Action Buttons -->
-                    <div class="flex justify-between gap-4 mt-8">
-                        <!-- Close Button -->
-                        <button type="button" id="close-modal"
-                            class="w-full md:w-auto font-semibold bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 focus:outline-none">
-                            Cancel
-                        </button>
-
-                        <!-- Submit Button -->
-                        <button type="submit"
-                            class="w-full md:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-105">
-                            Submit
-                        </button>
-                    </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 
 
 
 
 
-        <script>
-            // Function to filter the food items by category
-            function filterCategory(categoryId) {
-                const allCategorySections = document.querySelectorAll('.category-section');
+    <script>
+        // Function to filter the food items by category
+        function filterCategory(categoryId) {
+            const allCategorySections = document.querySelectorAll('.category-section');
 
-                allCategorySections.forEach(section => {
-                    
-                    if (categoryId === 0) {
+            allCategorySections.forEach(section => {
+
+                if (categoryId === 0) {
+                    section.style.display = 'block';
+                } else {
+
+                    if (section.classList.contains('category-' + categoryId)) {
                         section.style.display = 'block';
                     } else {
-                        
-                        if (section.classList.contains('category-' + categoryId)) {
-                            section.style.display = 'block'; 
-                        } else {
-                            section.style.display = 'none'; 
-                        }
+                        section.style.display = 'none';
                     }
-                });
+                }
+            });
 
-                
-                const allButtons = document.querySelectorAll('.category-button');
 
-                
-                allButtons.forEach(button => {
-                    button.classList.remove('bg-orange-600');
-                });
+            const allButtons = document.querySelectorAll('.category-button');
 
-                
-                const clickedButton = document.querySelector(`button[onclick="filterCategory(${categoryId})"]`);
-                clickedButton.classList.add('bg-orange-600');
+
+            allButtons.forEach(button => {
+                button.classList.remove('bg-orange-600');
+            });
+
+
+            const clickedButton = document.querySelector(`button[onclick="filterCategory(${categoryId})"]`);
+            clickedButton.classList.add('bg-orange-600');
+        }
+
+
+        window.onload = function() {
+            filterCategory(0);
+        }
+
+
+        const modal = document.getElementById('order-modal');
+        const closeModalButton = document.getElementById('close-modal');
+
+        // Add event listeners to "Order Now" buttons
+        const orderButtons = document.querySelectorAll('.order-now-button');
+
+        orderButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const foodItem = event.target.closest('.food-item');
+                const foodName = foodItem.querySelector('h3').innerText;
+                 const foodPrice = foodItem.querySelector('.text-lg').innerText.replace('€', '').trim();
+                const foodId = foodItem.dataset.fooditemId;
+
+                 //Populate form fields with the selected food item
+                 document.getElementById('fooditem-name').value = foodName;
+                 document.getElementById('fooditem-price').value = foodPrice;
+                document.getElementById('fooditem-id').value = foodId;
+
+                // Show the modal by adding 'modal-visible' class and removing 'modal-hidden'
+                modal.classList.remove('modal-hidden');
+                modal.classList.add('modal-visible');
+
+                document.body.classList.add('overflow-hidden'); // Disable scrolling when modal is open
+
+            });
+        });
+
+        // Close modal when clicking 'Cancel' or clicking outside
+        closeModalButton.addEventListener('click', () => {
+            modal.classList.remove('modal-visible');
+            modal.classList.add('modal-hidden');
+            document.body.classList.remove('overflow-hidden'); // Disable scrolling when modal is open
+
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.classList.remove('modal-visible');
+                modal.classList.add('modal-hidden');
+
+                // Enable scrolling when modal is closed
+                document.body.style.overflow = ''; // Restore body scroll
             }
-
-            
-            window.onload = function() {
-                filterCategory(0); 
-            }
-
-
-            const modal = document.getElementById('order-modal');
-const closeModalButton = document.getElementById('close-modal');
-
-// Add event listeners to "Order Now" buttons
-const orderButtons = document.querySelectorAll('.order-now-button');
-
-orderButtons.forEach(button => {
-    button.addEventListener('click', (event) => {
-        const foodItem = event.target.closest('.food-item');
-        const foodName = foodItem.querySelector('h3').innerText;
-        const foodPrice = foodItem.querySelector('.text-lg').innerText.replace('€', '').trim();
-        const foodId = foodItem.dataset.fooditemId;
-
-        // Populate form fields with the selected food item
-        document.getElementById('fooditem-name').value = foodName;
-        document.getElementById('fooditem-price').value = foodPrice;
-        document.getElementById('fooditem-id').value = foodId;
-
-        // Show the modal by adding 'modal-visible' class and removing 'modal-hidden'
-        modal.classList.remove('modal-hidden');
-        modal.classList.add('modal-visible');
-        
-        document.body.classList.add('overflow-hidden'); // Disable scrolling when modal is open
-
-    });
-});
-
-// Close modal when clicking 'Cancel' or clicking outside
-closeModalButton.addEventListener('click', () => {
-    modal.classList.remove('modal-visible');
-    modal.classList.add('modal-hidden');
-    document.body.classList.remove('overflow-hidden'); // Disable scrolling when modal is open
-
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target === modal) {
-        modal.classList.remove('modal-visible');
-        modal.classList.add('modal-hidden');
-        
-        // Enable scrolling when modal is closed
-        document.body.style.overflow = ''; // Restore body scroll
-    }
-});
-
-
-
-        </script>
-        @endsection
+        });
+    </script>
+    @endsection

@@ -119,7 +119,6 @@
     <button type="submit" class="bg-white hover:bg-gray-200 text-indigo-600 py-2 px-6 rounded-md text-lg">Book Now</button>
 </form>
 
-
   </div>
 </section>
 
