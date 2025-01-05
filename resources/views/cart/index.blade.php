@@ -6,7 +6,7 @@
 
     <!-- Cart Items -->
     @if (session()->has('cart') && count(session()->get('cart')) > 0)
-        @foreach(session()->get('cart') as $productId => $item)
+        @foreach(session()->get('cart') as $fooditemId => $item)
             <div class="bg-white shadow-lg rounded-lg p-6 mb-6 flex flex-col sm:flex-row items-center justify-between">
                 <div class="flex items-center">
                     <img src="{{ $item['image_url'] ?? 'https://via.placeholder.com/80' }}" alt="{{ $item['name'] }}" class="w-20 h-20 rounded-lg object-cover" />
@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="flex items-center space-x-4 mt-4 sm:mt-0">
-                    <p class="text-lg font-bold text-red-600">${{ number_format($item['price'], 2) }}</p>
+                    <p class="text-lg font-bold text-red-600">${{ number_format($item['price']) }}</p>
                     <div class="flex items-center bg-red-100 rounded-md">
                         <!-- Increase and Decrease buttons to change quantity -->
                         <form action="#" method="POST">
@@ -32,7 +32,7 @@
                             </button>
                         </form>
                     </div>
-                    <form action="{{ route('cart.remove', $productId) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('cart.remove', $fooditemId) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="text-gray-500 hover:text-red-500 transition duration-300" aria-label="Remove item">
@@ -80,7 +80,23 @@
 
         </div>
     @else
-        <p class="text-gray-600">Your cart is empty!</p>
+    <div class="text-center">
+        
+        <div class="text-gray-700 mb-6">
+            <i class="ri-shopping-cart-2-fill text-6xl"></i> 
+        </div>
+    
+        <!-- Heading -->
+        <h1 class="text-2xl font-bold text-gray-800 mb-2">Cart Is Empty</h1>
+        <p class="text-gray-600 mb-6">Your cart is empty, please add items to your cart to place an order.</p>
+    
+        <!-- Buttons -->
+        <div class="justify-center">
+          <a href="{{route('menu.index')}}" class="bg-gradient-to-r from-orange-400 to-red-500 text-white font-medium px-6 py-2 rounded-md shadow-md hover:shadow-lg transition-shadow">
+           Go to Menu
+          </a>
+        </div>
+      </div>
     @endif
 
 </div>
