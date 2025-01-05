@@ -102,7 +102,7 @@
 
     <!-- Table Section -->
     <div class="overflow-x-auto">
-        <table class="min-w-full border-collapse border border-gray-300">
+        <table id="categoryTable" class="min-w-full border-collapse border border-gray-300">
             <thead>
                 <tr class="bg-gray-100">
                     <th class="border border-gray-300 px-4 py-2">Order</th>
@@ -252,5 +252,44 @@
         document.getElementById('categoryModal').classList.add('modal-hidden'); // Hide modal
         document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
     });
+
+
+    //search
+
+     
+    document.getElementById('search').addEventListener('input', function() {
+    const searchQuery = this.value.trim().toLowerCase(); // Trim any extra spaces and convert to lowercase
+
+    // Update the URL with the encoded search query
+    history.pushState(null, null, `?search=${encodeURIComponent(searchQuery)}`);
+
+    // Filter the table based on category name
+    filterTableByCategoryname(searchQuery);
+});
+
+function filterTableByCategoryname(query) {
+    const rows = document.querySelectorAll('#categoryTable tbody tr'); 
+    rows.forEach(row => {
+        const cells = row.getElementsByTagName('td');
+        const categoryCell = cells[1];  // Assuming the category is in the first column (index 0)
+
+        if (categoryCell) {
+            const categoryText = categoryCell.textContent.trim().toLowerCase();  // Get the category name, trimmed and lowercase
+            if (categoryText.includes(query)) {  // Use 'includes' to match anywhere in the category name
+                row.style.display = '';  // Show the row
+            } else {
+                row.style.display = 'none';  // Hide the row
+            }
+        }
+    });
+}
+
+window.addEventListener('popstate', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search') || ''; // Default to empty if no search query
+    document.getElementById('search').value = searchQuery;  // Update the search input field
+    filterTableByCategoryname(searchQuery); // Reapply the filter based on URL search query
+});
+
 </script>
 @endsection

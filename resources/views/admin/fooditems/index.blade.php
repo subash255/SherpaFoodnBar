@@ -87,7 +87,7 @@
                         <!-- Right Column -->
                         <div class="space-y-6">
 
-                            <!-- Category Dropdown -->
+                            <!-- category Dropdown -->
                             <div>
                                 <label for="category_id" class="block text-sm font-medium text-gray-700">Category</label>
                                 <select name="category_id" id="category_id"
@@ -162,7 +162,7 @@
 
         <div class="overflow-x-auto">
             <!-- Table Section -->
-            <table class="min-w-full border-collapse border border-gray-300">
+            <table id="foodTable" class="min-w-full border-collapse border border-gray-300">
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="border border-gray-300 px-4 py-2">Food Name</th>
@@ -311,5 +311,41 @@
             document.getElementById('foodModal').classList.add('modal-hidden'); // Hide modal
             document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
         });
+
+        //search
+
+        document.getElementById('search').addEventListener('input', function() {
+    const searchQuery = this.value.trim().toLowerCase(); // Trim any extra spaces and convert to lowercase
+
+    // Update the URL with the encoded search query
+    history.pushState(null, null, `?search=${encodeURIComponent(searchQuery)}`);
+
+    // Filter the table based on category name
+    filterTableByfoodname(searchQuery);
+});
+
+function filterTableByfoodname(query) {
+    const rows = document.querySelectorAll('#foodTable tbody tr'); 
+    rows.forEach(row => {
+        const cells = row.getElementsByTagName('td');
+        const foodCell = cells[0];  // Assuming the food is in the first column (index 0)
+
+        if (foodCell) {
+            const foodText = foodCell.textContent.trim().toLowerCase();  // Get the food name, trimmed and lowercase
+            if (foodText.includes(query)) {  // Use 'includes' to match anywhere in the food name
+                row.style.display = '';  // Show the row
+            } else {
+                row.style.display = 'none';  // Hide the row
+            }
+        }
+    });
+}
+
+window.addEventListener('popstate', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search') || ''; // Default to empty if no search query
+    document.getElementById('search').value = searchQuery;  // Update the search input field
+    filterTableByfoodname(searchQuery); // Reapply the filter based on URL search query
+});
     </script>
 @endsection
