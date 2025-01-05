@@ -50,23 +50,31 @@
                         <th class="border border-gray-300 px-4 py-2">Name</th>
                         <th class="border border-gray-300 px-4 py-2">Email</th>
                         <th class="border border-gray-300 px-4 py-2">Phone number</th>
-                        <th class="border border-gray-300 px-4 py-2">Total people</th>
-                        <th class="border border-gray-300 px-4 py-2">Booking Date</th>
+                        <th class="border border-gray-300 px-4 py-2">order item</th>
+                        <th class="border border-gray-300 px-4 py-2">price</th>
+                        <th class="border border-gray-300 px-4 py-2">order number</th>
+                        <th class="border border-gray-300 px-4 py-2">message</th>
+                        <th class="border border-gray-300 px-4 py-2">status</th>
                         <th class="border border-gray-300 px-4 py-2">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($bookings as $booking)
+                    @foreach ($orders as $order)
                         <tr class="border border-gray-300">
-                            <td class="border border-gray-300 px-4 py-2">{{ $booking->name }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $booking->email }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $booking->phone }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $booking->number_of_people }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{$booking->booking_date}}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $order->name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $order->email }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $order->phone }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $order->fooditem->name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{$order->fooditem->price}}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{$order->order_number}}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{$order->notes}}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{$order->status}}</td>
+
                             <td class="px-2 py-2 flex justify-center space-x-4">
-                                <form action="{{ route('admin.booking.destroy', ['id' => $booking->id]) }}"
+                               
+                                <form action="{{ route('admin.order.destroy', ['id' => $order->id]) }}"
                                     method="post"
-                                    onsubmit="return confirm('Are you sure you want to delete this reservation item?');">
+                                    onsubmit="return confirm('Are you sure you want to delete this orders?');">
                                     @csrf
                                     @method('delete')
                                     <button
@@ -85,14 +93,14 @@
         <div class="flex justify-between items-center mt-4">
             <div class="flex items-center space-x-2">
                 <span class="ml-4 text-gray-700">
-                    Showing {{ $bookings->firstItem() }} to {{ $bookings->lastItem() }} of
-                    {{ $bookings->total() }}
+                    Showing {{ $orders->firstItem() }} to {{ $orders->lastItem() }} of
+                    {{ $orders->total() }}
                     entries
                 </span>
             </div>
 
             <div class="flex items-center space-x-2">
-                {{ $bookings->links() }}
+                {{ $orders->links() }}
             </div>
         </div>
 

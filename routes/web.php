@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FooditemController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubcategoryController;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/', [BookingController::class, 'store'])->name('booking.store');
+//order
+Route::post('order/{id}', [MenuController::class, 'store'])->name('menu.store');
+
+
+
 
 
 
@@ -71,7 +77,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('booking', [BookingController::class, 'index'])->name('admin.booking.index');
     Route::delete('booking/{id}', [BookingController::class, 'destroy'])->name('admin.booking.destroy');
 
-
+   //order routes
+    Route::get('order', [OrderController::class, 'index'])->name('admin.order.index');
+    Route::delete('order/{id}', [OrderController::class, 'destroy'])->name('admin.order.destroy');
 
 });
 
