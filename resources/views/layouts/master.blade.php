@@ -50,6 +50,12 @@
                 <a href="{{ route('welcome') }}#reservation" class="text-gray-800 hover:text-red-600 font-bold">RESERVATION</a>
             {{-- <a href="#" class="text-gray-800 hover:text-red-600 font-bold">GALLERY</a> --}}
             <a href="{{route('contact')}}" class="text-gray-800 hover:text-red-600 font-bold  {{ request()->routeIs('contact') ? 'text-red-600' : 'text-gray-800' }}">CONTACT US</a>
+                <!-- Cart Icon with Remix Icon -->
+    <a href="{{route('cart.index')}}" class="text-gray-800 hover:text-red-600 font-bold ">
+        
+        <i class="ri-shopping-cart-line text-2xl"></i> 
+        
+    </a>
             </div>
     
             <!-- Mobile Navigation (Hamburger Menu) -->
@@ -74,9 +80,16 @@
             <a href="{{route('welcome')}}" class=" text-2xl hover:text-red-700 font-semibold {{ request()->routeIs('welcome') ? 'text-red-600' : 'text-gray-800' }}">HOME</a>
             <a href="{{route('about')}}" class=" text-2xl hover:text-red-600 font-semibold {{ request()->routeIs('about') ? 'text-red-600' : 'text-gray-800' }}">ABOUT US</a>
             <a href="{{route('menu.index')}}" class="text-gray-800 text-2xl hover:text-red-600 font-semibold {{ request()->routeIs('menu.index') ? 'text-red-600' : 'text-gray-800' }}">MENU</a>
-            <a href="#" class="text-gray-800 text-2xl hover:text-red-600 font-semibold">RESERVATION</a>
+            <a href="{{ route('welcome') }}#reservation" class="text-gray-800 text-2xl hover:text-red-600 font-semibold">RESERVATION</a>
             <a href="#" class="text-gray-800 text-2xl hover:text-red-600 font-semibold">GALLERY</a>
             <a href="{{route('contact')}}" class="text-gray-800 text-2xl hover:text-red-600 font-semibold {{ request()->routeIs('contact') ? 'text-red-600' : 'text-gray-800' }}">CONTACT US</a>
+                <!-- Cart Icon with Remix Icon -->
+    <a href="{{route('cart.index')}}" class="text-gray-800 text-2xl hover:text-red-600 font-semibold flex items-center space-x-2">
+        <!-- Cart Icon (Remix Icon) -->
+        <i class="ri-shopping-cart-line text-2xl"></i> 
+        <span>CART</span>
+    </a>
+
         </div>
     </div>
     <main>

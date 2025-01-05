@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FooditemController;
 use App\Http\Controllers\HomePageController;
@@ -18,6 +19,11 @@ Route::get('/',[HomePageController::class, 'index'])->name('welcome');
 Route::get('about', [HomePageController::class, 'about'])->name('about');
 Route::get('menu',[MenuController::class,'index'])->name('menu.index');
 Route::get('contact',[HomePageController::class,'contact'])->name('contact');
+Route::get('cart',[CartController::class,'viewcart'])->name('cart.index');
+
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::delete('/cart/remove/{foodid}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
