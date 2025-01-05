@@ -50,7 +50,7 @@
             <!-- Search Section -->
             <div class="mb-4 flex">
                 <!-- Search Input -->
-                <input type="text" placeholder="Search by dish name" class="w-full border rounded-l-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 placeholder:text-sm placeholder:text-gray-500" />
+                <input type="text" id="search" placeholder="Search by dish name" class="w-full border rounded-l-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 placeholder:text-sm placeholder:text-gray-500" />
 
                 <!-- Search Button -->
                 <button class="bg-orange-500 text-white py-2 px-4 rounded-r-lg hover:bg-orange-600 focus:outline-none">
@@ -279,4 +279,57 @@
             }
         });
     </script>
+
+<script>
+// Handle the search input event
+document.getElementById('search').addEventListener('input', function() {
+    const searchQuery = this.value.toLowerCase(); // Get the search query, converted to lowercase
+
+    // Update the URL without reloading the page (optional)
+    history.pushState(null, null, `?search=${searchQuery}`);
+
+    // Filter the food items and categories based on the search query
+    filterFoodItemsAndCategories(searchQuery);
+});
+
+// Function to filter food items and categories by search query
+function filterFoodItemsAndCategories(query) {
+    const categories = document.querySelectorAll('.category-section'); // Select all category sections
+
+    categories.forEach(category => {
+        const foodItems = category.querySelectorAll('.food-item'); // Select all food items in the current category
+        let categoryMatches = false; // To track if any food item in the category matches
+
+        foodItems.forEach(foodItem => {
+            const foodName = foodItem.querySelector('h3').textContent.toLowerCase(); // Food name
+            const foodDescription = foodItem.querySelector('p.text-sm').textContent.toLowerCase(); // Food description
+
+            // Check if the food name or description contains the search query
+            if (foodName.includes(query) || foodDescription.includes(query)) {
+                foodItem.style.display = ''; // Show the food item if it matches the query
+                categoryMatches = true; // Mark the category as having a match
+            } else {
+                foodItem.style.display = 'none'; // Hide the food item if it doesn't match
+            }
+        });
+
+        // Hide the entire category if no food items match the search query
+        if (categoryMatches) {
+            category.style.display = ''; // Show the category if it has a matching food item
+        } else {
+            category.style.display = 'none'; // Hide the category if no food items match
+        }
+    });
+}
+
+// Optional: Handle browser's back/forward buttons to maintain the search query
+window.addEventListener('popstate', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search') || '';
+    document.getElementById('search').value = searchQuery; // Set the search box to the value from the URL
+    filterFoodItemsAndCategories(searchQuery); // Filter the food items and categories based on the search query
+});
+</script>
+
+
     @endsection
