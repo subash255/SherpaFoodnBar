@@ -44,101 +44,99 @@
             <div class="bg-white rounded-lg p-6 w-full sm:w-11/12 md:w-10/12 lg:w-3/4 xl:w-2/3 max-w-5xl relative">
                 <h2 class="text-xl font-semibold text-center mb-6">Create New Food Item</h2>
                 <form action="{{ route('admin.fooditems.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
+    @csrf
 
-                    <!-- Flex Container for Two Columns -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Flex Container for Two Columns -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-                        <!-- Left Column -->
-                        <div class="space-y-6">
+        <!-- Left Column -->
+        <div class="space-y-6">
 
-                            <!-- Food Name Input -->
-                            <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700">Food Name</label>
-                                <input type="text" id="foodname" name="name" placeholder="Enter food name"
-                                    class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg"
-                                    required oninput="generateSlug()">
-                            </div>
+            <!-- Food Name Input -->
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Food Name</label>
+                <input type="text" id="foodname" name="name" placeholder="Enter food name"
+                    class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg"
+                    required oninput="generateSlug()">
+            </div>
 
-                            <!-- Slug Input (auto-generated) -->
-                            <div>
-                                <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
-                                <input type="text" id="slug" name="slug" placeholder="Generated slug"
-                                    class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
-                            </div>
+            <!-- Slug Input (auto-generated) -->
+            <div>
+                <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
+                <input type="text" id="slug" name="slug" placeholder="Generated slug"
+                    class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
+            </div>
 
-                            <!-- Price Input -->
-                            <div>
-                                <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
-                                <input type="number" id="price" name="price" step="0.01" placeholder="Enter price"
-                                    class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg"
-                                    required>
-                            </div>
+            <!-- Price Input -->
+            <div>
+                <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+                <input type="number" id="price" name="price" step="0.01" placeholder="Enter price"
+                    class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg"
+                    required>
+            </div>
 
-                            <!-- Description Input -->
-                            <div>
-                                <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                                <textarea id="description" name="description" placeholder="Enter description"
-                                    class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg"
-                                    required></textarea>
-                            </div>
-                        </div>
+            <!-- Description Input -->
+            <div>
+                <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                <textarea id="description" name="description" placeholder="Enter description"
+                    class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg"
+                    required></textarea>
+            </div>
+        </div>
 
-                        <!-- Right Column -->
-                        <div class="space-y-6">
+        <!-- Right Column -->
+        <div class="space-y-6">
 
-                            <!-- category Dropdown -->
-                            <div>
-                                <label for="category_id" class="block text-sm font-medium text-gray-700">Category</label>
-                                <select name="category_id" id="category_id"
-                                    class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg"
-                                    required>
-                                    <option value="" disabled selected>Select Category</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+            <!-- Category Dropdown -->
+            <div>
+                <label for="category_id" class="block text-sm font-medium text-gray-700">Category</label>
+                <select name="category_id" id="category_id"
+                    class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg"
+                    required>
+                    <option value="" disabled selected>Select Category</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
 
-                            <!-- Subcategory Dropdown -->
-                            <div>
-                                <label for="subcategory_id"
-                                    class="block text-sm font-medium text-gray-700">Subcategory</label>
-                                <select name="subcategory_id" id="subcategory_id"
-                                    class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg"
-                                    required>
-                                    <option value="" disabled selected>Select Subcategory</option>
-                                    @foreach ($subcategories as $subcategory)
-                                        <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+            <!-- Category Filter Dropdown -->
+            <div class="mt-6 space-y-3">
+                <p class="font-semibold text-gray-700">Select Food Type</p>
+                <select id="category-filter"  name="type" class="text-orange-500 p-2 border rounded-lg w-full">
+                    <option value="">Select Category</option>
+                    <option value="veg">Veg</option>
+                    <option value="non-veg">Non-Veg</option>
+                    <option value="drinks">Drinks</option>
+                </select>
+            </div>
 
-                            <!-- Image Upload Input -->
-                            <div>
-                                <label for="image" class="block text-sm font-medium text-gray-700">Upload Image</label>
-                                <input type="file" id="image" name="image" accept="image/*" required
-                                    class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
-                            </div>
-                        </div>
+            <!-- Image Upload Input -->
+            <div>
+                <label for="image" class="block text-sm font-medium text-gray-700">Upload Image</label>
+                <input type="file" id="image" name="image" accept="image/*" required
+                    class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
+            </div>
+        </div>
 
-                    </div>
+    </div>
 
-                    <!-- Button Container -->
-                    <div class="flex justify-between gap-4 mt-8">
-                        <!-- Close Button -->
-                        <button type="button" id="closeModalButton"
-                            class="w-full md:w-auto font-semibold bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 focus:outline-none">
-                            Cancel
-                        </button>
+    <!-- Button Container -->
+    <div class="flex justify-between gap-4 mt-8">
+        <!-- Close Button -->
+        <button type="button" id="closeModalButton"
+            class="w-full md:w-auto font-semibold bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 focus:outline-none">
+            Cancel
+        </button>
 
-                        <!-- Submit Button -->
-                        <button type="submit"
-                            class="w-full md:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-105">
-                            Submit
-                        </button>
-                    </div>
-                </form>
+        <!-- Submit Button -->
+        <button type="submit"
+            class="w-full md:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-105">
+            Submit
+        </button>
+    </div>
+</form>
+
             </div>
         </div>
 
@@ -167,7 +165,7 @@
                     <tr class="bg-gray-100">
                         <th class="border border-gray-300 px-4 py-2">Food Name</th>
                         <th class="border border-gray-300 px-4 py-2">Category</th>
-                        <th class="border border-gray-300 px-4 py-2">Subcategory</th>
+                        <th class="border border-gray-300 px-4 py-2">Type</th>
                         <th class="border border-gray-300 px-4 py-2">Price</th>
                         <th class="border border-gray-300 px-4 py-2">Status</th>
                         <th class="border border-gray-300 px-4 py-2">Action</th>
@@ -178,7 +176,7 @@
                         <tr class="border border-gray-300">
                             <td class="border border-gray-300 px-4 py-2">{{ $foodItem->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ optional($foodItem->category)->name }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $foodItem->subcategory->name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $foodItem->type }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $foodItem->price }}</td>
                             <td class="border border-gray-300 px-4 py-2">
                                 <label for="status{{ $foodItem->id }}" class="inline-flex items-center cursor-pointer">
@@ -347,5 +345,8 @@ window.addEventListener('popstate', function() {
     document.getElementById('search').value = searchQuery;  // Update the search input field
     filterTableByfoodname(searchQuery); // Reapply the filter based on URL search query
 });
+
+
+
     </script>
 @endsection

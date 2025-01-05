@@ -83,50 +83,65 @@
                 </ul>
 
                 <!-- Filter by Veg or Non-Veg -->
-                <div class="mt-6 space-y-3">
-                    <p class="font-semibold text-gray-700">Filter by Type</p>
-                    <label class="flex items-center space-x-3">
-                        <input type="radio" name="filter" class="text-orange-500">
-                        <span class="text-gray-600">Veg</span>
-                    </label>
-                    <label class="flex items-center space-x-3">
-                        <input type="radio" name="filter" class="text-orange-500">
-                        <span class="text-gray-600">Non-Veg</span>
-                    </label>
-                </div>
+    
+    <!-- Checkboxes for filtering -->
+    <div class="mt-6 space-y-3">
+    <p class="font-semibold text-gray-700">Filter by Type</p>
+    
+    <!-- Veg Filter -->
+    <label class="flex items-center space-x-3">
+        <input type="checkbox" class="filter-checkbox text-orange-500" value="veg">
+        <span class="text-gray-600">Veg</span>
+    </label>
+    
+    <!-- Non-Veg Filter -->
+    <label class="flex items-center space-x-3">
+        <input type="checkbox" class="filter-checkbox text-orange-500" value="non-veg">
+        <span class="text-gray-600">Non-Veg</span>
+    </label>
+    
+    <!-- Drinks Filter -->
+    <label class="flex items-center space-x-3">
+        <input type="checkbox" class="filter-checkbox text-orange-500" value="drinks">
+        <span class="text-gray-600">Drinks</span>
+    </label>
+</div>
+
+
             </aside>
 
         <!-- Menu Items -->
         <div id="food-items" class="space-y-4 mt-6 w-full">
-            @foreach ($categories as $category)
-            <div class="category-section category-{{ $category->id }} w-full">
-                <!-- Category Title -->
-                <h2 class="text-2xl text-center mt-4 font-bold text-green-600 mb-4">{{ $category->name }}</h2>
-                <div class="space-y-4 w-full">
-                    @foreach ($category->fooditems as $fooditem)
-                    <!-- Menu Item -->
-                    <div class="food-item flex flex-col sm:flex-row items-center bg-white rounded-lg shadow p-4 w-full" data-fooditem-id="{{ $fooditem->id }}">
-                        <!-- Image Section -->
-                        <div class="flex-shrink-0">
-                            <img src="{{ asset('images/fooditem/' . $fooditem->image) }}" alt="{{ $fooditem->name }}" class="w-24 h-24 object-cover rounded-lg">
-                        </div>
-                        <!-- Text and Price Section -->
-                        <div class="ml-6 flex-grow">
-                            <h3 class="text-lg font-bold">{{ $fooditem->name }}</h3>
-                            <p class="text-sm text-gray-500">{{ $fooditem->description }}</p>
-                            <p class="text-lg font-bold text-gray-800 mt-2">
-                                €{{ number_format($fooditem->price, 2) }}</p>
-                        </div>
-                        <!-- Button Section -->
-                        <div class="flex items-center justify-center mt-4 sm:mt-0 sm:ml-4">
-                            <button class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded order-now-button">Order Now</button>
-                        </div>
-                    </div>
-                    @endforeach
+    @foreach ($categories as $category)
+    <div class="category-section category-{{ $category->id }} w-full" data-category-id="{{ $category->id }}">
+        <!-- Category Title -->
+        <h2 class="text-2xl text-center mt-4 font-bold text-green-600 mb-4">{{ $category->name }}</h2>
+        <div class="space-y-4 w-full">
+            @foreach ($category->fooditems as $fooditem)
+            <!-- Menu Item -->
+            <div class="food-item flex flex-col sm:flex-row items-center bg-white rounded-lg shadow p-4 w-full"
+                data-fooditem-id="{{ $fooditem->id }}" data-type="{{ $fooditem->type }}">
+                <!-- Image Section -->
+                <div class="flex-shrink-0">
+                    <img src="{{ asset('images/fooditem/' . $fooditem->image) }}" alt="{{ $fooditem->name }}" class="w-24 h-24 object-cover rounded-lg">
+                </div>
+                <!-- Text and Price Section -->
+                <div class="ml-6 flex-grow">
+                    <h3 class="text-lg font-bold">{{ $fooditem->name }}</h3>
+                    <p class="text-sm text-gray-500">{{ $fooditem->description }}</p>
+                    <p class="text-lg font-bold text-gray-800 mt-2">
+                        €{{ number_format($fooditem->price, 2) }}</p>
+                </div>
+                <!-- Button Section -->
+                <div class="flex items-center justify-center mt-4 sm:mt-0 sm:ml-4">
+                    <button class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded order-now-button">Order Now</button>
                 </div>
             </div>
             @endforeach
         </div>
+    </div>
+    @endforeach
+</div>
 
         <!-- Modal Structure -->
     </div>
@@ -309,7 +324,7 @@ function filterFoodItemsAndCategories(query) {
             const foodDescription = foodItem.querySelector('p.text-sm').textContent.toLowerCase(); // Food description
 
             // Check if the food name or description contains the search query
-            if (foodName.includes(query) || foodDescription.includes(query)) {
+            if (foodName.includes(query)) {
                 foodItem.style.display = ''; // Show the food item if it matches the query
                 categoryMatches = true; // Mark the category as having a match
             } else {
@@ -333,6 +348,64 @@ window.addEventListener('popstate', function() {
     document.getElementById('search').value = searchQuery; // Set the search box to the value from the URL
     filterFoodItemsAndCategories(searchQuery); // Filter the food items and categories based on the search query
 });
+
+
+
+//filter
+
+// Listen for changes on the filter checkboxes
+document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', filterFoodItems);
+});
+
+function filterFoodItems() {
+    // Get all checked filter checkboxes
+    const selectedTypes = Array.from(document.querySelectorAll('.filter-checkbox:checked')).map(checkbox => checkbox.value);
+
+    // Get all categories
+    const categories = document.querySelectorAll('.category-section');
+
+    categories.forEach(category => {
+        const foodItems = category.querySelectorAll('.food-item');
+        let hasVisibleItems = false; // Flag to check if any item in this category is visible
+
+        foodItems.forEach(foodItem => {
+            const foodType = foodItem.getAttribute('data-type');
+
+            // Show or hide the food item based on the selected types
+            if (selectedTypes.length === 0 || selectedTypes.includes(foodType)) {
+                foodItem.style.display = ''; // Show the food item
+                hasVisibleItems = true; // Mark category as having visible items
+            } else {
+                foodItem.style.display = 'none'; // Hide the food item
+            }
+        });
+
+        // If no food items are visible in this category, hide the category
+        if (hasVisibleItems) {
+            category.style.display = ''; // Show the category
+        } else {
+            category.style.display = 'none'; // Hide the category
+        }
+    });
+}
+
+// Ensure only one checkbox is selected at a time (like radio buttons)
+document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('click', function() {
+        if (this.checked) {
+            // Uncheck all other checkboxes
+            document.querySelectorAll('.filter-checkbox').forEach(otherCheckbox => {
+                if (otherCheckbox !== this) {
+                    otherCheckbox.checked = false;
+                }
+            });
+        }
+    });
+});
+
+
+
 </script>
 
 

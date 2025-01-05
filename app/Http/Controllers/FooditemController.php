@@ -31,7 +31,7 @@ class FooditemController extends Controller
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:fooditems,slug',
             'category_id' => 'required|exists:categories,id',
-            'subcategory_id' => 'required|exists:subcategories,id',
+            'type' => 'required|string|in:veg,non-veg,drinks', 
             'price' => 'required|numeric|min:0',
             'status' => 'boolean',
             'image' => 'nullable|image',
@@ -51,8 +51,8 @@ class FooditemController extends Controller
         $foodItem->name = $request->name;
         $foodItem->slug = $request->slug;
         $foodItem->category_id = $request->category_id;
-        $foodItem->subcategory_id = $request->subcategory_id;
         $foodItem->price = $request->price;
+        $foodItem->type = $request->type;
         $foodItem->status = $request->has('status') ? $request->status : 0; // Default status is inactive (0)
         $foodItem->image = $image;
         $foodItem->description = $request->description;
