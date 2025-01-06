@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
 <div class="max-w-5xl mx-auto p-6 space-y-8">
 
     <!-- Check if there are cart items -->
@@ -10,18 +9,17 @@
         @csrf
         <!-- Cart Items Section -->
         @foreach (session()->get('cart') as $fooditemId => $item)
-        <div class="bg-white shadow-lg rounded-lg p-6 mb-6 flex flex-col sm:flex-row items-center justify-between">
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-6 flex flex-col sm:flex-row items-center justify-between" id="cart-item-{{ $fooditemId }}">
 
             <!-- Item Image and Info -->
             <div class="flex items-center space-x-4">
                 <img src="{{ $item['image_url'] ? asset('images/fooditem/' . $item['image_url']) : 'https://via.placeholder.com/80' }}" 
-     alt="{{ $item['name'] }}" 
-     class="w-20 h-20 rounded-lg object-cover" />
+                    alt="{{ $item['name'] }}" 
+                    class="w-20 h-20 rounded-lg object-cover" />
 
                 <div class="ml-4">
                     <h3 class="text-lg font-semibold text-gray-900">{{ $item['name'] }}</h3>
-                    <p class="text-gray-500 text-sm">{{ $item['description'] ?? 'No description available.' }}
-                    </p>
+                    <p class="text-gray-500 text-sm">{{ $item['description'] ?? 'No description available.' }}</p>
                 </div>
             </div>
 
@@ -33,59 +31,26 @@
                 <div class="flex items-center bg-red-100 rounded-md">
 
                     <!-- Quantity controls for cart items -->
-                    <form action="{{ route('cart.update') }}" method="POST" 
-                        class="inline-flex items-center bg-red-100 rounded-md">
-                        @csrf
-                        @method('PATCH')
-                        <input type="hidden" name="fooditem_id" value="{{ $fooditemId }}">
-                        <!-- Hidden fooditem ID -->
-
-                        <!-- Button to decrease the quantity -->
-                        <button type="submit" name="quantity" value="{{ max(1, $item['quantity'] - 1) }}"
-                            class="px-4 py-2 text-red-500 hover:bg-red-200 rounded-l-md transition duration-300" {{
-                            $item['quantity'] <=1 ? 'disabled' : '' }}>
-                            <i class="ri-subtract-line"></i>
-                        </button>
-
-                        <!-- Display current quantity -->
-                        <span class="px-4 py-2 text-gray-800 font-medium">{{ $item['quantity'] }}</span>
-
-                        <!-- Button to increase the quantity -->
-                        <button type="submit" name="quantity" value="{{ $item['quantity'] + 1 }}"
-                            class="px-4 py-2 text-red-500 hover:bg-red-200 rounded-r-md transition duration-300">
-                            <i class="ri-add-line"></i>
-                        </button>
-                    </form>
-
+                    <div class="quantity-controls">
+                        <button type="button" class="decrease-btn" data-fooditem-id="{{ $fooditemId }}" data-action="decrease">-</button>
+                        <span class="quantity text-gray-800 font-medium">{{ $item['quantity'] }}</span>
+                        <button type="button" class="increase-btn" data-fooditem-id="{{ $fooditemId }}" data-action="increase">+</button>
+                    </div>
 
                 </div>
 
-
                 <!-- Remove button -->
-                <form action="{{ route('cart.remove', $fooditemId) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <!-- This line spoof the DELETE method -->
-                    <button type="submit" class="text-gray-500 hover:text-red-500 transition duration-300"
-                        aria-label="Remove item">
-                        <i class="ri-delete-bin-line text-xl"></i>
-                    </button>
-                </form>
+                <button type="button" class="remove-btn text-gray-500 hover:text-red-500 transition duration-300" data-fooditem-id="{{ $fooditemId }}">
+                    <i class="ri-delete-bin-line text-xl"></i>
+                </button>
 
             </div>
         </div>
 
-        <!-- Hidden fields for item details -->
-        <input type="hidden" name="items[{{ $fooditemId }}][name]" value="{{ $item['name'] }}">
-        <input type="hidden" name="items[{{ $fooditemId }}][price]" value="{{ $item['price'] }}">
-        <input type="hidden" name="items[{{ $fooditemId }}][quantity]" value="{{ $item['quantity'] }}">
-        <input type="hidden" name="items[{{ $fooditemId }}][description]" value="{{ $item['description'] ?? '' }}">
-        <input type="hidden" name="items[{{ $fooditemId }}][image_url]" value="{{ $item['image_url'] ?? '' }}">
         @endforeach
 
         <!-- User Details and Payment Section -->
         <div class="flex flex-col lg:flex-row lg:space-x-6 mt-8">
-
             <!-- User Details Form -->
             <div class="w-full lg:w-2/3 mb-6 lg:mb-0">
                 <div class="bg-white shadow-lg rounded-lg p-6">
@@ -129,48 +94,87 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Cart Total Section -->
-            <div class="w-full lg:w-1/3">
-                <div class="bg-white shadow-lg rounded-lg p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Cart Total</h3>
-                    <div class="flex justify-between mb-4">
-                        <span class="text-gray-600">Subtotal</span>
-                        <span class="font-semibold text-gray-900" id="subtotal">${{ number_format($subtotal, 2)
-                            }}</span>
-                    </div>
-                    <div class="flex justify-between mb-4">
-                        <span class="text-gray-600">Total</span>
-                        <span class="font-semibold text-red-600" id="total">${{ number_format($total, 2) }}</span>
-                    </div>
-                    <!-- Button to proceed with checkout -->
-                    <button type="submit"
-                        class="w-full bg-red-500 text-white py-3 rounded-md hover:bg-red-600 transition duration-300">
-                        Submit Order
-                    </button>
-                </div>
-            </div>
-
+        <!-- You can keep this section unchanged for this demonstration -->
+        <div class="mt-6 flex justify-between items-center">
+            <p class="text-xl font-semibold">Subtotal: $<span id="subtotal">{{ number_format($cartSubtotal, 2) }}</span></p>
+            <button type="submit" class="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition">Proceed to Checkout</button>
         </div>
+
     </form>
     @else
     <div class="text-center">
-        <div class="text-gray-700 mb-6">
-            <i class="ri-shopping-cart-2-fill text-6xl"></i>
-        </div>
-
         <h1 class="text-2xl font-bold text-gray-800 mb-2">Cart Is Empty</h1>
         <p class="text-gray-600 mb-6">Your cart is empty, please add items to your cart to place an order.</p>
-
-        <div class="justify-center">
-            <a href="{{ route('menu.index') }}"
-                class="bg-gradient-to-r from-orange-400 to-red-500 text-white font-medium px-6 py-2 rounded-md shadow-md hover:shadow-lg transition-shadow">
-                Go to Menu
-            </a>
-        </div>
     </div>
     @endif
 
 </div>
+
+<script>
+    $(document).ready(function() {
+
+        // Update quantity (increase/decrease)
+        $('.decrease-btn, .increase-btn').on('click', function() {
+            let fooditemId = $(this).data('fooditem-id');
+            let action = $(this).data('action');
+            let currentQuantity = parseInt($('#cart-item-' + fooditemId + ' .quantity').text());
+
+            // Calculate the new quantity
+            let newQuantity = (action === 'increase') ? currentQuantity + 1 : (currentQuantity > 1 ? currentQuantity - 1 : 1);
+
+            // Send AJAX request to update the cart
+            $.ajax({
+                url: '{{ route('cart.update') }}',
+                method: 'PATCH',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    fooditem_id: fooditemId,
+                    quantity: newQuantity
+                },
+                success: function(response) {
+                    // Update the UI with the new quantity
+                    $('#cart-item-' + fooditemId + ' .quantity').text(newQuantity);
+                    updateCartTotal(response.cart);
+                },
+                error: function() {
+                    alert('Something went wrong while updating the cart.');
+                }
+            });
+        });
+
+        // Remove item from cart
+        $('.remove-btn').on('click', function() {
+            let fooditemId = $(this).data('fooditem-id');
+
+            // Send AJAX request to remove item from cart
+            $.ajax({
+                url: '/cart/remove/' + fooditemId,
+                method: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function(response) {
+                    // Remove the item from the UI
+                    $('#cart-item-' + fooditemId).remove();
+                    updateCartTotal(response.cart);
+                },
+                error: function() {
+                    alert('Something went wrong while removing the item.');
+                }
+            });
+        });
+
+        // Update the cart total
+        function updateCartTotal(cart) {
+            let subtotal = 0;
+            $.each(cart, function(id, item) {
+                subtotal += item.price * item.quantity;
+            });
+            $('#subtotal').text('$' + subtotal.toFixed(2));
+            let total = subtotal; // Apply any discounts here if necessary
+            $('#total').text('$' + total.toFixed(2));
+        }
+    });
+</script>
 
 @endsection
