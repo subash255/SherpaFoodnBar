@@ -21,11 +21,11 @@ Route::get('menu',[MenuController::class,'index'])->name('menu.index');
 Route::get('contact',[HomePageController::class,'contact'])->name('contact');
 
 //cart routes
-Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.index');
-Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
+Route::get('cart',[CartController::class,'viewcart'])->name('cart.index');
+Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('cart/store', [CartController::class, 'store'])->name('cart.store');
 Route::patch('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/remove/{fooditemId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 
 
 Route::middleware('auth')->group(function () {

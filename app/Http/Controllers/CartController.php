@@ -43,87 +43,63 @@ public function addToCart(Request $request)
     public function viewCart()
     {
         $cart = session()->get('cart', []);
-        
+
         // Calculate subtotal
-        $subtotal = 0;
+        $cartSubtotal = 0;
         foreach ($cart as $item) {
-            $subtotal += $item['price'] * $item['quantity'];
+            $cartSubtotal += $item['price'] * $item['quantity'];
         }
-
-        // Optionally, apply any discount logic (if needed, e.g., for coupons)
-        $discount = 0; // For simplicity, no discount here
-        $total = $subtotal - $discount;
-
-        // Return the view with the cart, subtotal, and total
-        return view('cart.index', compact('cart', 'subtotal', 'total'));
+    
+        // Pass the cart and subtotal to the view
+        return view('cart.index', compact('cart', 'cartSubtotal'));
     }
 
     // Update Cart
-    public function update(Request $request)
-    {
-        $cart = session()->get('cart');
-    
-        if ($request->has('fooditem_id') && $request->has('quantity')) {
-            $fooditemId = $request->fooditem_id;
-            $quantity = $request->quantity;
-    
-            if (isset($cart[$fooditemId])) {
-                $cart[$fooditemId]['quantity'] = $quantity;
-                session()->put('cart', $cart);
-            }
-        }
-    
-        // Return updated cart total and subtotal
-        $total = $this->getCartTotal();
-        $subtotal = $this->getCartSubtotal();
-        
-        return response()->json(compact('total', 'subtotal'));
+    // Update the cart item quantity
+public function update(Request $request)
+{
+    $fooditemId = $request->fooditem_id;
+    $quantity = $request->quantity;
+
+    // Get cart from session
+    $cart = session()->get('cart', []);
+
+    // If the item exists in the cart, update the quantity
+    if (isset($cart[$fooditemId])) {
+        $cart[$fooditemId]['quantity'] = $quantity;
     }
-    
-    public function remove($fooditemId)
-    {
-        $cart = session()->get('cart');
-    
-        if (isset($cart[$fooditemId])) {
-            unset($cart[$fooditemId]);
-            session()->put('cart', $cart);
-        }
-    
-        // Return updated cart total and subtotal
-        $total = $this->getCartTotal();
-        $subtotal = $this->getCartSubtotal();
-        
-        return response()->json(compact('total', 'subtotal'));
+
+    // Store the updated cart back in the session
+    session()->put('cart', $cart);
+
+    // Return the updated cart
+    return response()->json([
+        'success' => true,
+        'cart' => $cart
+    ]);
+}
+
+// Remove an item from the cart
+public function removeFromCart($fooditemId)
+{
+    // Get the current cart
+    $cart = session()->get('cart', []);
+
+    // If the item exists, remove it
+    if (isset($cart[$fooditemId])) {
+        unset($cart[$fooditemId]);
     }
-    
-    // Calculate the cart subtotal (total price without taxes or discounts)
-    private function getCartSubtotal()
-    {
-        $cart = session()->get('cart', []);
-        $subtotal = 0;
-    
-        foreach ($cart as $item) {
-            $subtotal += $item['price'] * $item['quantity']; // Multiply price by quantity for each item
-        }
-    
-        return $subtotal;
-    }
-    
-    // Calculate the total (including tax, discounts, etc.)
-    private function getCartTotal()
-    {
-        $subtotal = $this->getCartSubtotal();
-    
-        // Tax calculation (you can modify this logic as needed)
-        $taxRate = 0.1; // Example: 10% tax
-        $tax = $subtotal * $taxRate;
-    
-        // Example: total = subtotal + tax
-        $total = $subtotal + $tax;
-    
-        return $total;
-    }
-    
+
+    // Store the updated cart back in the session
+    session()->put('cart', $cart);
+
+    // Return the updated cart
+    return response()->json([
+        'success' => true,
+        'cart' => $cart
+    ]);
+}
+
 
     public function store(Request $request)
     {
