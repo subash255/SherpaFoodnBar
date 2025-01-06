@@ -24,7 +24,7 @@ Route::get('contact',[HomePageController::class,'contact'])->name('contact');
 Route::get('cart',[CartController::class,'viewcart'])->name('cart.index');
 Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 Route::post('cart/store', [CartController::class, 'store'])->name('cart.store');
-Route::patch('cart', [CartController::class, 'updateCart'])->name('cart.update');
+Route::patch('cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::delete('cart/{fooditemId}/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
 

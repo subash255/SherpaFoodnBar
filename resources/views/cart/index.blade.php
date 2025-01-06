@@ -8,14 +8,13 @@
     @if (session()->has('cart') && count(session()->get('cart')) > 0)
     <form action="{{route('cart.store')}}" method="POST">
         @csrf
-
         <!-- Cart Items Section -->
         @foreach (session()->get('cart') as $fooditemId => $item)
         <div class="bg-white shadow-lg rounded-lg p-6 mb-6 flex flex-col sm:flex-row items-center justify-between">
 
             <!-- Item Image and Info -->
             <div class="flex items-center space-x-4">
-                <img src="{{ $item['image_url'] ? asset('image/fooditem/' . $item['image_url']) : 'https://via.placeholder.com/80' }}" 
+                <img src="{{ $item['image_url'] ? asset('images/fooditem/' . $item['image_url']) : 'https://via.placeholder.com/80' }}" 
      alt="{{ $item['name'] }}" 
      class="w-20 h-20 rounded-lg object-cover" />
 
@@ -34,10 +33,10 @@
                 <div class="flex items-center bg-red-100 rounded-md">
 
                     <!-- Quantity controls for cart items -->
-                    <form action="{{ route('cart.update') }}" method="post"
+                    <form action="{{ route('cart.update') }}" method="POST" 
                         class="inline-flex items-center bg-red-100 rounded-md">
                         @csrf
-                        @method('patch')
+                        @method('PATCH')
                         <input type="hidden" name="fooditem_id" value="{{ $fooditemId }}">
                         <!-- Hidden fooditem ID -->
 

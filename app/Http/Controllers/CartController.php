@@ -69,7 +69,7 @@ class CartController extends Controller
     }
 
     // Update Cart
-    public function updateCart(Request $request)
+    public function update(Request $request)
     {
         $fooditemId = $request->fooditem_id; // The food item ID to update
         $quantity = $request->quantity; // New quantity to set
