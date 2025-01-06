@@ -15,7 +15,7 @@ class FooditemController extends Controller
         $subcategories = Subcategory::all();
         $foodItems = Fooditem::paginate(10);
         return view('admin.fooditems.index', [
-            'title' => 'Food Item'
+            'title' => 'Food Items'
         ] , compact('foodItems' , 'categories' , 'subcategories'));
     }
 

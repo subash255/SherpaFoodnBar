@@ -163,6 +163,7 @@
             <table id="foodTable" class="min-w-full border-collapse border border-gray-300">
                 <thead>
                     <tr class="bg-gray-100">
+                        <th class="border border-gray-300 px-4 py-2">S.N</th>
                         <th class="border border-gray-300 px-4 py-2">Food Name</th>
                         <th class="border border-gray-300 px-4 py-2">Category</th>
                         <th class="border border-gray-300 px-4 py-2">Type</th>
@@ -174,6 +175,7 @@
                 <tbody>
                     @foreach ($foodItems as $foodItem)
                         <tr class="border border-gray-300">
+                            <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $foodItem->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ optional($foodItem->category)->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $foodItem->type }}</td>

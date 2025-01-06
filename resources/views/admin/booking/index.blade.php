@@ -47,6 +47,7 @@
             <table id="usersTable" class="min-w-full border-collapse border border-gray-300">
                 <thead>
                     <tr class="bg-gray-100">
+                        <th class="border border-gray-300 px-4 py-2">S.N</th>
                         <th class="border border-gray-300 px-4 py-2">Name</th>
                         <th class="border border-gray-300 px-4 py-2">Email</th>
                         <th class="border border-gray-300 px-4 py-2">Phone number</th>
@@ -58,6 +59,7 @@
                 <tbody>
                     @foreach ($bookings as $booking)
                         <tr class="border border-gray-300">
+                            <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $booking->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $booking->email }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $booking->phone }}</td>

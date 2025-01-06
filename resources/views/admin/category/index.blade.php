@@ -105,7 +105,7 @@
         <table id="categoryTable" class="min-w-full border-collapse border border-gray-300">
             <thead>
                 <tr class="bg-gray-100">
-                    <th class="border border-gray-300 px-4 py-2">Order</th>
+                    <th class="border border-gray-300 px-4 py-2">S.N</th>
                     <th class="border border-gray-300 px-4 py-2">Category Name</th>
                     <th class="border border-gray-300 px-4 py-2">Slug</th>
                     <th class="border border-gray-300 px-4 py-2">Status</th>
@@ -142,7 +142,7 @@
                         </form>
 
                         <!-- Settings Icon -->
-                        <form action="{{route('admin.subcategory.index', ['id' => $category->id]) }}" method="get">
+                        <form action="#" method="get">  //{{route('admin.subcategory.index', ['id' => $category->id]) }}
                             @csrf
 
                             <button class="bg-green-500 hover:bg-green-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
