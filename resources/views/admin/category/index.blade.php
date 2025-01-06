@@ -142,7 +142,7 @@
                         </form>
 
                         <!-- Settings Icon -->
-                        <form action="#" method="get">  //{{route('admin.subcategory.index', ['id' => $category->id]) }}
+                        <form action="#" method="get">
                             @csrf
 
                             <button class="bg-green-500 hover:bg-green-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">

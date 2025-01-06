@@ -66,14 +66,16 @@ class FooditemController extends Controller
 
     public function edit($id)
     {  
+        // Fetch categories, subcategories, and food item
         $categories = Category::all();
         $subcategories = Subcategory::all();
-        $fooditem = Fooditem::findOrFail($id);
-        return view('admin.fooditem.edit', compact('fooditem','categories','subcategories'), [
-            'title' => 'Manage Food Item'
-        ]);
+        $foodItem = Fooditem::findOrFail($id);  // Use camelCase here
+    
+        // Pass data to the view using compact and with()
+        return view('admin.fooditems.edit', compact('foodItem', 'categories', 'subcategories'))
+            ->with('title', 'Manage Food Item');
     }
-
+    
     public function update(Request $request, $id)
     {
         $fooditem = Fooditem::findOrFail($id);

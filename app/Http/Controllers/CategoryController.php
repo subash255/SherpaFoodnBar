@@ -57,34 +57,39 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $category = Category::findOrFail($id);
-
+    
+        // Update the validation to expect 'name' instead of 'category_name'
         $request->validate([
-            'category_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255', // 'name' instead of 'category_name'
             'slug' => 'required|string|max:255|unique:categories,slug,' . $category->id,
             'image' => 'nullable|image',
         ]);
-
-        $category->category_name = $request->category_name;
+    
+        // Update the category data
+        $category->name = $request->name; // Use 'name' here, as per the migration
         $category->slug = $request->slug;
-
+    
+        // Handle the image upload if a new image is provided
         if ($request->hasFile('image')) {
-            // Delete old image if exists
+            // Delete the old image if exists
             $oldImagePath = public_path('images/brand/' . $category->image);
             if (file_exists($oldImagePath)) {
                 unlink($oldImagePath);
             }
-
-            // Upload new image
+    
+            // Upload the new image
             $image = $request->file('image');
             $imageName = time() . '.' . $image->extension();
             $image->move(public_path('images/brand'), $imageName);
             $category->image = $imageName;
         }
-
+    
+        // Save the updated category
         $category->save();
-
+    
         return redirect()->route('admin.category.index')->with('success', 'Category updated successfully');
     }
+    
 
     // Delete Category
     public function destroy($id)

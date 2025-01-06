@@ -11,13 +11,14 @@
 
         <!-- Cart Items Section -->
         @foreach (session()->get('cart') as $fooditemId => $item)
-        <div class="bg-white shadow-lg rounded-lg p-6 mb-6 flex flex-col sm:flex-row items-center justify-between" id="cart-item-{{ $fooditemId }}">
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-6 flex flex-col sm:flex-row items-center justify-between"
+            id="cart-item-{{ $fooditemId }}">
 
             <!-- Item Image and Info -->
             <div class="flex items-center space-x-4">
-                <img src="{{ $item['image_url'] ? asset('images/fooditem/' . $item['image_url']) : 'https://via.placeholder.com/80' }}" 
-                    alt="{{ $item['name'] }}" 
-                    class="w-20 h-20 rounded-lg object-cover" />
+                <img src="{{ $item['image_url'] ? asset('images/fooditem/' . $item['image_url']) : 'https://via.placeholder.com/80' }}"
+    alt="{{ $item['name'] }}" class="w-20 h-20 rounded-lg object-cover" />
+
 
                 <div class="ml-4">
                     <h3 class="text-lg font-semibold text-gray-900">{{ $item['name'] }}</h3>
@@ -34,15 +35,20 @@
 
                     <!-- Quantity controls for cart items -->
                     <div class="quantity-controls flex items-center">
-                        <button type="button" class="decrease-btn px-4 py-2 bg-white text-gray-700 hover:bg-gray-200 rounded-l-md" data-fooditem-id="{{ $fooditemId }}" data-action="decrease">-</button>
+                        <button type="button"
+                            class="decrease-btn px-4 py-2 bg-white text-gray-700 hover:bg-gray-200 rounded-l-md"
+                            data-fooditem-id="{{ $fooditemId }}" data-action="decrease">-</button>
                         <span class="quantity text-gray-800 font-medium px-4 py-2">{{ $item['quantity'] }}</span>
-                        <button type="button" class="increase-btn px-4 py-2 bg-white text-gray-700 hover:bg-gray-200 rounded-r-md" data-fooditem-id="{{ $fooditemId }}" data-action="increase">+</button>
+                        <button type="button"
+                            class="increase-btn px-4 py-2 bg-white text-gray-700 hover:bg-gray-200 rounded-r-md"
+                            data-fooditem-id="{{ $fooditemId }}" data-action="increase">+</button>
                     </div>
 
                 </div>
 
                 <!-- Remove button -->
-                <button type="button" class="remove-btn text-gray-500 hover:text-red-500 transition duration-300" data-fooditem-id="{{ $fooditemId }}">
+                <button type="button" class="remove-btn text-gray-500 hover:text-red-500 transition duration-300"
+                    data-fooditem-id="{{ $fooditemId }}">
                     <i class="ri-delete-bin-line text-xl"></i>
                 </button>
 
@@ -87,7 +93,7 @@
                                     <label for="onlinePayment" class="text-gray-700">Online Payment</label>
                                 </div>
                                 <div class="flex items-center">
-                                    <input type="radio" name="payment_method" value="cash_on_delivery" class="mr-2"
+                                    <input type="radio" name="payment_method" value="cash_on_pickup" class="mr-2"
                                         id="cashOnDelivery" />
                                     <label for="cashOnDelivery" class="text-gray-700">Cash on Delivery</label>
                                 </div>
@@ -99,30 +105,34 @@
 
             <!-- Cart Total and Checkout -->
             <div class="mt-6 lg:mt-0 flex justify-between items-center bg-white p-6 rounded-lg shadow-lg">
-                <p class="text-xl font-semibold text-gray-800">Subtotal: $<span id="subtotal">{{ number_format($cartSubtotal, 2) }}</span></p>
-                <button type="submit" class="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition">Proceed to Checkout</button>
+                <p class="text-xl font-semibold text-gray-800">Subtotal: $<span id="subtotal">{{
+                        number_format($cartSubtotal, 2) }}</span></p>
+                <button type="submit"
+                    class="bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition">Proceed to
+                    Checkout</button>
             </div>
         </div>
 
     </form>
     @else
     <div class="text-center">
-        
+
         <div class="text-gray-700 mb-6">
-            <i class="ri-shopping-cart-2-fill text-6xl"></i> 
+            <i class="ri-shopping-cart-2-fill text-8xl"></i>
         </div>
-    
+
         <!-- Heading -->
-        <h1 class="text-2xl font-bold text-gray-800 mb-2">Cart Is Empty</h1>
+        <h1 class="text-2xl font-bold text-gray-800 mb-2">Your Cart Is Empty</h1>
         <p class="text-gray-600 mb-6">Your cart is empty, please add items to your cart to place an order.</p>
-    
+
         <!-- Buttons -->
         <div class="justify-center">
-          <a href="{{route('menu.index')}}" class="bg-gradient-to-r from-orange-400 to-red-500 text-white font-medium px-6 py-2 rounded-md shadow-md hover:shadow-lg transition-shadow">
-           Go to Menu
-          </a>
+            <a href="{{route('menu.index')}}"
+                class="bg-gradient-to-r from-orange-400 to-red-500 text-white font-medium px-6 py-2 rounded-md shadow-md hover:shadow-lg transition-shadow">
+                Go to Menu
+            </a>
         </div>
-      </div>
+    </div>
     @endif
 
 </div>

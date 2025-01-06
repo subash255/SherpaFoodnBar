@@ -104,7 +104,7 @@
             <div class="mt-6 space-y-3">
                 <p class="font-semibold text-gray-700">Select Food Type</p>
                 <select id="category-filter"  name="type" class="text-orange-500 p-2 border rounded-lg w-full">
-                    <option value="">Select Category</option>
+                    <option value="">Select Type</option>
                     <option value="veg">Veg</option>
                     <option value="non-veg">Non-Veg</option>
                     <option value="drinks">Drinks</option>
