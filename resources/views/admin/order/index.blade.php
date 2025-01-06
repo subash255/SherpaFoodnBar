@@ -47,20 +47,22 @@
             <table id="usersTable" class="min-w-full border-collapse border border-gray-300">
                 <thead>
                     <tr class="bg-gray-100">
+                        <th class="border border-gray-300 px-4 py-2">S.N</th>
                         <th class="border border-gray-300 px-4 py-2">Name</th>
                         <th class="border border-gray-300 px-4 py-2">Email</th>
-                        <th class="border border-gray-300 px-4 py-2">Phone number</th>
-                        <th class="border border-gray-300 px-4 py-2">order item</th>
-                        <th class="border border-gray-300 px-4 py-2">price</th>
-                        <th class="border border-gray-300 px-4 py-2">order number</th>
-                        <th class="border border-gray-300 px-4 py-2">message</th>
-                        <th class="border border-gray-300 px-4 py-2">status</th>
+                        <th class="border border-gray-300 px-4 py-2">Contact</th>
+                        <th class="border border-gray-300 px-4 py-2">Order item</th>
+                        <th class="border border-gray-300 px-4 py-2">Price</th>
+                        <th class="border border-gray-300 px-4 py-2">Order Num</th>
+                        <th class="border border-gray-300 px-4 py-2">Message</th>
+                        <th class="border border-gray-300 px-4 py-2">Status</th>
                         <th class="border border-gray-300 px-4 py-2">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($orders as $order)
                         <tr class="border border-gray-300">
+                            <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->email }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->phone }}</td>

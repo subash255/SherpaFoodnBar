@@ -10,7 +10,8 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::paginate(5);
-        return view('admin.order.index', compact('orders'));
+        return view('admin.order.index', [
+            'title' => 'Orders'], compact('orders'));
     }
 
     public function destroy($id)

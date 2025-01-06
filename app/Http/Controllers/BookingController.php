@@ -10,7 +10,8 @@ class BookingController extends Controller
     public function index()
     {
         $bookings = Booking::paginate(5);
-        return view('admin.booking.index', compact('bookings'));
+        return view('admin.booking.index',  [
+            'title' => 'Table Reservations'], compact('bookings'));
     }
    
 
@@ -33,7 +34,8 @@ class BookingController extends Controller
         // If a booking already exists, prevent further processing and return an error message
         if ($existingBooking) {
             // Return the error message with no further action (prevents creating a duplicate)
-            return redirect()->back()->with('error', 'You have already reserved a table with this email or phone number.');
+            return redirect()->back()->with('error', 'You have already reserved a table with this email or phone number.')->withInput()->header('Location', url()->previous() . '#reservation');
+
         }
     
         // Create a new booking record in the database
@@ -46,7 +48,8 @@ class BookingController extends Controller
         ]);
     
         // Redirect or return a success message
-        return redirect()->route('welcome')->with('success', 'Your booking was successful!');
+        return redirect()->route('welcome')->with('success', 'Your booking was successful!')->header('Location', route('welcome') . '#reservation');
+
     }
     
     //delete
