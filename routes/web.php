@@ -19,10 +19,13 @@ Route::get('/',[HomePageController::class, 'index'])->name('welcome');
 Route::get('about', [HomePageController::class, 'about'])->name('about');
 Route::get('menu',[MenuController::class,'index'])->name('menu.index');
 Route::get('contact',[HomePageController::class,'contact'])->name('contact');
-Route::get('cart',[CartController::class,'viewcart'])->name('cart.index');
 
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-Route::delete('/cart/remove/{foodid}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+//cart routes
+Route::get('cart',[CartController::class,'viewcart'])->name('cart.index');
+Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('cart/store', [CartController::class, 'store'])->name('cart.store');
+Route::patch('cart', [CartController::class, 'updateCart'])->name('cart.update');
+Route::delete('cart/{fooditemId}/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
 
 Route::middleware('auth')->group(function () {

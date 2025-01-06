@@ -139,6 +139,8 @@
                         <input type="hidden" name="fooditem_id" value="{{ $fooditem->id }}">
                         <input type="hidden" name="fooditem_name" value="{{ $fooditem->name }}">
                         <input type="hidden" name="fooditem_price" value="{{ $fooditem->price }}">
+                        <input type="hidden" name="fooditem_image" value="{{ $fooditem->image }}">
+                        
                         <button class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded order-now-button">Order Now</button>
 
                     </form>                    
