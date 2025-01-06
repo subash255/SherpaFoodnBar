@@ -51,11 +51,11 @@
                         <th class="border border-gray-300 px-4 py-2">Name</th>
                         <th class="border border-gray-300 px-4 py-2">Email</th>
                         <th class="border border-gray-300 px-4 py-2">Contact</th>
-                        <th class="border border-gray-300 px-4 py-2">Order item</th>
+                        <th class="border border-gray-300 px-4 py-2">payment method</th>
                         <th class="border border-gray-300 px-4 py-2">Price</th>
                         <th class="border border-gray-300 px-4 py-2">Order Num</th>
-                        <th class="border border-gray-300 px-4 py-2">Message</th>
                         <th class="border border-gray-300 px-4 py-2">Status</th>
+                        <th class="border border-gray-300 px-4 py-2">Items</th>
                         <th class="border border-gray-300 px-4 py-2">Action</th>
                     </tr>
                 </thead>
@@ -66,11 +66,32 @@
                             <td class="border border-gray-300 px-4 py-2">{{ $order->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->email }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->phone }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $order->fooditem->name }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{$order->fooditem->price}}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ ucfirst($order->payment_method) }} </td>
+                            <td class="border border-gray-300 px-4 py-2">${{ number_format($order->total, 2) }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{$order->order_number}}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{$order->notes}}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{$order->status}}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ucfirst($order->status) }}</td>
+                            
+                            <td class="py-3 px-4 border-b">
+                            <!-- Loop through the items array to display each item in separate rows -->
+                            <table class="min-w-full">
+                                <thead>
+                                    <tr>
+                                        <th class="border border-gray-300 px-4 py-2">Name</th>
+                                        <th class="border border-gray-300 px-4 py-2">Price</th>
+                                        <th class="border border-gray-300 px-4 py-2">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($order->items as $item)
+                                        <tr>
+                                            <td class="border border-gray-300 px-4 py-2">{{ $item['name'] }}</td>
+                                            <td class="border border-gray-300 px-4 py-2">${{ number_format($item['price'], 2) }}</td>
+                                            <td class="border border-gray-300 px-4 py-2">{{ $item['description'] }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </td>
 
                             <td class="px-2 py-2 flex justify-center space-x-4">
                                
@@ -110,42 +131,33 @@
     </div>
 
     <script>
-      // Handle the search input event
+      
 document.getElementById('search').addEventListener('input', function() {
-    const searchQuery = this.value.toLowerCase(); // Get the search query, converted to lowercase
-
-    // Update the URL without reloading the page (optional)
+    const searchQuery = this.value.toLowerCase(); 
     history.pushState(null, null, `?search=${searchQuery}`);
-
-    // Filter the table rows based on the search query
     filterTableByUsername(searchQuery);
 });
 
-// Function to filter the table rows by username (first column), progressively
-function filterTableByUsername(query) {
-    const rows = document.querySelectorAll('#usersTable tbody tr'); // Select all table rows
-    rows.forEach(row => {
-        const cells = row.getElementsByTagName('td'); // Get all cells in the current row
-        const usernameCell = cells[0]; // The first column is the username (Name)
 
-        // Check if the username cell text starts with the search query
+function filterTableByUsername(query) {
+    const rows = document.querySelectorAll('#usersTable tbody tr'); 
+    rows.forEach(row => {
+        const cells = row.getElementsByTagName('td'); 
+        const usernameCell = cells[1];
+
         if (usernameCell.textContent.toLowerCase().startsWith(query)) {
-            row.style.display = ''; // Show the row if it starts with the query
+            row.style.display = ''; 
         } else {
-            row.style.display = 'none'; // Hide the row if it doesn't match
+            row.style.display = 'none'; 
         }
     });
 }
 
-// Optional: Handle browser's back/forward buttons to maintain the search query
 window.addEventListener('popstate', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const searchQuery = urlParams.get('search') || '';
-    document.getElementById('search').value = searchQuery; // Set the search box to the value from the URL
-    filterTableByUsername(searchQuery); // Filter the table based on the search query
+    document.getElementById('search').value = searchQuery; 
+    filterTableByUsername(searchQuery); 
 });
-
-
-
         </script>
 @endsection

@@ -87,7 +87,7 @@
                                     <label for="onlinePayment" class="text-gray-700">Online Payment</label>
                                 </div>
                                 <div class="flex items-center">
-                                    <input type="radio" name="payment_method" value="cash_on_delivery" class="mr-2"
+                                    <input type="radio" name="payment_method" value="cash_on_pickup" class="mr-2"
                                         id="cashOnDelivery" />
                                     <label for="cashOnDelivery" class="text-gray-700">Cash on Delivery</label>
                                 </div>
