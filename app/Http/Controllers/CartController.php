@@ -6,48 +6,38 @@ use App\Models\Fooditem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
     // Add to Cart
-    public function addToCart(Request $request)
-    {
-        $fooditemId = $request->fooditem_id;  // Make sure this matches the hidden input name in the form
-        $quantity = $request->quantity ?? 1; // Default quantity is 1
+    // Adding an item to the cart
+public function addToCart(Request $request)
+{
+    $fooditem = FoodItem::findOrFail($request->fooditem_id);
 
-        // Retrieve the cart from the session (an empty array if it doesn't exist)
-        $cart = session()->get('cart', []);
+    $cart = session()->get('cart', []);
 
-        // Try to find the food item
-        $fooditem = Fooditem::find($fooditemId);
-
-        if (!$fooditem) {
-            // If the food item does not exist, you can return an error or redirect
-            return redirect()->route('cart.index')->with('error', 'Food item not found.');
-        }
-
-        // Check if the fooditem is already in the cart
-        if (isset($cart[$fooditemId])) {
-            // Update the quantity of the existing fooditem
-            $cart[$fooditemId]['quantity'] += $quantity;
-        } else {
-            // Add the fooditem to the cart
-            $cart[$fooditemId] = [
-                'name' => $fooditem->name,
-                'quantity' => $quantity,
-                'price' => $fooditem->price,
-                'image_url' => $fooditem->image ?? 'https://via.placeholder.com/80',
-                'description' => $fooditem->description ?? 'No description available.',
-            ];
-        }
-
-        // Store the cart back in the session
-        session()->put('cart', $cart);
-
-        return redirect()->route('cart.index')->with('success', 'Food item added to cart successfully!');
+    // Add or update the item in the cart
+    if (isset($cart[$fooditem->id])) {
+        $cart[$fooditem->id]['quantity']++;
+    } else {
+        $cart[$fooditem->id] = [
+            'name' => $fooditem->name,
+            'description' => $fooditem->description,
+            'price' => $fooditem->price,
+            'quantity' => 1,
+            'image_url' => $fooditem->image_url,
+        ];
     }
+
+    session()->put('cart', $cart);
+
+    return back()->with('success', 'Item added to cart!');
+}
+
 
     // View Cart
     public function viewCart()
@@ -71,45 +61,75 @@ class CartController extends Controller
     // Update Cart
     public function update(Request $request)
     {
-        $fooditemId = $request->fooditem_id; // The food item ID to update
-        $quantity = $request->quantity; // New quantity to set
+        $cart = session()->get('cart');
     
-        // Retrieve the cart from the session
-        $cart = session()->get('cart', []);
+        if ($request->has('fooditem_id') && $request->has('quantity')) {
+            $fooditemId = $request->fooditem_id;
+            $quantity = $request->quantity;
     
-        // Check if the food item exists in the cart
-        if (isset($cart[$fooditemId])) {
-            // Update the quantity of the fooditem
-            $cart[$fooditemId]['quantity'] = $quantity;
+            if (isset($cart[$fooditemId])) {
+                $cart[$fooditemId]['quantity'] = $quantity;
+                session()->put('cart', $cart);
+            }
         }
     
-        // Store the updated cart back in the session
-        session()->put('cart', $cart);
-    
-        return redirect()->route('cart.index')->with('success', 'Cart updated successfully!');
+        // Return updated cart total and subtotal
+        $total = $this->getCartTotal();
+        $subtotal = $this->getCartSubtotal();
+        
+        return response()->json(compact('total', 'subtotal'));
     }
     
-
-    // Remove Item from Cart
-    public function removeFromCart($fooditemId)
+    public function remove($fooditemId)
     {
-        // Retrieve the cart from the session
-        $cart = session()->get('cart', []);
-
-        // Check if the food item exists in the cart
+        $cart = session()->get('cart');
+    
         if (isset($cart[$fooditemId])) {
-            // Remove the item from the cart
             unset($cart[$fooditemId]);
+            session()->put('cart', $cart);
         }
-
-        // Store the updated cart back in the session
-        session()->put('cart', $cart);
-
-        return redirect()->route('cart.index')->with('success', 'Item removed from cart!');
+    
+        // Return updated cart total and subtotal
+        $total = $this->getCartTotal();
+        $subtotal = $this->getCartSubtotal();
+        
+        return response()->json(compact('total', 'subtotal'));
     }
+    
+    // Calculate the cart subtotal (total price without taxes or discounts)
+    private function getCartSubtotal()
+    {
+        $cart = session()->get('cart', []);
+        $subtotal = 0;
+    
+        foreach ($cart as $item) {
+            $subtotal += $item['price'] * $item['quantity']; // Multiply price by quantity for each item
+        }
+    
+        return $subtotal;
+    }
+    
+    // Calculate the total (including tax, discounts, etc.)
+    private function getCartTotal()
+    {
+        $subtotal = $this->getCartSubtotal();
+    
+        // Tax calculation (you can modify this logic as needed)
+        $taxRate = 0.1; // Example: 10% tax
+        $tax = $subtotal * $taxRate;
+    
+        // Example: total = subtotal + tax
+        $total = $subtotal + $tax;
+    
+        return $total;
+    }
+    
 
     public function store(Request $request)
     {
+        // Log the incoming data for debugging
+        Log::info('Store request data:', $request->all());
+    
         // Validate user input
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -118,7 +138,6 @@ class CartController extends Controller
             'payment_method' => 'required|string|in:online,cash_on_delivery',
         ]);
     
-        // If validation fails, redirect back with errors
         if ($validator->fails()) {
             return redirect()->route('cart.index')
                              ->withErrors($validator)
@@ -126,27 +145,20 @@ class CartController extends Controller
         }
     
         // Retrieve the cart from the session
-        $cart = session()->get('cart', []);
-    
-        // Check if the cart is empty
-        if (empty($cart)) {
-            return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
+        $cart = session()->get('cart');
+        if (!$cart || count($cart) == 0) {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
     
-        // Calculate the total price
-        $subtotal = 0;
-        foreach ($cart as $item) {
-            $subtotal += $item['price'] * $item['quantity'];
-        }
+        // Calculate total price
+        $total = array_sum(array_map(function ($item) {
+            return $item['price'] * $item['quantity'];
+        }, $cart));
     
-        // Optionally, apply any discounts (if needed, e.g., for coupons)
-        $discount = 0; // For simplicity, no discount here
-        $total = $subtotal - $discount;
+        // Generate a unique order number
+        $orderNumber = strtoupper(uniqid('ORD-'));
     
-        // Generate a unique order number (for example, using timestamp or a random string)
-        $orderNumber = 'ORD-' . strtoupper(uniqid());
-    
-        // Create the order and store the cart items as JSON
+        // Create a new order in the database
         $order = Order::create([
             'order_number' => $orderNumber,
             'name' => $request->name,
@@ -159,10 +171,15 @@ class CartController extends Controller
             'notes' => $request->notes,
         ]);
     
-        // Clear the cart from the session
+        // Log the order details
+        Log::info('Order placed successfully:', $order->toArray());
+    
+        // Clear the cart from session
         session()->forget('cart');
     
-        // Redirect with success message
-        return redirect()->route('cart.index')->with('success', 'Your order has been placed successfully!');
+        // Redirect to a confirmation page or order details page
+        return redirect()->route('cart.index')->with('success', 'Order placed successfully!');
     }
+    
+    
 }    
