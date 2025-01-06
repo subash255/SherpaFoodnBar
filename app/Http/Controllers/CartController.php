@@ -112,7 +112,7 @@ public function store(Request $request)
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255',
         'phone' => 'required|string|max:15',
-        'payment_method' => 'required|string|in:online,cash_on_delivery',
+        'payment_method' => 'required|string|in:online,cash_on_pickup',
         'cart_data' => 'required|string',  // Ensure cart data is received
     ]);
 
