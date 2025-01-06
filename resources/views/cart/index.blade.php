@@ -5,7 +5,10 @@
 
     <!-- Check if there are cart items -->
     @if (session()->has('cart') && count(session()->get('cart')) > 0)
-    <div id="cart-items-container">
+    <form action="{{route('cart.store')}}" method="POST">
+        @csrf
+        <input type="hidden" name="cart_data" value="{{ json_encode(session()->get('cart')) }}">
+
         <!-- Cart Items Section -->
         @foreach (session()->get('cart') as $fooditemId => $item)
         <div class="bg-white shadow-lg rounded-lg p-6 mb-6 flex flex-col sm:flex-row items-center justify-between" id="cart-item-{{ $fooditemId }}">
@@ -30,10 +33,10 @@
                 <div class="flex items-center bg-red-100 rounded-md">
 
                     <!-- Quantity controls for cart items -->
-                    <div class="quantity-controls">
-                        <button type="button" class="decrease-btn" data-fooditem-id="{{ $fooditemId }}" data-action="decrease">-</button>
-                        <span class="quantity text-gray-800 font-medium">{{ $item['quantity'] }}</span>
-                        <button type="button" class="increase-btn" data-fooditem-id="{{ $fooditemId }}" data-action="increase">+</button>
+                    <div class="quantity-controls flex items-center">
+                        <button type="button" class="decrease-btn px-4 py-2 bg-white text-gray-700 hover:bg-gray-200 rounded-l-md" data-fooditem-id="{{ $fooditemId }}" data-action="decrease">-</button>
+                        <span class="quantity text-gray-800 font-medium px-4 py-2">{{ $item['quantity'] }}</span>
+                        <button type="button" class="increase-btn px-4 py-2 bg-white text-gray-700 hover:bg-gray-200 rounded-r-md" data-fooditem-id="{{ $fooditemId }}" data-action="increase">+</button>
                     </div>
 
                 </div>
@@ -93,18 +96,33 @@
                     </div>
                 </div>
             </div>
-        <!-- You can keep this section unchanged for this demonstration -->
-        <div class="mt-6 flex justify-between items-center">
-            <p class="text-xl font-semibold">Subtotal: $<span id="subtotal">{{ number_format($cartSubtotal, 2) }}</span></p>
-            <button type="submit" class="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition">Proceed to Checkout</button>
+
+            <!-- Cart Total and Checkout -->
+            <div class="mt-6 lg:mt-0 flex justify-between items-center bg-white p-6 rounded-lg shadow-lg">
+                <p class="text-xl font-semibold text-gray-800">Subtotal: $<span id="subtotal">{{ number_format($cartSubtotal, 2) }}</span></p>
+                <button type="submit" class="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition">Proceed to Checkout</button>
+            </div>
         </div>
 
     </form>
     @else
     <div class="text-center">
+        
+        <div class="text-gray-700 mb-6">
+            <i class="ri-shopping-cart-2-fill text-6xl"></i> 
+        </div>
+    
+        <!-- Heading -->
         <h1 class="text-2xl font-bold text-gray-800 mb-2">Cart Is Empty</h1>
         <p class="text-gray-600 mb-6">Your cart is empty, please add items to your cart to place an order.</p>
-    </div>
+    
+        <!-- Buttons -->
+        <div class="justify-center">
+          <a href="{{route('menu.index')}}" class="bg-gradient-to-r from-orange-400 to-red-500 text-white font-medium px-6 py-2 rounded-md shadow-md hover:shadow-lg transition-shadow">
+           Go to Menu
+          </a>
+        </div>
+      </div>
     @endif
 
 </div>
@@ -169,9 +187,9 @@
             $.each(cart, function(id, item) {
                 subtotal += item.price * item.quantity;
             });
-            $('#subtotal').text('$' + subtotal.toFixed(2));
+            $('#subtotal').text( subtotal.toFixed(2));
             let total = subtotal; // Apply any discounts here if necessary
-            $('#total').text('$' + total.toFixed(2));
+            $('#total').text( total.toFixed(2));
         }
     });
 </script>
