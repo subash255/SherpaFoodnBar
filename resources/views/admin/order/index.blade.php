@@ -1,7 +1,5 @@
 @extends('layouts.app')
 @section('content')
-   
-
     {{-- Flash Message --}}
     @if (session('success'))
         <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
@@ -18,13 +16,24 @@
         }, 3000);
     </script>
 
-
-
-   
-
+    <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
+        <div class="flex justify-end gap-2 mb-4">
+            <a href="{{ route('admin.order.index', ['status' => 'pending', 'entries' => request('entries')]) }}"
+               class="border-2 {{ request('status') == 'pending' ? 'bg-blue-500 text-white' : 'border-blue-500 text-blue-500' }} font-bold px-6 py-1 rounded-lg hover:bg-blue-500 hover:text-white">
+                Pending
+            </a>
+            <a href="{{ route('admin.order.index', ['status' => 'delivered', 'entries' => request('entries')]) }}"
+               class="border-2 {{ request('status') == 'delivered' ? 'bg-green-500 text-white' : 'border-green-500 text-green-500' }} font-bold px-6 py-1 rounded-lg hover:bg-green-500 hover:text-white">
+                Delivered
+            </a>
+            <a href="{{ route('admin.order.index', ['status' => 'rejected', 'entries' => request('entries')]) }}"
+               class="border-2 {{ request('status') == 'rejected' ? 'bg-red-500 text-white' : 'border-red-500 text-red-500' }} font-bold px-6 py-1 rounded-lg hover:bg-red-500 hover:text-white">
+                Rejected
+            </a>
+        </div>
         
-<div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
         <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
+
             <div class="flex items-center space-x-2">
                 <label for="entries" class="mr-2">Show entries:</label>
                 <select id="entries" class="border border-gray-300 px-5 py-1 w-full sm:w-auto pr-10"
@@ -41,6 +50,7 @@
                     class="border border-gray-300 px-4 py-2 w-full sm:w-96" />
             </div>
         </div>
+
 
         <div class="overflow-x-auto">
             <!-- Table Section -->
@@ -126,38 +136,44 @@
                 {{ $orders->links() }}
             </div>
         </div>
-
-
     </div>
 
     <script>
-      
-document.getElementById('search').addEventListener('input', function() {
-    const searchQuery = this.value.toLowerCase(); 
-    history.pushState(null, null, `?search=${searchQuery}`);
-    filterTableByUsername(searchQuery);
-});
+        document.getElementById('search').addEventListener('input', function() {
+            const searchQuery = this.value.toLowerCase(); 
+            history.pushState(null, null, `?search=${searchQuery}`);
+            filterTableByUsername(searchQuery);
+        });
 
+        function filterTableByUsername(query) {
+            const rows = document.querySelectorAll('#usersTable tbody tr');
+            rows.forEach(row => {
+                const cells = row.getElementsByTagName('td');
+                const usernameCell = cells[1];
 
-function filterTableByUsername(query) {
-    const rows = document.querySelectorAll('#usersTable tbody tr'); 
-    rows.forEach(row => {
-        const cells = row.getElementsByTagName('td'); 
-        const usernameCell = cells[1];
-
-        if (usernameCell.textContent.toLowerCase().startsWith(query)) {
-            row.style.display = ''; 
-        } else {
-            row.style.display = 'none'; 
+                if (usernameCell.textContent.toLowerCase().startsWith(query)) {
+                    row.style.display = ''; 
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         }
-    });
-}
 
-window.addEventListener('popstate', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchQuery = urlParams.get('search') || '';
-    document.getElementById('search').value = searchQuery; 
-    filterTableByUsername(searchQuery); 
-});
-        </script>
+        window.addEventListener('popstate', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('search') || '';
+            document.getElementById('search').value = searchQuery;
+            filterTableByUsername(searchQuery);
+        });
+    </script>
+
+<script>
+    function filterByStatus(status) {
+        // Update the URL with the selected status
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('status', status);
+        window.location.href = currentUrl.toString(); // Redirect to the new URL
+    }
+</script>
+
 @endsection

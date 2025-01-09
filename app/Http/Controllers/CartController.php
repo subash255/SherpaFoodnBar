@@ -13,25 +13,25 @@ use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
-    // Add to Cart
+   
     // Adding an item to the cart
 public function addToCart(Request $request)
 {
     $fooditem = FoodItem::findOrFail($request->fooditem_id);
-
+    
     $cart = session()->get('cart', []);
 
-    // Add or update the item in the cart
     if (isset($cart[$fooditem->id])) {
         $cart[$fooditem->id]['quantity']++;
     } else {
-        $cart[$fooditem->id] = [
-            'name' => $fooditem->name,
-            'description' => $fooditem->description,
-            'price' => $fooditem->price,
-            'quantity' => 1,
-            'image_url' => $fooditem->image_url,
-        ];
+            $cart[$fooditem->id] = [
+                'name' => $fooditem->name,
+                'description' => $fooditem->description,
+                'price' => $fooditem->price,
+                'quantity' => 1,
+                'image' => $fooditem->image,  
+            ];
+        
     }
 
     session()->put('cart', $cart);
