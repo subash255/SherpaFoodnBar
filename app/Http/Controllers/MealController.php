@@ -43,7 +43,7 @@ class MealController extends Controller
     public function edit($id)
     {
         $meal = Meal::findOrFail($id);
-        return view('admin.category.edit', compact('meal'), [
+        return view('admin.meal.edit', compact('meal'), [
             'title' => 'Manage Meal'
         ]);
     }

@@ -29,7 +29,7 @@
     }, 3000);
 </script>
 
-<div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
+<div class="p-4 bg-white shadow-lg -mt-12 mx-4 z-20 rounded-lg">
     <div class="mb-4 flex justify-end">
         <button id="openModalButton"
             class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">
@@ -92,7 +92,7 @@
             <thead>
                 <tr class="bg-gray-100">
                     <th class="border border-gray-300 px-4 py-2">S.N</th>
-                    <th class="border border-gray-300 px-4 py-2">meal Name</th>
+                    <th class="border border-gray-300 px-4 py-2">Meal Name</th>
                     <th class="border border-gray-300 px-4 py-2">Status</th>
                     <th class="border border-gray-300 px-4 py-2">Action</th>
                 </tr>
@@ -112,7 +112,7 @@
                     </td>
                     <td class="px-2 py-2 mt-2 flex justify-center space-x-4">
                         <!-- Edit Icon -->
-                        <a href="{{ route('admin.meal.edit', ['id' => $meal->id]) }}" class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                        <a href="{{ route('admin.meal.edit', $meal->id) }}" class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                             <i class="ri-edit-box-line text-white"></i>
                         </a>
                         <!-- Delete Icon -->
@@ -125,7 +125,7 @@
                         </form>
 
                         <!-- Settings Icon -->
-                        <form action="#" method="get">
+                        <form action="{{route('admin.submeal.index',$meal->id)}} " method="get">
                             @csrf
 
                             <button class="bg-green-500 hover:bg-green-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
@@ -254,11 +254,10 @@ function filterTableByMealname(query) {
     const rows = document.querySelectorAll('#mealTable tbody tr'); 
     rows.forEach(row => {
         const cells = row.getElementsByTagName('td');
-        const mealCell = cells[1];  // Assuming the category is in the first column (index 0)
-
+        const mealCell = cells[1];
         if (mealCell) {
-            const mealText = mealCell.textContent.trim().toLowerCase();  // Get the category name, trimmed and lowercase
-            if (mealText.includes(query)) {  // Use 'includes' to match anywhere in the category name
+            const mealText = mealCell.textContent.trim().toLowerCase();  // Get the meal name, trimmed and lowercase
+            if (mealText.includes(query)) {  // Use 'includes' to match anywhere in the meal name
                 row.style.display = '';  // Show the row
             } else {
                 row.style.display = 'none';  // Hide the row

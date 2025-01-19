@@ -12,6 +12,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubcategoryController;
+use App\Http\Controllers\SubmealController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -97,6 +98,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('meal/{id}/edit', [MealController::class, 'edit'])->name('admin.meal.edit');
     Route::patch('meal/{id}', [MealController::class, 'update'])->name('admin.meal.update');
     Route::delete('meal/{id}', [MealController::class, 'destroy'])->name('admin.meal.delete');
+
+    //submeal routes
+    Route::get('submeal/{id}', [SubmealController::class, 'index'])->name('admin.submeal.index');
+    Route::post('submeal', [SubmealController::class, 'store'])->name('admin.submeal.store');
+    Route::get('submeal/{id}/edit', [SubmealController::class, 'edit'])->name('admin.submeal.edit');
+    Route::patch('submeal/{id}', [SubmealController::class, 'update'])->name('admin.submeal.update');
+    Route::delete('submeal/{id}', [SubmealController::class, 'destroy'])->name('admin.submeal.destroy');
 
 });
 
