@@ -21,7 +21,7 @@
 
         <div class="overflow-x-auto">
             <!-- Table Section -->
-            <table id="bookingTable" class="min-w-full border-collapse border border-gray-300">
+            <table id="bookingTable" class="min-w-full border-separate border-spacing-0 border border-gray-300">
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="border border-gray-300 px-4 py-2">S.N</th>
@@ -30,19 +30,20 @@
                         <th class="border border-gray-300 px-4 py-2">Phone number</th>
                         <th class="border border-gray-300 px-4 py-2">Total people</th>
                         <th class="border border-gray-300 px-4 py-2">Booking Date</th>
-                        <th class="border border-gray-300 px-4 py-2">Action</th>
+                        <th class="border border-gray-300 px-4 py-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($bookings as $booking)
-                        <tr class="border border-gray-300">
-                            <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
+                        <tr class="bg-white hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-2 text-center">{{ $loop->iteration }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $booking->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $booking->email }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $booking->phone }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $booking->number_of_people }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $booking->booking_date }}</td>
                             <td class="px-2 py-2 flex justify-center space-x-4">
+                                <!-- Delete Icon -->
                                 <form action="{{ route('admin.booking.destroy', ['id' => $booking->id]) }}" method="post"
                                     onsubmit="return confirm('Are you sure you want to delete this reservation item?');">
                                     @csrf
@@ -57,6 +58,7 @@
                     @endforeach
                 </tbody>
             </table>
+            
         </div>
 
        

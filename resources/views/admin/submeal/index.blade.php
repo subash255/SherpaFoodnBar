@@ -78,23 +78,6 @@
             </div>
         </div>
 
-        <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
-            <div class="flex items-center space-x-2">
-                <label for="entries" class="mr-2">Show entries:</label>
-                <select id="entries" class="border border-gray-300 px-5 py-1 w-full sm:w-auto pr-10"
-                    onchange="updateEntries()">
-                    <option value="5" {{ request('entries') == 5 ? 'selected' : '' }}>5</option>
-                    <option value="15" {{ request('entries') == 15 ? 'selected' : '' }}>15</option>
-                    <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
-                </select>
-            </div>
-
-            <div class="flex items-center space-x-2 w-full sm:w-auto">
-                <span class="text-gray-700">Search:</span>
-                <input type="text" id="search" placeholder="Search..."
-                    class="border border-gray-300 px-4 py-2 w-full sm:w-96" />
-            </div>
-        </div>
 
         <div class="overflow-x-auto">
             <table id="submealTable" class="min-w-full border-collapse border border-gray-300">
@@ -147,18 +130,6 @@
             </table>
         </div>
 
-        <!-- Pagination Section -->
-        <div class="flex justify-between items-center mt-4">
-            <div class="flex items-center space-x-2">
-                <span class="ml-4 text-gray-700">
-                    Showing {{ $submeals->firstItem() }} to {{ $submeals->lastItem() }} of {{ $submeals->total() }}
-                    entries
-                </span>
-            </div>
-            <div class="flex items-center space-x-2">
-                {{ $submeals->links() }}
-            </div>
-        </div>
     </div>
 
     <script>
@@ -239,33 +210,23 @@
             document.getElementById('submealModal').classList.add('modal-hidden'); // Hide modal
             document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
         });
-
-        //search
-        document.getElementById('search').addEventListener('input', function() {
-            const searchQuery = this.value.toLowerCase();
-            history.pushState(null, null, `?search=${searchQuery}`);
-            filterTableBySubmealname(searchQuery);
-        });
-
-        function filterTableBySubmealname(query) {
-            const rows = document.querySelectorAll('#submealTable tbody tr');
-            rows.forEach(row => {
-                const cells = row.getElementsByTagName('td');
-                const submealnameCell = cells[2];
-
-                if (submealnameCell.textContent.toLowerCase().startsWith(query)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        }
-
-        window.addEventListener('popstate', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const searchQuery = urlParams.get('search') || '';
-            document.getElementById('search').value = searchQuery;
-            filterTableBySubmealname(searchQuery);
-        });
     </script>
+
+<script>
+    $(document).ready(function () {
+        $('#submealTable').DataTable({
+            "pageLength": 10,
+            "lengthMenu": [10, 25, 50, 100], 
+            paging: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            lengthChange: true,
+            initComplete: function () {
+                $('.dataTables_length').addClass('flex items-center gap-2 mb-4'); 
+                $('select').addClass('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 w-[4rem]'); 
+            }
+        });
+    });
+</script>
 @endsection

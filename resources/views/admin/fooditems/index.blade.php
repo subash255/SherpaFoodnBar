@@ -140,27 +140,10 @@
             </div>
         </div>
 
-        <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
-            <div class="flex items-center space-x-2">
-                <label for="entries" class="mr-2">Show entries:</label>
-                <select id="entries" class="border border-gray-300 px-5 py-1 w-full sm:w-auto pr-10"
-                    onchange="updateEntries()">
-                    <option value="5" {{ request('entries') == 5 ? 'selected' : '' }}>5</option>
-                    <option value="15" {{ request('entries') == 15 ? 'selected' : '' }}>15</option>
-                    <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
-                </select>
-            </div>
-
-            <div class="flex items-center space-x-2 w-full sm:w-auto">
-                <span class="text-gray-700">Search:</span>
-                <input type="text" id="search" placeholder="Search..."
-                    class="border border-gray-300 px-4 py-2 w-full sm:w-96" />
-            </div>
-        </div>
 
         <div class="overflow-x-auto">
             <!-- Table Section -->
-            <table id="foodTable" class="min-w-full border-collapse border border-gray-300">
+            <table id="foodTable" class="min-w-full border-separate border-spacing-0 border border-gray-300">
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="border border-gray-300 px-4 py-2">S.N</th>
@@ -169,28 +152,26 @@
                         <th class="border border-gray-300 px-4 py-2">Type</th>
                         <th class="border border-gray-300 px-4 py-2">Price</th>
                         <th class="border border-gray-300 px-4 py-2">Status</th>
-                        <th class="border border-gray-300 px-4 py-2">Action</th>
+                        <th class="border border-gray-300 px-4 py-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($foodItems as $foodItem)
-                        <tr class="border border-gray-300">
-                            <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
+                        <tr class="bg-white hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-2 text-center">{{ $loop->iteration }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $foodItem->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ optional($foodItem->category)->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $foodItem->type }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $foodItem->price }}</td>
                             <td class="border border-gray-300 px-4 py-2">
                                 <label for="status{{ $foodItem->id }}" class="inline-flex items-center cursor-pointer">
-                                <input id="status{{ $foodItem->id }}" type="checkbox" class="hidden toggle-switch" data-id="{{ $foodItem->id }}" {{ $foodItem->status ? 'checked' : '' }} />
-
+                                    <input id="status{{ $foodItem->id }}" type="checkbox" class="hidden toggle-switch" data-id="{{ $foodItem->id }}" {{ $foodItem->status ? 'checked' : '' }} />
                                     <div class="w-10 h-6 bg-gray-200 rounded-full relative">
-                                        <div class="dot absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition">
-                                        </div>
+                                        <div class="dot absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition"></div>
                                     </div>
                                 </label>
                             </td>
-                            <td class="px-2 py-2 flex justify-center space-x-4">
+                            <td class="px-2 py-2 flex justify-center space-x-4 border border-gray-300">
                                 <!-- Edit Icon -->
                                 <a href="{{ route('admin.fooditems.edit', ['id' => $foodItem->id]) }}"
                                     class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
@@ -198,12 +179,10 @@
                                 </a>
                                 <!-- Delete Icon -->
                                 <form action="{{ route('admin.fooditems.destroy', ['id' => $foodItem->id]) }}"
-                                    method="post"
-                                    onsubmit="return confirm('Are you sure you want to delete this food item?');">
+                                    method="post" onsubmit="return confirm('Are you sure you want to delete this food item?');">
                                     @csrf
                                     @method('delete')
-                                    <button
-                                        class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                                    <button class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                                         <i class="ri-delete-bin-line text-white"></i>
                                     </button>
                                 </form>
@@ -212,21 +191,7 @@
                     @endforeach
                 </tbody>
             </table>
-        </div>
-
-        <!-- Pagination and Show Entries Section at the Bottom -->
-        <div class="flex justify-between items-center mt-4">
-            <div class="flex items-center space-x-2">
-                <span class="ml-4 text-gray-700">
-                    Showing {{ $foodItems->firstItem() }} to {{ $foodItems->lastItem() }} of
-                    {{ $foodItems->total() }}
-                    entries
-                </span>
-            </div>
-
-            <div class="flex items-center space-x-2">
-                {{ $foodItems->links() }}
-            </div>
+            
         </div>
 
 
@@ -312,34 +277,23 @@
             document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
         });
 
-        //search
-    document.getElementById('search').addEventListener('input', function() {
-        const searchQuery = this.value.toLowerCase();
-        history.pushState(null, null, `?search=${searchQuery}`);
-        filterTableByFoodname(searchQuery);
-    });
+    </script>
 
-
-    function filterTableByFoodname(query) {
-        const rows = document.querySelectorAll('#foodTable tbody tr');
-        rows.forEach(row => {
-            const cells = row.getElementsByTagName('td');
-            const foodnameCell = cells[1];
-
-            if (foodnameCell.textContent.toLowerCase().startsWith(query)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
+<script>
+    $(document).ready(function () {
+        $('#foodTable').DataTable({
+            "pageLength": 10,
+            "lengthMenu": [10, 25, 50, 100], 
+            paging: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            lengthChange: true,
+            initComplete: function () {
+                $('.dataTables_length').addClass('flex items-center gap-2 mb-4'); 
+                $('select').addClass('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 w-[4rem]'); 
             }
         });
-    }
-
-    window.addEventListener('popstate', function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const searchQuery = urlParams.get('search') || '';
-        document.getElementById('search').value = searchQuery;
-        filterTableByFoodname(searchQuery);
     });
-
-    </script>
+</script>
 @endsection

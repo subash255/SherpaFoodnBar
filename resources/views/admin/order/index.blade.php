@@ -32,29 +32,10 @@
             </a>
         </div>
 
-        <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
-
-            <div class="flex items-center space-x-2">
-                <label for="entries" class="mr-2">Show entries:</label>
-                <select id="entries" class="border border-gray-300 px-5 py-1 w-full sm:w-auto pr-10"
-                    onchange="updateEntries()">
-                    <option value="5" {{ request('entries') == 5 ? 'selected' : '' }}>5</option>
-                    <option value="15" {{ request('entries') == 15 ? 'selected' : '' }}>15</option>
-                    <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
-                </select>
-            </div>
-
-            <div class="flex items-center space-x-2 w-full sm:w-auto">
-                <span class="text-gray-700">Search:</span>
-                <input type="text" id="search" placeholder="Search..."
-                    class="border border-gray-300 px-4 py-2 w-full sm:w-96" />
-            </div>
-        </div>
-
 
         <div class="overflow-x-auto">
             <!-- Table Section -->
-            <table id="usersTable" class="min-w-full border-collapse border border-gray-300">
+            <table id="orderTable" class="min-w-full border-separate border-spacing-0 border border-gray-300">
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="border border-gray-300 px-4 py-2">S.N</th>
@@ -65,22 +46,21 @@
                         <th class="border border-gray-300 px-4 py-2">Price</th>
                         <th class="border border-gray-300 px-4 py-2">Order Num</th>
                         <th class="border border-gray-300 px-4 py-2">Status</th>
-                        {{-- <th class="border border-gray-300 px-4 py-2">Items</th> --}}
                         <th class="border border-gray-300 px-4 py-2">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($orders as $order)
-                        <tr class="border border-gray-300">
-                            <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
+                        <tr class="bg-white hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-2 text-center">{{ $loop->iteration }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->email }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->phone }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ ucfirst($order->payment_method) }} </td>
+                            <td class="border border-gray-300 px-4 py-2">{{ ucfirst($order->payment_method) }}</td>
                             <td class="border border-gray-300 px-4 py-2">${{ number_format($order->total, 2) }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->order_number }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ ucfirst($order->status) }}</td>
-
+            
                             {{-- <td class="py-3 px-4 border-b">
                                 <!-- Loop through the items array to display each item in separate rows -->
                                 <table class="min-w-full">
@@ -95,24 +75,20 @@
                                         @foreach ($order->items as $item)
                                             <tr>
                                                 <td class="border border-gray-300 px-4 py-2">{{ $item['name'] }}</td>
-                                                <td class="border border-gray-300 px-4 py-2">
-                                                    ${{ number_format($item['price'], 2) }}</td>
-                                                <td class="border border-gray-300 px-4 py-2">{{ $item['description'] }}
-                                                </td>
+                                                <td class="border border-gray-300 px-4 py-2">${{ number_format($item['price'], 2) }}</td>
+                                                <td class="border border-gray-300 px-4 py-2">{{ $item['description'] }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </td> --}}
-
+            
                             <td class="px-2 py-2 flex justify-center space-x-4">
-
-                                <form action="{{ route('admin.order.destroy', ['id' => $order->id]) }}" method="post"
-                                    onsubmit="return confirm('Are you sure you want to delete this orders?');">
+                                <!-- Delete Icon -->
+                                <form action="{{ route('admin.order.destroy', ['id' => $order->id]) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this order?');">
                                     @csrf
                                     @method('delete')
-                                    <button
-                                        class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                                    <button class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center border-none outline-none focus:ring-0">
                                         <i class="ri-delete-bin-line text-white"></i>
                                     </button>
                                 </form>
@@ -121,52 +97,11 @@
                     @endforeach
                 </tbody>
             </table>
+            
         </div>
 
-        <!-- Pagination and Show Entries Section at the Bottom -->
-        <div class="flex justify-between items-center mt-4">
-            <div class="flex items-center space-x-2">
-                <span class="ml-4 text-gray-700">
-                    Showing {{ $orders->firstItem() }} to {{ $orders->lastItem() }} of
-                    {{ $orders->total() }}
-                    entries
-                </span>
-            </div>
-
-            <div class="flex items-center space-x-2">
-                {{ $orders->links() }}
-            </div>
-        </div>
     </div>
 
-    <script>
-        document.getElementById('search').addEventListener('input', function() {
-            const searchQuery = this.value.toLowerCase();
-            history.pushState(null, null, `?search=${searchQuery}`);
-            filterTableByUsername(searchQuery);
-        });
-
-        function filterTableByUsername(query) {
-            const rows = document.querySelectorAll('#usersTable tbody tr');
-            rows.forEach(row => {
-                const cells = row.getElementsByTagName('td');
-                const usernameCell = cells[1];
-
-                if (usernameCell.textContent.toLowerCase().startsWith(query)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        }
-
-        window.addEventListener('popstate', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const searchQuery = urlParams.get('search') || '';
-            document.getElementById('search').value = searchQuery;
-            filterTableByUsername(searchQuery);
-        });
-    </script>
 
     <script>
         function filterByStatus(status) {
@@ -176,4 +111,22 @@
             window.location.href = currentUrl.toString(); // Redirect to the new URL
         }
     </script>
+
+<script>
+    $(document).ready(function () {
+        $('#orderTable').DataTable({
+            "pageLength": 10,
+            "lengthMenu": [10, 25, 50, 100], 
+            paging: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            lengthChange: true,
+            initComplete: function () {
+                $('.dataTables_length').addClass('flex items-center gap-2 mb-4'); 
+                $('select').addClass('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 w-[4rem]'); 
+            }
+        });
+    });
+</script>
 @endsection

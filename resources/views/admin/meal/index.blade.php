@@ -74,19 +74,19 @@
 
     <!-- Table Section -->
     <div class="overflow-x-auto">
-        <table id="mealTable" class="min-w-full border-collapse border border-gray-300">
+        <table id="mealTable" class="min-w-full border-separate border-spacing-0 border border-gray-300">
             <thead>
                 <tr class="bg-gray-100">
                     <th class="border border-gray-300 px-4 py-2">S.N</th>
                     <th class="border border-gray-300 px-4 py-2">Meal Name</th>
                     <th class="border border-gray-300 px-4 py-2">Status</th>
-                    <th class="border border-gray-300 px-4 py-2">Action</th>
+                    <th class="border border-gray-300 px-4 py-2">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($meals as $meal)
-                <tr class="border border-gray-300">
-                    <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
+                <tr class="bg-white hover:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2 text-center">{{ $loop->iteration }}</td>
                     <td class="border border-gray-300 px-4 py-2">{{ $meal->name }}</td>
                     <td class="border border-gray-300 px-4 py-2">
                         <label for="status{{ $meal->id }}" class="inline-flex items-center cursor-pointer">
@@ -96,7 +96,7 @@
                             </div>
                         </label>
                     </td>
-                    <td class="px-2 py-2 mt-2 flex justify-center space-x-4">
+                    <td class="px-2 py-2 flex justify-center space-x-4 border border-gray-300">
                         <!-- Edit Icon -->
                         <a href="{{ route('admin.meal.edit', $meal->id) }}" class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                             <i class="ri-edit-box-line text-white"></i>
@@ -109,11 +109,9 @@
                                 <i class="ri-delete-bin-line text-white"></i>
                             </button>
                         </form>
-
                         <!-- Settings Icon -->
-                        <form action="{{route('admin.submeal.index',$meal->id)}} " method="get">
+                        <form action="{{ route('admin.submeal.index', $meal->id) }}" method="get">
                             @csrf
-
                             <button class="bg-green-500 hover:bg-green-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                                 <i class="ri-settings-5-line text-white"></i>
                             </button>
@@ -123,6 +121,7 @@
                 @endforeach
             </tbody>
         </table>
+        
     </div>
 
 
