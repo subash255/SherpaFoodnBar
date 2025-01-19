@@ -16,22 +16,22 @@
         }, 3000);
     </script>
 
-<div class="p-4 bg-white shadow-lg -mt-12 mx-4 z-20 rounded-lg">
+    <div class="p-4 bg-white shadow-lg -mt-12 mx-4 z-20  rounded-lg">
         <div class="flex justify-end gap-2 mb-4">
             <a href="{{ route('admin.order.index', ['status' => 'pending', 'entries' => request('entries')]) }}"
-               class="border-2 {{ request('status') == 'pending' ? 'bg-blue-500 text-white' : 'border-blue-500 text-blue-500' }} font-bold px-6 py-1 rounded-lg hover:bg-blue-500 hover:text-white">
+                class="border-2 {{ request('status') == 'pending' ? 'bg-blue-500 text-white' : 'border-blue-500 text-blue-500' }} font-bold px-6 py-1 rounded-lg hover:bg-blue-500 hover:text-white">
                 Pending
             </a>
             <a href="{{ route('admin.order.index', ['status' => 'delivered', 'entries' => request('entries')]) }}"
-               class="border-2 {{ request('status') == 'delivered' ? 'bg-green-500 text-white' : 'border-green-500 text-green-500' }} font-bold px-6 py-1 rounded-lg hover:bg-green-500 hover:text-white">
+                class="border-2 {{ request('status') == 'delivered' ? 'bg-green-500 text-white' : 'border-green-500 text-green-500' }} font-bold px-6 py-1 rounded-lg hover:bg-green-500 hover:text-white">
                 Delivered
             </a>
             <a href="{{ route('admin.order.index', ['status' => 'rejected', 'entries' => request('entries')]) }}"
-               class="border-2 {{ request('status') == 'rejected' ? 'bg-red-500 text-white' : 'border-red-500 text-red-500' }} font-bold px-6 py-1 rounded-lg hover:bg-red-500 hover:text-white">
+                class="border-2 {{ request('status') == 'rejected' ? 'bg-red-500 text-white' : 'border-red-500 text-red-500' }} font-bold px-6 py-1 rounded-lg hover:bg-red-500 hover:text-white">
                 Rejected
             </a>
         </div>
-        
+
         <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
 
             <div class="flex items-center space-x-2">
@@ -78,35 +78,36 @@
                             <td class="border border-gray-300 px-4 py-2">{{ $order->phone }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ ucfirst($order->payment_method) }} </td>
                             <td class="border border-gray-300 px-4 py-2">${{ number_format($order->total, 2) }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{$order->order_number}}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ucfirst($order->status) }}</td>
-                            
+                            <td class="border border-gray-300 px-4 py-2">{{ $order->order_number }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ ucfirst($order->status) }}</td>
+
                             <td class="py-3 px-4 border-b">
-                            <!-- Loop through the items array to display each item in separate rows -->
-                            <table class="min-w-full">
-                                <thead>
-                                    <tr>
-                                        <th class="border border-gray-300 px-4 py-2">Name</th>
-                                        <th class="border border-gray-300 px-4 py-2">Price</th>
-                                        <th class="border border-gray-300 px-4 py-2">Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($order->items as $item)
+                                <!-- Loop through the items array to display each item in separate rows -->
+                                <table class="min-w-full">
+                                    <thead>
                                         <tr>
-                                            <td class="border border-gray-300 px-4 py-2">{{ $item['name'] }}</td>
-                                            <td class="border border-gray-300 px-4 py-2">${{ number_format($item['price'], 2) }}</td>
-                                            <td class="border border-gray-300 px-4 py-2">{{ $item['description'] }}</td>
+                                            <th class="border border-gray-300 px-4 py-2">Name</th>
+                                            <th class="border border-gray-300 px-4 py-2">Price</th>
+                                            <th class="border border-gray-300 px-4 py-2">Description</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </td>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($order->items as $item)
+                                            <tr>
+                                                <td class="border border-gray-300 px-4 py-2">{{ $item['name'] }}</td>
+                                                <td class="border border-gray-300 px-4 py-2">
+                                                    ${{ number_format($item['price'], 2) }}</td>
+                                                <td class="border border-gray-300 px-4 py-2">{{ $item['description'] }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </td>
 
                             <td class="px-2 py-2 flex justify-center space-x-4">
-                               
-                                <form action="{{ route('admin.order.destroy', ['id' => $order->id]) }}"
-                                    method="post"
+
+                                <form action="{{ route('admin.order.destroy', ['id' => $order->id]) }}" method="post"
                                     onsubmit="return confirm('Are you sure you want to delete this orders?');">
                                     @csrf
                                     @method('delete')
@@ -140,7 +141,7 @@
 
     <script>
         document.getElementById('search').addEventListener('input', function() {
-            const searchQuery = this.value.toLowerCase(); 
+            const searchQuery = this.value.toLowerCase();
             history.pushState(null, null, `?search=${searchQuery}`);
             filterTableByUsername(searchQuery);
         });
@@ -152,7 +153,7 @@
                 const usernameCell = cells[1];
 
                 if (usernameCell.textContent.toLowerCase().startsWith(query)) {
-                    row.style.display = ''; 
+                    row.style.display = '';
                 } else {
                     row.style.display = 'none';
                 }
@@ -167,13 +168,12 @@
         });
     </script>
 
-<script>
-    function filterByStatus(status) {
-        // Update the URL with the selected status
-        const currentUrl = new URL(window.location.href);
-        currentUrl.searchParams.set('status', status);
-        window.location.href = currentUrl.toString(); // Redirect to the new URL
-    }
-</script>
-
+    <script>
+        function filterByStatus(status) {
+            // Update the URL with the selected status
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('status', status);
+            window.location.href = currentUrl.toString(); // Redirect to the new URL
+        }
+    </script>
 @endsection
