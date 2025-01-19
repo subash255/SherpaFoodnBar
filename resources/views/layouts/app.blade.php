@@ -51,7 +51,7 @@
             <i class="ri-cup-line"></i>
           <span class="ml-4 font-semibold">Food Items</span>
         </a>
-        <a href="{{route('admin.meals.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.fooditems.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
+        <a href="{{route('admin.meal.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.fooditems.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-cup-line"></i>
         <span class="ml-4 font-semibold">Meals</span>
       </a>

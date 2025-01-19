@@ -112,7 +112,7 @@
                     </td>
                     <td class="px-2 py-2 mt-2 flex justify-center space-x-4">
                         <!-- Edit Icon -->
-                        <a href="{{ route('admin.meal.edit', ['id' => $meal->id]) }}" class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                        <a href="{{ route('admin.meal.edit', $meal->id) }}" class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                             <i class="ri-edit-box-line text-white"></i>
                         </a>
                         <!-- Delete Icon -->
@@ -125,7 +125,7 @@
                         </form>
 
                         <!-- Settings Icon -->
-                        <form action="#" method="get">
+                        <form action="{{route('admin.submeal.index',$meal->id)}} " method="get">
                             @csrf
 
                             <button class="bg-green-500 hover:bg-green-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
@@ -254,11 +254,11 @@ function filterTableByMealname(query) {
     const rows = document.querySelectorAll('#mealTable tbody tr'); 
     rows.forEach(row => {
         const cells = row.getElementsByTagName('td');
-        const mealCell = cells[1];  // Assuming the category is in the first column (index 0)
+        const mealCell = cells[1];  // Assuming the meal is in the first column (index 0)
 
         if (mealCell) {
-            const mealText = mealCell.textContent.trim().toLowerCase();  // Get the category name, trimmed and lowercase
-            if (mealText.includes(query)) {  // Use 'includes' to match anywhere in the category name
+            const mealText = mealCell.textContent.trim().toLowerCase();  // Get the meal name, trimmed and lowercase
+            if (mealText.includes(query)) {  // Use 'includes' to match anywhere in the meal name
                 row.style.display = '';  // Show the row
             } else {
                 row.style.display = 'none';  // Hide the row
