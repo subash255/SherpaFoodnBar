@@ -1,7 +1,5 @@
 @extends('layouts.app')
 @section('content')
-   
-
     {{-- Flash Message --}}
     @if (session('success'))
         <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
@@ -20,10 +18,10 @@
 
 
 
-   
 
-        
-<div class="p-4 bg-white shadow-lg -mt-12 mx-4 z-20 rounded-lg">
+
+
+    <div class="p-4 bg-white shadow-lg -mt-12 mx-4 z-20 rounded-lg">
         <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
             <div class="flex items-center space-x-2">
                 <label for="entries" class="mr-2">Show entries:</label>
@@ -44,7 +42,7 @@
 
         <div class="overflow-x-auto">
             <!-- Table Section -->
-            <table id="usersTable" class="min-w-full border-collapse border border-gray-300">
+            <table id="bookingTable" class="min-w-full border-collapse border border-gray-300">
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="border border-gray-300 px-4 py-2">S.N</th>
@@ -64,10 +62,9 @@
                             <td class="border border-gray-300 px-4 py-2">{{ $booking->email }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $booking->phone }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $booking->number_of_people }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{$booking->booking_date}}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $booking->booking_date }}</td>
                             <td class="px-2 py-2 flex justify-center space-x-4">
-                                <form action="{{ route('admin.booking.destroy', ['id' => $booking->id]) }}"
-                                    method="post"
+                                <form action="{{ route('admin.booking.destroy', ['id' => $booking->id]) }}" method="post"
                                     onsubmit="return confirm('Are you sure you want to delete this reservation item?');">
                                     @csrf
                                     @method('delete')
@@ -102,42 +99,69 @@
     </div>
 
     <script>
-      // Handle the search input event
-document.getElementById('search').addEventListener('input', function() {
-    const searchQuery = this.value.toLowerCase(); // Get the search query, converted to lowercase
+        // Handle the search input event
+        document.getElementById('search').addEventListener('input', function() {
+            const searchQuery = this.value.toLowerCase(); // Get the search query, converted to lowercase
 
-    // Update the URL without reloading the page (optional)
-    history.pushState(null, null, `?search=${searchQuery}`);
+            // Update the URL without reloading the page (optional)
+            history.pushState(null, null, `?search=${searchQuery}`);
 
-    // Filter the table rows based on the search query
-    filterTableByUsername(searchQuery);
-});
+            // Filter the table rows based on the search query
+            filterTableByUsername(searchQuery);
+        });
 
-// Function to filter the table rows by username (first column), progressively
-function filterTableByUsername(query) {
-    const rows = document.querySelectorAll('#usersTable tbody tr'); // Select all table rows
-    rows.forEach(row => {
-        const cells = row.getElementsByTagName('td'); // Get all cells in the current row
-        const usernameCell = cells[0]; // The first column is the username (Name)
+        // Function to filter the table rows by username (first column), progressively
+        function filterTableByUsername(query) {
+            const rows = document.querySelectorAll('#usersTable tbody tr'); // Select all table rows
+            rows.forEach(row => {
+                const cells = row.getElementsByTagName('td'); // Get all cells in the current row
+                const usernameCell = cells[0]; // The first column is the username (Name)
 
-        // Check if the username cell text starts with the search query
-        if (usernameCell.textContent.toLowerCase().startsWith(query)) {
-            row.style.display = ''; // Show the row if it starts with the query
-        } else {
-            row.style.display = 'none'; // Hide the row if it doesn't match
+                // Check if the username cell text starts with the search query
+                if (usernameCell.textContent.toLowerCase().startsWith(query)) {
+                    row.style.display = ''; // Show the row if it starts with the query
+                } else {
+                    row.style.display = 'none'; // Hide the row if it doesn't match
+                }
+            });
         }
+
+        // Optional: Handle browser's back/forward buttons to maintain the search query
+        window.addEventListener('popstate', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('search') || '';
+            document.getElementById('search').value = searchQuery; // Set the search box to the value from the URL
+            filterTableByUsername(searchQuery); // Filter the table based on the search query
+        });
+    </script>
+
+<script>
+    document.getElementById('search').addEventListener('input', function() {
+        const searchQuery = this.value.toLowerCase();
+        history.pushState(null, null, `?search=${searchQuery}`);
+        filterTableByBookingname(searchQuery);
     });
-}
-
-// Optional: Handle browser's back/forward buttons to maintain the search query
-window.addEventListener('popstate', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchQuery = urlParams.get('search') || '';
-    document.getElementById('search').value = searchQuery; // Set the search box to the value from the URL
-    filterTableByUsername(searchQuery); // Filter the table based on the search query
-});
 
 
+    function filterTableByBookingname(query) {
+        const rows = document.querySelectorAll('#bookingTable tbody tr');
+        rows.forEach(row => {
+            const cells = row.getElementsByTagName('td');
+            const bookingnameCell = cells[2];
 
-        </script>
+            if (bookingnameCell.textContent.toLowerCase().startsWith(query)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    window.addEventListener('popstate', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('search') || '';
+        document.getElementById('search').value = searchQuery;
+        filterTableByBookingname(searchQuery);
+    });
+</script>
 @endsection

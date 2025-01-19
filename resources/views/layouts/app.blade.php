@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Raleway:wght@100..900&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
   @vite(['resources/css/app.css', 'resources/js/app.js'])
   <script>
@@ -39,31 +41,31 @@
         <img id="logo" src="{{ asset('images/logo.jpg') }}" alt="Logo" class="w-32 h-32 rounded-full border-2 border-gray-500 object-contain">
       </div>
       <nav class="mt-6">
-        <a href="{{ route('admin.dashboard') }}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.dashboard') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
+        <a href="{{ route('admin.dashboard') }}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.dashboard') ? 'bg-red-600 text-white' : 'hover:bg-red-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-layout-masonry-fill"></i>
           <span class="ml-4 font-semibold">Dashboard</span>
         </a>
-        <a href="{{route('admin.category.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.category.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
+        <a href="{{route('admin.category.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.category.index') ? 'bg-red-600 text-white' : 'hover:bg-red-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-grid-line"></i>
           <span class="ml-4 font-semibold">Category</span>
         </a>
-        <a href="{{route('admin.fooditems.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.fooditems.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
-            <i class="ri-cup-line"></i>
+        <a href="{{route('admin.fooditems.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.fooditems.index') ? 'bg-red-600 text-white' : 'hover:bg-red-500 hover:text-white' }} transition-colors duration-200">
+            <i class="ri-cup-fill"></i>
           <span class="ml-4 font-semibold">Food Items</span>
         </a>
-        <a href="{{route('admin.meals.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.fooditems.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
-          <i class="ri-cup-line"></i>
+        <a href="{{route('admin.meal.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.meal.index') ? 'bg-red-600 text-white' : 'hover:bg-red-500 hover:text-white' }} transition-colors duration-200">
+          <i class="ri-restaurant-fill"></i>
         <span class="ml-4 font-semibold">Meals</span>
       </a>
-        <a href="{{route('admin.booking.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.booking.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
+        <a href="{{route('admin.booking.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.booking.index') ? 'bg-red-600 text-white' : 'hover:bg-red-500 hover:text-white' }} transition-colors duration-200">
             <i class="ri-calendar-check-fill"></i>
             <span class="ml-4 font-semibold">Reservations</span>
           </a>
-        <a href="{{route('admin.order.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.order.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
+        <a href="{{route('admin.order.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.order.index') ? 'bg-red-600 text-white' : 'hover:bg-red-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-shopping-cart-2-fill"></i>
           <span class="ml-4 font-semibold">Orders</span>
         </a>
-        <a href="{{route('admin.banner.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.banner.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
+        <a href="{{route('admin.banner.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.banner.index') ? 'bg-red-600 text-white' : 'hover:bg-red-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-image-fill"></i>
           <span class="ml-4 font-semibold">Banners</span>
         </a>

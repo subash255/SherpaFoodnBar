@@ -61,11 +61,11 @@
                         <th class="border border-gray-300 px-4 py-2">Name</th>
                         <th class="border border-gray-300 px-4 py-2">Email</th>
                         <th class="border border-gray-300 px-4 py-2">Contact</th>
-                        <th class="border border-gray-300 px-4 py-2">payment method</th>
+                        <th class="border border-gray-300 px-4 py-2">Payment Method</th>
                         <th class="border border-gray-300 px-4 py-2">Price</th>
                         <th class="border border-gray-300 px-4 py-2">Order Num</th>
                         <th class="border border-gray-300 px-4 py-2">Status</th>
-                        <th class="border border-gray-300 px-4 py-2">Items</th>
+                        {{-- <th class="border border-gray-300 px-4 py-2">Items</th> --}}
                         <th class="border border-gray-300 px-4 py-2">Action</th>
                     </tr>
                 </thead>
@@ -81,7 +81,7 @@
                             <td class="border border-gray-300 px-4 py-2">{{ $order->order_number }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ ucfirst($order->status) }}</td>
 
-                            <td class="py-3 px-4 border-b">
+                            {{-- <td class="py-3 px-4 border-b">
                                 <!-- Loop through the items array to display each item in separate rows -->
                                 <table class="min-w-full">
                                     <thead>
@@ -103,7 +103,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                            </td>
+                            </td> --}}
 
                             <td class="px-2 py-2 flex justify-center space-x-4">
 

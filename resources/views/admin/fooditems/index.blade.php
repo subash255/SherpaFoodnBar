@@ -313,42 +313,33 @@
         });
 
         //search
-
-        document.getElementById('search').addEventListener('input', function() {
-    const searchQuery = this.value.trim().toLowerCase(); // Trim any extra spaces and convert to lowercase
-
-    // Update the URL with the encoded search query
-    history.pushState(null, null, `?search=${encodeURIComponent(searchQuery)}`);
-
-    // Filter the table based on category name
-    filterTableByfoodname(searchQuery);
-});
-
-function filterTableByfoodname(query) {
-    const rows = document.querySelectorAll('#foodTable tbody tr'); 
-    rows.forEach(row => {
-        const cells = row.getElementsByTagName('td');
-        const foodCell = cells[0];  // Assuming the food is in the first column (index 0)
-
-        if (foodCell) {
-            const foodText = foodCell.textContent.trim().toLowerCase();  // Get the food name, trimmed and lowercase
-            if (foodText.includes(query)) {  // Use 'includes' to match anywhere in the food name
-                row.style.display = '';  // Show the row
-            } else {
-                row.style.display = 'none';  // Hide the row
-            }
-        }
+    document.getElementById('search').addEventListener('input', function() {
+        const searchQuery = this.value.toLowerCase();
+        history.pushState(null, null, `?search=${searchQuery}`);
+        filterTableByFoodname(searchQuery);
     });
-}
-
-window.addEventListener('popstate', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchQuery = urlParams.get('search') || ''; // Default to empty if no search query
-    document.getElementById('search').value = searchQuery;  // Update the search input field
-    filterTableByfoodname(searchQuery); // Reapply the filter based on URL search query
-});
 
 
+    function filterTableByFoodname(query) {
+        const rows = document.querySelectorAll('#foodTable tbody tr');
+        rows.forEach(row => {
+            const cells = row.getElementsByTagName('td');
+            const foodnameCell = cells[1];
+
+            if (foodnameCell.textContent.toLowerCase().startsWith(query)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    window.addEventListener('popstate', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('search') || '';
+        document.getElementById('search').value = searchQuery;
+        filterTableByFoodname(searchQuery);
+    });
 
     </script>
 @endsection
