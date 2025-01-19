@@ -7,6 +7,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FooditemController;
 use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\MealController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
@@ -89,6 +90,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
    //order routes
     Route::get('order', [OrderController::class, 'index'])->name('admin.order.index');
     Route::delete('order/{id}', [OrderController::class, 'destroy'])->name('admin.order.destroy');
+
+    //meal routes
+    Route::get('meal/index', [MealController::class, 'index'])->name('admin.meal.index');
+    Route::post('meal', [MealController::class, 'store'])->name('admin.meal.store');
+    Route::get('meal/{id}/edit', [MealController::class, 'edit'])->name('admin.meal.edit');
+    Route::patch('meal/{id}', [MealController::class, 'update'])->name('admin.meal.update');
+    Route::delete('meal/{id}', [MealController::class, 'destroy'])->name('admin.meal.delete');
 
 });
 

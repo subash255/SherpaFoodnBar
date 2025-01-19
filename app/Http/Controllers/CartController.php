@@ -24,14 +24,13 @@ public function addToCart(Request $request)
     if (isset($cart[$fooditem->id])) {
         $cart[$fooditem->id]['quantity']++;
     } else {
-            $cart[$fooditem->id] = [
-                'name' => $fooditem->name,
-                'description' => $fooditem->description,
-                'price' => $fooditem->price,
-                'quantity' => 1,
-                'image' => $fooditem->image,  
-            ];
-        
+        $cart[$fooditem->id] = [
+            'name' => $fooditem->name,
+            'description' => $fooditem->description,
+            'price' => $fooditem->price,
+            'quantity' => 1,
+            'image' => $fooditem->image,
+        ];
     }
 
     session()->put('cart', $cart);

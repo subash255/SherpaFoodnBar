@@ -14,10 +14,11 @@
                     <div class="bg-white shadow-lg rounded-lg p-6 mb-6 flex flex-col sm:flex-row items-center justify-between"
                         id="cart-item-{{ $fooditemId }}">
 
-                        <!-- Item Image and Info -->
-                        <div class="flex items-center space-x-4">
-                            <img src="{{ $item['image'] ? asset('images/fooditem/' . $item['image']) : 'https://via.placeholder.com/80' }}"
-                                alt="{{ $item['name'] }}" class="w-20 h-20 rounded-lg object-cover" />
+            <!-- Item Image and Info -->
+            <div class="flex items-center space-x-4">
+                <img src="{{ $item['image'] ? asset('images/fooditem/' . $item['image']) : 'https://via.placeholder.com/80' }}"
+    alt="{{ $item['name'] }}" class="w-20 h-20 rounded-lg object-cover" />
+
 
                             <div class="ml-4">
                                 <h3 class="text-lg font-semibold text-gray-900">{{ $item['name'] }}</h3>
