@@ -27,7 +27,7 @@
     }, 3000);
 </script>
 
-<div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
+<div class="p-4 bg-white shadow-lg -mt-12 mx-4 z-20 rounded-lg">
     <div class="mb-4 flex justify-end">
         <button id="openModalButton"
         class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">

@@ -23,7 +23,7 @@
    
 
         
-<div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
+<div class="p-4 bg-white shadow-lg -mt-12 mx-4 z-20 rounded-lg">
         <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
             <div class="flex items-center space-x-2">
                 <label for="entries" class="mr-2">Show entries:</label>

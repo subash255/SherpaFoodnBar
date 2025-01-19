@@ -16,7 +16,7 @@
         }, 3000);
     </script>
 
-    <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
+<div class="p-4 bg-white shadow-lg -mt-12 mx-4 z-20 rounded-lg">
         <div class="flex justify-end gap-2 mb-4">
             <a href="{{ route('admin.order.index', ['status' => 'pending', 'entries' => request('entries')]) }}"
                class="border-2 {{ request('status') == 'pending' ? 'bg-blue-500 text-white' : 'border-blue-500 text-blue-500' }} font-bold px-6 py-1 rounded-lg hover:bg-blue-500 hover:text-white">
