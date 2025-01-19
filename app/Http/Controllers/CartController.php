@@ -30,7 +30,7 @@ public function addToCart(Request $request)
             'description' => $fooditem->description,
             'price' => $fooditem->price,
             'quantity' => 1,
-            'image_url' => $fooditem->image_url,
+            'image' => $fooditem->image,
         ];
     }
 

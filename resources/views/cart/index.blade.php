@@ -16,7 +16,7 @@
 
             <!-- Item Image and Info -->
             <div class="flex items-center space-x-4">
-                <img src="{{ $item['image_url'] ? asset('images/fooditem/' . $item['image_url']) : 'https://via.placeholder.com/80' }}"
+                <img src="{{ $item['image'] ? asset('images/fooditem/' . $item['image']) : 'https://via.placeholder.com/80' }}"
     alt="{{ $item['name'] }}" class="w-20 h-20 rounded-lg object-cover" />
 
 
