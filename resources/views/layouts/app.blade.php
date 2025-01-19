@@ -10,6 +10,32 @@
   <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Raleway:wght@100..900&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
   @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+  <style>
+    /* Adjust the padding and positioning of the entries select box to avoid overlap */
+.dataTables_length select {
+    padding-right: 35px;  /* Add space for the dropdown arrow */
+    appearance: none;  /* Remove default dropdown appearance */
+    -webkit-appearance: none; /* Remove default dropdown for Safari */
+    -moz-appearance: none; /* Remove default dropdown for Firefox */
+    width: auto;  /* Auto adjust width to fit content */
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"><path d="M0 0l5 5 5-5z" fill="none" stroke="#333" stroke-width="1"/></svg>') no-repeat right 10px center;
+    background-size: 10px;  /* Resize the custom arrow */
+    text-indent: 0.01px; /* Adjust text indent for better alignment */
+}
+
+/* Optional: Add a border color when the select box is focused */
+.dataTables_length select:focus {
+    border-color: #4A90E2;
+    outline: none;
+}
+
+/* Optional: Remove dropdown arrow for a cleaner UI in specific cases */
+.dataTables_length select::-ms-expand {
+    display: none; /* Remove the arrow in Internet Explorer */
+}
+
+  </style>
   <script>
     // Remove the JavaScript related to toggling the sidebar
     window.onload = function () {
@@ -19,6 +45,15 @@
       // Make sure the sidebar is always in expanded state
     };
   </script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.css" />
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/2.2.1/js/dataTables.js"></script>
+
   
   <script>
     // Function to update entries based on user selection

@@ -10,7 +10,7 @@ class MealController extends Controller
    
     public function index()
     {
-        $meals = Meal::paginate(5);
+        $meals = Meal::all();
         return view('admin.meal.index', compact('meals'), [
             'title' => 'Meals'
         ]);

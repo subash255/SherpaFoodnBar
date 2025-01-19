@@ -290,4 +290,10 @@
         filterTableByCategoryname(searchQuery);
     });
     </script>
+
+<script>
+    $(document).ready(function() {
+      $('#categoryTable').DataTable();
+    });
+  </script>
 @endsection

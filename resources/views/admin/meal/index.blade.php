@@ -69,22 +69,8 @@
         </div>
     </div>
 
-    <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
-        <div class="flex items-center space-x-2">
-            <label for="entries" class="mr-2">Show entries:</label>
-            <select id="entries" class="border border-gray-300 px-5 py-1 w-full sm:w-auto pr-10" onchange="updateEntries()">
-                <option value="5" {{ request('entries') == 5 ? 'selected' : '' }}>5</option>
-                <option value="15" {{ request('entries') == 15 ? 'selected' : '' }}>15</option>
-                <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
-            </select>
-        </div>
 
-        <div class="flex items-center space-x-2 w-full sm:w-auto">
-            <span class="text-gray-700">Search:</span>
-            <input type="text" id="search" placeholder="Search..."
-                class="border border-gray-300 px-4 py-2 w-full sm:w-96" />
-        </div>
-    </div>
+    
 
     <!-- Table Section -->
     <div class="overflow-x-auto">
@@ -137,20 +123,6 @@
                 @endforeach
             </tbody>
         </table>
-    </div>
-
-    <!-- Pagination and Show Entries Section at the Bottom -->
-    <div class="flex justify-between items-center mt-4">
-        <div class="flex items-center space-x-2">
-            <span class="ml-4 text-gray-700">
-                Showing {{ $meals->firstItem() }} to {{ $meals->lastItem() }} of {{ $meals->total() }}
-                entries
-            </span>
-        </div>
-
-        <div class="flex items-center space-x-2">
-            {{ $meals->links() }}
-        </div>
     </div>
 
 
@@ -236,42 +208,25 @@
         document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
     });
 
-
-    //search
-
-     
-    document.getElementById('search').addEventListener('input', function() {
-    const searchQuery = this.value.trim().toLowerCase(); // Trim any extra spaces and convert to lowercase
-
-    // Update the URL with the encoded search query
-    history.pushState(null, null, `?search=${encodeURIComponent(searchQuery)}`);
-
-    // Filter the table based on meal name
-    filterTableByMealname(searchQuery);
-});
-
-function filterTableByMealname(query) {
-    const rows = document.querySelectorAll('#mealTable tbody tr'); 
-    rows.forEach(row => {
-        const cells = row.getElementsByTagName('td');
-        const mealCell = cells[1];
-        if (mealCell) {
-            const mealText = mealCell.textContent.trim().toLowerCase();  // Get the meal name, trimmed and lowercase
-            if (mealText.includes(query)) {  // Use 'includes' to match anywhere in the meal name
-                row.style.display = '';  // Show the row
-            } else {
-                row.style.display = 'none';  // Hide the row
-            }
-        }
-    });
-}
-
-window.addEventListener('popstate', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchQuery = urlParams.get('search') || ''; // Default to empty if no search query
-    document.getElementById('search').value = searchQuery;  // Update the search input field
-    filterTableByMealname(searchQuery); // Reapply the filter based on URL search query
-});
-
 </script>
+
+<script>
+    $(document).ready(function () {
+        $('#mealTable').DataTable({
+            "pageLength": 10,
+            "lengthMenu": [10, 25, 50, 100], 
+            paging: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            lengthChange: true,
+            initComplete: function () {
+                $('.dataTables_length').addClass('flex items-center gap-2 mb-4'); 
+                $('select').addClass('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 w-[4rem]'); 
+            }
+        });
+    });
+</script>
+
+
 @endsection
