@@ -111,7 +111,6 @@
                         </form>
                         <!-- Settings Icon -->
                         <form action="{{ route('admin.submeal.index', $meal->id) }}" method="get">
-                            @csrf
                             <button class="bg-green-500 hover:bg-green-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                                 <i class="ri-settings-5-line text-white"></i>
                             </button>

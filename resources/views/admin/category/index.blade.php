@@ -99,7 +99,7 @@
                 <tbody>
                     @foreach ($categories as $category)
                         <tr class="bg-white hover:bg-gray-50">
-                            <td class="border border-gray-300 px-4 py-2 text-center">{{ $loop->iteration }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $category->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $category->slug }}</td>
                             <td class="border border-gray-300 px-4 py-2">
