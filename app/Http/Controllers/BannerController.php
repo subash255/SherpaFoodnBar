@@ -11,10 +11,10 @@ class BannerController extends Controller
     public function index()
     {
         $banners = Banner::paginate(5);
-        $assignedPriorities = Banner::pluck('priority')->toArray();  
-        $availablePriorities = range(1, 10); 
+        $assignedPriorities = Banner::pluck('priority')->toArray();
+        $availablePriorities = range(1, 10);
         $availablePriorities = array_diff($availablePriorities, $assignedPriorities);
-        return view('admin.banner.index', compact('banners','availablePriorities'), [
+        return view('admin.banner.index', compact('banners', 'availablePriorities'), [
             'title' => 'Manage Banners'
         ]);
     }
@@ -40,16 +40,16 @@ class BannerController extends Controller
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $image = time() . '.' . $request->file('image')->getClientOriginalExtension();
             $request->file('image')->move(public_path('banner'), $image);
-    
 
-        Banner::create([
-            'image' => $image,
-            'priority' => $request->input('priority', 0),
-        ]);
 
-        return redirect()->route('admin.banner.index')->with('success', 'Banner created successfully.');
+            Banner::create([
+                'image' => $image,
+                'priority' => $request->input('priority', 0),
+            ]);
+
+            return redirect()->route('admin.banner.index')->with('success', 'Banner created successfully.');
+        }
     }
-}
 
     // Display the specified banner
     public function show($id)
@@ -65,7 +65,7 @@ class BannerController extends Controller
         $availablePriorities = range(1, 10);
         $availablePriorities = array_diff($availablePriorities, $assignedPriorities);
         $banner = Banner::findOrFail($id);
-        return view('admin.banner.edit', compact('banner','availablePriorities'), [
+        return view('admin.banner.edit', compact('banner', 'availablePriorities'), [
             'title' => 'Manage Banners'
         ]);
     }
@@ -105,7 +105,7 @@ class BannerController extends Controller
     public function destroy($id)
     {
         $banner = Banner::findOrFail($id);
-        
+
         // Delete the image file
         if (file_exists(public_path('storage/' . $banner->image))) {
             unlink(public_path('storage/' . $banner->image));
