@@ -16,13 +16,13 @@ class FooditemController extends Controller
         $foodItems = Fooditem::paginate(10);
         return view('admin.fooditems.index', [
             'title' => 'Food Items'
-        ] , compact('foodItems' , 'categories' , 'subcategories'));
+        ], compact('foodItems', 'categories', 'subcategories'));
     }
 
     public function create()
     {
         return view('admin.fooditems.create');
-    }   
+    }
 
     public function store(Request $request)
     {
@@ -31,15 +31,15 @@ class FooditemController extends Controller
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:fooditems,slug',
             'category_id' => 'required|exists:categories,id',
-            'type' => 'required|string|in:veg,non-veg,drinks', 
+            'type' => 'required|string|in:veg,non-veg,drinks',
             'price' => 'required|numeric|min:0',
             'status' => 'boolean',
             'image' => 'nullable|image',
             'description' => 'required|string',
-             
+
         ]);
-             //image store for first time 
-        if ($request->hasFile('image')) {   
+        //image store for first time 
+        if ($request->hasFile('image')) {
             $image = time() . '.' . $request->file('image')->getClientOriginalExtension();
             $request->file('image')->move(public_path('images/fooditem'), $image);
         }
@@ -65,17 +65,17 @@ class FooditemController extends Controller
     }
 
     public function edit($id)
-    {  
+    {
         // Fetch categories, subcategories, and food item
         $categories = Category::all();
         $subcategories = Subcategory::all();
         $foodItem = Fooditem::findOrFail($id);  // Use camelCase here
-    
+
         // Pass data to the view using compact and with()
         return view('admin.fooditems.edit', compact('foodItem', 'categories', 'subcategories'))
             ->with('title', 'Manage Food Item');
     }
-    
+
     public function update(Request $request, $id)
     {
         $fooditem = Fooditem::findOrFail($id);
@@ -109,17 +109,14 @@ class FooditemController extends Controller
     {
         // Retrieve the food item by ID from the database
         $fooditem = FoodItem::findOrFail($foodItemId);
-        
+
         // Update the status field with the new value
         $fooditem->status = $request->state; // 'state' is 1 (checked) or 0 (unchecked)
-        
+
         // Save the updated food item back to the database
         $fooditem->save();
-        
+
         // Return a JSON response indicating success
         return response()->json(['success' => true]);
     }
-
-    
-
 }
