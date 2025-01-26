@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
     {{-- Flash Message --}}
     @if (session('success'))
         <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
@@ -83,12 +84,12 @@
                                 </table>
                             </td> --}}
             
-                            <td class="px-2 py-2 flex justify-center space-x-4">
+                            <td class="px-2 py-2 text-center">
                                 <!-- Delete Icon -->
                                 <form action="{{ route('admin.order.destroy', ['id' => $order->id]) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this order?');">
                                     @csrf
                                     @method('delete')
-                                    <button class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center border-none outline-none focus:ring-0">
+                                    <button class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full">
                                         <i class="ri-delete-bin-line text-white"></i>
                                     </button>
                                 </form>

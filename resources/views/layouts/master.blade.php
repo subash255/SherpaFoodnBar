@@ -233,32 +233,40 @@ document.querySelectorAll('#mobile-menu a').forEach(anchor => {
 <script>
     // Initialize Swiper
     var swiper = new Swiper('.swiper-container', {
-      slidesPerView: 3,
-      spaceBetween: 20,
+      slidesPerView: 3,          // Default for larger screens
+      spaceBetween: 20,          // Space between slides
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
       },
       autoplay: {
-        delay: 3000,  // 3 seconds
-        disableOnInteraction: true,  // Keep autoplay after user interaction
+        delay: 3000,             // 3 seconds
+        disableOnInteraction: false,  // Keep autoplay after user interaction
       },
       breakpoints: {
-        400: {
-          slidesPerView: 1,
+        320: {                   // For very small screens (mobile)
+          slidesPerView: 1,      // Show 1 slide on very small screens
+          spaceBetween: 10,      // Smaller space between slides
+        },
+        480: {                   // For small screens (larger mobile, tablet portrait)
+          slidesPerView: 1,      // Show 1 slide
+          spaceBetween: 15,
         },
         640: {
-          slidesPerView: 1,
+          slidesPerView: 2,      // Show 2 slides for small tablets
+          spaceBetween: 15,
         },
         768: {
-          slidesPerView: 2,
+          slidesPerView: 2,      // Show 2 slides for larger mobile/tablets
+          spaceBetween: 20,
         },
         1024: {
-          slidesPerView: 3,
+          slidesPerView: 3,      // Show 3 slides for laptops and larger devices
+          spaceBetween: 20,
         },
       }
     });
-  </script>
+</script>
 
 
 </body>

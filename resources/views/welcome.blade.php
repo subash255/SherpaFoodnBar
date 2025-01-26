@@ -71,26 +71,21 @@
         <div class="swiper-wrapper">
             <!-- Product 1 -->
             @foreach ($categories as $category)
-                <div
-                    class="swiper-slide flex flex-col items-center justify-center p-4 mb-6 bg-white rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out">
+                <div class="swiper-slide flex flex-col items-center justify-center p-4 mb-6 bg-white rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out">
                     <a href="{{ route('menu.index') }}">
                         <img src="{{ asset('images/brand/' . $category->image) }}" alt="Starters"
-                            class="w-52 h-52 object-cover rounded-lg mb-4">
+                            class="w-full sm:w-52 h-52 object-cover rounded-lg mb-4">
                         <div class="product-name text-xl font-bold text-gray-900 text-center">{{ $category->name }}</div>
                     </a>
                 </div>
             @endforeach
-
-
         </div>
-
+    
         <!-- Navigation Buttons -->
-        <div
-            class="swiper-button-next bg-indigo-600 text-white p-3 rounded-full shadow-md hover:bg-indigo-700 transform transition duration-300 ease-in-out">
+        <div class="swiper-button-next bg-indigo-600 text-white p-3 rounded-full shadow-md hover:bg-indigo-700 transform transition duration-300 ease-in-out">
             <i class="fas fa-chevron-right text-xl"></i>
         </div>
-        <div
-            class="swiper-button-prev bg-indigo-600 text-white p-3 rounded-full shadow-md hover:bg-indigo-700 transform transition duration-300 ease-in-out">
+        <div class="swiper-button-prev bg-indigo-600 text-white p-3 rounded-full shadow-md hover:bg-indigo-700 transform transition duration-300 ease-in-out">
             <i class="fas fa-chevron-left text-xl"></i>
         </div>
     </div>
@@ -200,7 +195,7 @@
                         <h3 class="text-2xl font-bold text-gray-800 mb-2">{{ $fooditem->name }}</h3>
 
                         <!-- Dynamically displaying the food item's price -->
-                        <p class="text-lg text-gray-600 mb-4">${{ number_format($fooditem->price, 2) }}</p>
+                        <p class="text-lg text-gray-600 mb-4">€{{ number_format($fooditem->price, 2) }}</p>
 
                         <!-- Order button -->
                         <button
