@@ -9,7 +9,7 @@ class BookingController extends Controller
 {
     public function index()
     {
-        $bookings = Booking::paginate(5);
+        $bookings = Booking::all();
         return view('admin.booking.index',  [
             'title' => 'Table Reservations'
         ], compact('bookings'));

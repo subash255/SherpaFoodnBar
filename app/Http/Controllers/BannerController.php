@@ -10,7 +10,7 @@ class BannerController extends Controller
     // Display a listing of the banners
     public function index()
     {
-        $banners = Banner::paginate(5);
+        $banners = Banner::all();
         $assignedPriorities = Banner::pluck('priority')->toArray();
         $availablePriorities = range(1, 10);
         $availablePriorities = array_diff($availablePriorities, $assignedPriorities);
