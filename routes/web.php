@@ -60,6 +60,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('category/update-toggle/{categoryId}', [CategoryController::class, 'updateToggleStatus']);
 
 
+
     //subcategory routes
     Route::get('subcategory/{id}', [SubcategoryController::class, 'index'])->name('admin.subcategory.index');  
     Route::get('subcategory/create', [SubcategoryController::class, 'create'])->name('admin.subcategory.create');
