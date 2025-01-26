@@ -173,7 +173,7 @@
                 }
 
                 // Send AJAX request to update the product status in the database
-                fetch(`/admin/category/update-toggle/${categoryId}`, {
+                fetch(`/category/update-toggle/${categoryId}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

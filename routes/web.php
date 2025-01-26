@@ -57,6 +57,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('category/{id}/edit', [CategoryController::class, 'edit'])->name('admin.category.edit');
     Route::patch('category/{id}', [CategoryController::class, 'update'])->name('admin.category.update');
     Route::delete('category/{id}', [CategoryController::class, 'destroy'])->name('admin.category.delete');
+    Route::post('category/update-toggle/{categoryId}', [CategoryController::class, 'updateToggleStatus']);
+
 
     //subcategory routes
     Route::get('subcategory/{id}', [SubcategoryController::class, 'index'])->name('admin.subcategory.index');  
