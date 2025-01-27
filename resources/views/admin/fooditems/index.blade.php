@@ -162,7 +162,7 @@
                             <td class="border border-gray-300 px-4 py-2">{{ $foodItem->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ optional($foodItem->category)->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $foodItem->type }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $foodItem->price }}</td>
+                            <td class="border border-gray-300 px-4 py-2">€{{ $foodItem->price }}</td>
                             <td class="border border-gray-300 px-4 py-2">
                                 <label for="status{{ $foodItem->id }}" class="inline-flex items-center cursor-pointer">
                                     <input id="status{{ $foodItem->id }}" type="checkbox" class="hidden toggle-switch" data-id="{{ $foodItem->id }}" {{ $foodItem->status ? 'checked' : '' }} />
