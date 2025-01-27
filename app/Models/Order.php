@@ -10,6 +10,6 @@ class Order extends Model
 
     public function fooditem()
     {
-        return $this->belongsTo(Fooditem::class);
+        return $this->hasMany(Fooditem::class);
     }
 }
