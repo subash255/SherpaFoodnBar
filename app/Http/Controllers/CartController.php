@@ -102,60 +102,60 @@ class CartController extends Controller
 
 
     public function store(Request $request)
-    {
-        // Log incoming data for debugging
-        Log::info('Store request data:', $request->all());
+{
+    // Log incoming data for debugging
+    Log::info('Store request data:', $request->all());
 
-        // Validate user input
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:15',
-            'payment_method' => 'required|string|in:online,cash_on_pickup',
-            'cart_data' => 'required|string',  // Ensure cart data is received
-        ]);
+    // Validate user input
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'phone' => 'required|string|max:15',
+        'payment_method' => 'required|string|in:online,cash_on_pickup',
+        'cart_data' => 'required|string',  // Ensure cart data is received
+    ]);
 
-        if ($validator->fails()) {
-            return redirect()->route('cart.index')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        // Decode cart data from JSON
-        $cart = json_decode($request->cart_data, true);
-
-        if (!$cart || count($cart) == 0) {
-            return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
-        }
-
-        // Calculate total price
-        $total = array_sum(array_map(function ($item) {
-            return $item['price'] * $item['quantity'];
-        }, $cart));
-
-        // Generate a unique order number
-        $orderNumber = strtoupper(uniqid('ORD-'));
-
-        // Create the order
-        $order = Order::create([
-            'order_number' => $orderNumber,
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'status' => 'pending',
-            'total' => $total, // Ensure 'total' is being passed
-            'payment_method' => $request->payment_method,
-            'items' => json_encode($cart),  // Store cart as JSON
-
-        ]);
-
-        // Log the order details
-        Log::info('Order placed successfully:', $order->toArray());
-
-        // Clear the cart from session
-        session()->forget('cart');
-
-        // Redirect with success message
-        return redirect()->route('cart.index')->with('success', 'Order placed successfully!');
+    if ($validator->fails()) {
+        return redirect()->route('cart.index')
+            ->withErrors($validator)
+            ->withInput();
     }
+
+    // Decode cart data from JSON
+    $cart = session()->get('cart', []);  // Fetch cart directly from session
+
+    if (empty($cart)) {
+        return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
+    }
+
+    // Calculate total price with updated quantities
+    $total = array_sum(array_map(function ($item) {
+        return $item['price'] * $item['quantity'];  // Use updated quantity
+    }, $cart));
+
+    // Generate a unique order number
+    $orderNumber = strtoupper(uniqid('ORD-'));
+
+    // Create the order
+    $order = Order::create([
+        'order_number' => $orderNumber,
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone,
+        'status' => 'pending',
+        'total' => $total,
+        'payment_method' => $request->payment_method,
+        'items' => json_encode($cart),  // Store updated cart (with correct quantity)
+    ]);
+
+    // Log the order details
+    Log::info('Order placed successfully:', $order->toArray());
+
+    // Clear the cart from session
+    session()->forget('cart');
+
+    // Redirect with success message
+    return redirect()->route('cart.index')->with('success', 'Order placed successfully!');
+}
+
 }
