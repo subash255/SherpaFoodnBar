@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Fooditem;
 use App\Models\Order;
+use App\Services\VismaPayService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
@@ -97,20 +99,17 @@ class CartController extends Controller
         ]);
     }
 
+    
 
-   
     public function store(Request $request)
 {
-    // Log incoming data for debugging
-    Log::info('Store request data:', $request->all());
-
     // Validate user input
     $validator = Validator::make($request->all(), [
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255',
         'phone' => 'required|string|max:15',
         'payment_method' => 'required|string|in:online,cash_on_pickup',
-        'cart_data' => 'required|string',  // Ensure cart data is received
+        'cart_data' => 'required|string',
     ]);
 
     if ($validator->fails()) {
@@ -119,19 +118,19 @@ class CartController extends Controller
             ->withInput();
     }
 
-    // Decode cart data from JSON
-    $cart = session()->get('cart', []);  // Fetch cart directly from session
+    // Decode cart data from session
+    $cart = session()->get('cart', []);
 
     if (empty($cart)) {
         return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
     }
 
-    // Calculate total price with updated quantities
+    // Calculate total price
     $total = array_sum(array_map(function ($item) {
-        return $item['price'] * $item['quantity'];  // Use updated quantity
+        return $item['price'] * $item['quantity'];
     }, $cart));
 
-    // Generate a unique order number
+    // Generate unique order number
     $orderNumber = strtoupper(uniqid('ORD-'));
 
     // Create the order
@@ -143,16 +142,50 @@ class CartController extends Controller
         'status' => 'pending',
         'total' => $total,
         'payment_method' => $request->payment_method,
-        'items' => json_encode($cart),  // Store updated cart (with correct quantity)
+        'items' => json_encode($cart),
     ]);
 
-    // Log the order details
-    Log::info('Order placed successfully:', $order->toArray());
+    // If the payment method is online, redirect to payment page
+    if ($request->payment_method == 'online') {
+        // Construct payment URL (adjust as needed based on VismaPay's instructions)
+        $paymentUrl = "https://vismapay.com/payment?order_number={$order->order_number}&amount={$order->total}&currency=USD&email={$order->email}&return_url=" . route('cart.sucess', ['orderNumber' => $order->order_number]) . "&cancel_url=" . route('cart.cancel', ['orderNumber' => $order->order_number]);
+        
+        // Redirect to VismaPay's payment page
+        return redirect()->to($paymentUrl);
+    }
 
-    // Clear the cart from session
+    // Clear the cart from session after successful payment redirection or if cash on pickup
     session()->forget('cart');
 
     // Redirect with success message
     return redirect()->route('cart.index')->with('success', 'Order placed successfully!');
 }
+
+public function paymentSuccess($orderNumber)
+{
+    $order = Order::where('order_number', $orderNumber)->firstOrFail();
+    
+    // Update the order status to 'payment'
+    $order->status = 'payment';
+    $order->save();
+
+    // Log cart content before clearing
+    Log::info('Cart before clearing', ['cart' => session()->get('cart')]);
+
+    // Clear the cart from session after successful payment
+    session()->forget('cart');
+
+    // Log to ensure the cart is cleared
+    Log::info('Cart after clearing', ['cart' => session()->get('cart')]);
+
+    return view('payment.sucess', compact('order'));
+}
+
+
+    public function paymentCancel($orderNumber)
+    {
+        $order = Order::where('order_number', $orderNumber)->firstOrFail();
+        return view('payment.cancel', compact('order'));
+    }
+    
 }
