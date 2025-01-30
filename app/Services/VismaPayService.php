@@ -1,40 +1,56 @@
 <?php
+
+
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 
 class VismaPayService
 {
-    protected $apiUrl;
     protected $apiKey;
+    protected $privateKey;
+    protected $apiUrl;
 
     public function __construct()
     {
-        $this->apiUrl = env('VISMAPAY_API_URL');  // API base URL
-        $this->apiKey = env('VISMAPAY_API_KEY');  // API key
+        $this->apiKey = env('VISMAPAY_API_KEY');
+        $this->privateKey = env('VISMAPAY_PRIVATE_KEY');
+        $this->apiUrl = env('VISMAPAY_API_URL');
     }
 
-    /**
-     * Create a payment session and return the payment URL.
-     */
-    public function createPaymentSession($order)
+    public function createPaymentUrl($orderNumber, $amount, $currency, $email, $returnUrl, $cancelUrl)
     {
-        $payload = [
-            'order_number' => $order->order_number,
-            'amount' => $order->total,
-            'currency' => 'USD',  // Ensure you use the correct currency
-            'email' => $order->email,
-            'return_url' => route('payment.success', ['orderNumber' => $order->order_number]),
-            'cancel_url' => route('payment.cancel', ['orderNumber' => $order->order_number]),
-            'api_key' => $this->apiKey,
-        ];
-
-        $response = Http::post("{$this->apiUrl}/create-payment-session", $payload);
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->apiKey
+        ])->post($this->apiUrl . '/create-payment', [
+            'order_number' => $orderNumber,
+            'amount' => $amount,
+            'currency' => $currency,
+            'email' => $email,
+            'return_url' => $returnUrl,
+            'cancel_url' => $cancelUrl
+        ]);
 
         if ($response->successful()) {
-            return $response->json()['payment_url'];  // This URL is the hosted payment page URL
+            return $response->json(); // Contains the payment URL and other relevant information
         }
 
-        return null;  // In case of failure, return null
+        throw new \Exception('Failed to create payment URL');
+    }
+
+    public function verifyPayment($paymentToken)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->apiKey
+        ])->post($this->apiUrl . '/verify-payment', [
+            'token' => $paymentToken
+        ]);
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        throw new \Exception('Payment verification failed');
     }
 }
+
