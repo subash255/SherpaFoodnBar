@@ -100,8 +100,8 @@ class CartController extends Controller
         ]);
     }
 
-    
-  
+
+
 
 
     public function store(Request $request)
@@ -114,19 +114,19 @@ class CartController extends Controller
             'payment_method' => 'required|string|in:online,cash_on_pickup',
             'cart_data' => 'required|string',
         ]);
-    
+
         // Decode cart data from session
         $cart = session()->get('cart', []);
-    
+
         // Calculate total price by summing up price * quantity for each cart item
         $total = array_sum(array_map(function ($item) {
             return $item['price'] * $item['quantity'];
         }, $cart));
-    
+
         // Generate a unique order number
         $orderNumber = strtoupper(uniqid('ORD-'));
-    
-        if($request->payment_method == 'cash_on_pickup'){
+
+        if ($request->payment_method == 'cash_on_pickup') {
             Order::create([
                 'order_number' => $orderNumber,
                 'name' => $data['name'],
@@ -139,81 +139,106 @@ class CartController extends Controller
             ]);
             session()->forget('cart');
             return redirect()->route('cart.index')->with('success', 'Order placed successfully!');
-        }elseif($request->payment_method == 'online'){
-            
+        } elseif ($request->payment_method == 'online') {
+            $apiKey = env('VISMAPAY_API_KEY');
+            $orderNumber = $orderNumber;
+            $privateKey = env('VISMAPAY_PRIVATE_KEY');
+
+            $message = $apiKey . '|' . $orderNumber;
+
+            $authcode = strtoupper(hash_hmac('sha256', $message, $privateKey));
             $paymentData = [
+                'version' => 'w3.2',
+                'api_key' => $apiKey,
                 'order_number' => $orderNumber,
-                'amount' => $total * 100, // Convert to fractional units (1 USD = 100 cents)
-                'currency' => 'USD',  // Adjust the currency if necessary
+                'amount' => $total * 100,
+                'currency' => 'EUR',
                 'email' => $data['email'],
-                'name' => $data['name'],
-                'phone' => $data['phone'],
-                'return_url' => route('cart.success',  $orderNumber),
-                'cancel_url' => route('cart.cancel',  $orderNumber),
+                'payment_method' => [
+                    'type' => 'e-payment',
+                    "return_url" => route('cart.success', $orderNumber),
+                    "cancel_url" => route('cart.cancel', $orderNumber),
+                    "notify_url" => "https://test.shop.com/notify",
+                    'lang' => 'en',
+                    'token_valid_until' => time() + 3600,
+                    'selected' => ['nordea']
+                ],
+                'authcode' => $authcode,
+                'customer' => [
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'phone' => $data['phone'],
+                ],
+                'products' => json_encode($cart)
             ];
 
-            $apiKey = env('VISMAY_API_KEY');
-            $privateKey = env('VISMAY_PRIVATE_KEY');
-            try {
-                // Sending POST request to external payment API
-                $response = Http::withHeaders([
-                    'Authorization' => 'Bearer ' . $apiKey,
-                    'X-Private-Key' => $privateKey,
-                ])->post('https://www.vismapay.com/pbwapi/auth_payment', $paymentData);
-                
-                // Check if the response was successful
-                $responseData = $response->json();
-                
-                // Check if the result is success (1) and process the order
-                if (isset($responseData['result']) && $responseData['result'] == 1) {
-                    // Create the order in your system
-                    Order::create([
-                        'order_number' => $orderNumber,
-                        'name' => $data['name'],
-                        'email' => $data['email'],
-                        'phone' => $data['phone'],
-                        'status' => 'pending',
-                        'total' => $total,
-                        'payment_method' => $data['payment_method'],
-                        'items' => json_encode($cart),
-                    ]);
-        
-                    // Clear the cart session
-                    session()->forget('cart');
-        
-                    // Redirect to the cart index with a success message
-                    return redirect()->route('cart.index')->with('success', 'Order placed successfully!');
-                } else {
-                    return redirect()->route('cart.index')->with('error', 'Failed to place order. Please try again!');
-                }
-            } catch (\Exception $e) {
+
+            $ch = curl_init('https://www.vismapay.com/pbwapi/auth_payment');
+
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($paymentData));
+
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Authorization: Bearer ' . env('VISMAPAY_API_KEY'),
+                'X-Private-Key: ' . env('VISMAPAY_PRIVATE_KEY'),
+                'Content-Type: application/json',
+            ]);
+
+
+            $response = curl_exec($ch);
+
+            if (curl_errno($ch)) {
                 return redirect()->route('cart.index')->with('error', 'An error occurred while placing your order. Please try again later.');
+            }
+
+            curl_close($ch);
+
+            $responseData = json_decode($response, true);
+
+
+
+            // Check if the response is successful
+            if (isset($responseData['result']) && $responseData['result'] == 0) {
+                // Check for payment URL or token
+                if (isset($responseData['token']) && !empty($responseData['token'])) {
+                    // Generate the payment URL using the token
+                    $paymentUrl = 'https://www.vismapay.com/pbwapi/token/' . $responseData['token'];
+
+
+                    // Redirect to the payment URL
+                    return redirect()->away($paymentUrl);
+                } else {
+                    return redirect()->route('cart.index')->with('error', 'Payment token not received. Please try again later.');
+                }
+            } else {
+                return redirect()->route('cart.index')->with('error', 'Failed to process payment. Please try again!');
             }
         }
     }
-    
 
-    
 
-public function paymentSuccess($orderNumber)
-{
-    $order = Order::where('order_number', $orderNumber)->firstOrFail();
-    
-    // Update the order status to 'payment'
-    $order->status = 'payment';
-    $order->save();
 
-    // Log cart content before clearing
-    Log::info('Cart before clearing', ['cart' => session()->get('cart')]);
 
-    // Clear the cart from session after successful payment
-    session()->forget('cart');
+    public function paymentSuccess($orderNumber)
+    {
+        $order = Order::where('order_number', $orderNumber)->firstOrFail();
 
-    // Log to ensure the cart is cleared
-    Log::info('Cart after clearing', ['cart' => session()->get('cart')]);
+        // Update the order status to 'payment'
+        $order->status = 'payment';
+        $order->save();
 
-    return view('payment.sucess', compact('order'));
-}
+        // Log cart content before clearing
+        Log::info('Cart before clearing', ['cart' => session()->get('cart')]);
+
+        // Clear the cart from session after successful payment
+        session()->forget('cart');
+
+        // Log to ensure the cart is cleared
+        Log::info('Cart after clearing', ['cart' => session()->get('cart')]);
+
+        return view('payment.sucess', compact('order'));
+    }
 
 
     public function paymentCancel($orderNumber)
@@ -221,5 +246,4 @@ public function paymentSuccess($orderNumber)
         $order = Order::where('order_number', $orderNumber)->firstOrFail();
         return view('payment.cancel', compact('order'));
     }
-    
 }
