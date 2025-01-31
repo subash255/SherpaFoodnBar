@@ -46,7 +46,7 @@
                         <!-- Item Price and Quantity Controls -->
                         <div class="flex items-center space-x-4 mt-4 sm:mt-0">
 
-                            <p class="text-lg font-bold text-red-600">${{ number_format($item['price'], 2) }}</p>
+                            <p class="text-lg font-bold text-red-600">€{{ number_format($item['price'], 2) }}</p>
 
                             <div class="flex items-center bg-red-100 rounded-md">
 
@@ -123,7 +123,7 @@
 
                     <!-- Cart Total and Checkout -->
                     <div class="mt-6 lg:mt-0 flex justify-between items-center bg-white p-6 rounded-lg shadow-lg">
-                        <p class="text-xl font-semibold text-gray-800">Subtotal: $<span
+                        <p class="text-xl font-semibold text-gray-800">Subtotal: €<span
                                 id="subtotal" >{{ number_format($cartSubtotal, 2) }}</span></p>
                         <button type="submit"
                             class="bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition">Proceed to

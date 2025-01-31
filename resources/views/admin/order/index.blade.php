@@ -58,7 +58,7 @@
                             <td class="border border-gray-300 px-4 py-2">{{ $order->email }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->phone }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ ucfirst($order->payment_method) }}</td>
-                            <td class="border border-gray-300 px-4 py-2">${{ number_format($order->total, 2) }}</td>
+                            <td class="border border-gray-300 px-4 py-2">€{{ number_format($order->total, 2) }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->order_number }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ ucfirst($order->status) }}</td>
             
@@ -84,7 +84,7 @@
                                 </table>
                             </td> --}}
             
-                            <td class="px-2 py-2 text-center">
+                            <td class="px-2 py-2 text-center border border-gray-300">
                                 <!-- Delete Icon -->
                                 <form action="{{ route('admin.order.destroy', ['id' => $order->id]) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this order?');">
                                     @csrf
