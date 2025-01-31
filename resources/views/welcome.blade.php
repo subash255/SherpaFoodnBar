@@ -10,6 +10,7 @@
         .modal-visible {
             display: flex !important;
         }
+
     </style>
 
     <!-- Flash Messages (if any) -->
@@ -80,14 +81,9 @@
                 </div>
             @endforeach
         </div>
-    
-        <!-- Navigation Buttons -->
-        <div class="swiper-button-next bg-indigo-600 text-white p-3 rounded-full shadow-md hover:bg-indigo-700 transform transition duration-300 ease-in-out">
-            <i class="fas fa-chevron-right text-xl"></i>
-        </div>
-        <div class="swiper-button-prev bg-indigo-600 text-white p-3 rounded-full shadow-md hover:bg-indigo-700 transform transition duration-300 ease-in-out">
-            <i class="fas fa-chevron-left text-xl"></i>
-        </div>
+        
+        <!-- Pagination Dots -->
+        <div class="swiper-pagination"></div> 
     </div>
 
 

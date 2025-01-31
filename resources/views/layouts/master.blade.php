@@ -235,13 +235,13 @@ document.querySelectorAll('#mobile-menu a').forEach(anchor => {
     var swiper = new Swiper('.swiper-container', {
       slidesPerView: 3,          // Default for larger screens
       spaceBetween: 20,          // Space between slides
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
       autoplay: {
         delay: 3000,             // 3 seconds
         disableOnInteraction: false,  // Keep autoplay after user interaction
+      },
+      pagination: {
+        el: '.swiper-pagination', // The container for the dots
+        clickable: true,          // Make the dots clickable
       },
       breakpoints: {
         320: {                   // For very small screens (mobile)
