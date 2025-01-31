@@ -28,7 +28,7 @@ Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 Route::post('cart/store', [CartController::class, 'store'])->name('cart.store');
 Route::patch('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/remove/{fooditemId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-Route::get('cart/sucess/{orderNumber}', [CartController::class, 'paymentSuccess'])->name('cart.sucess');
+Route::get('cart/sucess/{orderNumber}', [CartController::class, 'paymentSuccess'])->name('cart.success');
 Route::get('cart/cancel/{orderNumber}', [CartController::class, 'paymentCancel'])->name('cart.cancel');
 
 
