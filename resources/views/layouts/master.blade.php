@@ -102,11 +102,15 @@
     <div class="container mx-auto px-4 mt-5">
         <div class="flex flex-wrap justify-evenly gap-8">
             <!-- Map Section -->
-            <div class="flex-1 min-w-[350px] p-4">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2436.9235423896794!2d-0.11954318413908667!3d51.50330821752643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604cbf7aa02f3%3A0xa752f5ebfdd3cf4!2slastminute.com%20London%20Eye!5e0!3m2!1sen!2suk!4v1603282368274!5m2!1sen!2suk"
-                    width="100%" height="200" class="border-0 rounded" allowfullscreen="" loading="lazy"></iframe>
-            </div>
+            <div class="flex-1 min-w-[250px] p-4">
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2436.9235423896794!2d-0.11954318413908667!3d51.50330821752643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604cbf7aa02f3%3A0xa752f5ebfdd3cf4!2slastminute.com%20London%20Eye!5e0!3m2!1sen!2suk!4v1603282368274!5m2!1sen!2suk" 
+                  class="w-full h-48 sm:h-40 md:h-48 lg:h-48 xl:h-48 border-0 rounded" 
+                  allowfullscreen="" 
+                  loading="lazy">
+                </iframe>
+              </div>
+              
             <!-- Address Section -->
             <div class="flex-1 min-w-[250px] p-4">
                 <h3 class="text-yellow-400 font-extrabold text-lg mb-4">Contact Us</h3>

@@ -122,9 +122,9 @@
             </div>
 
             <!-- Cart Total and Checkout -->
-            <div class="mt-6 lg:mt-0 flex justify-between items-center bg-white p-6 rounded-lg shadow-lg">
+            <div class="lg:mt-0 flex justify-between items-center">
                 <p class="text-xl font-semibold text-gray-800">Subtotal: €<span
-                        id="subtotal">{{ number_format($cartSubtotal, 2) }}</span></p>
+                        id="subtotal">{{ number_format($cartSubtotal) }}</span></p>
                 <button type="submit"
                     class="bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600 transition">Proceed to
                     Checkout</button>
