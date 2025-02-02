@@ -28,7 +28,7 @@
                     <span>9800001111</span>
                 </div>
                 <div class="flex items-center space-x-2">
-                    <i class="ri-mail-open-fill text-gray-400 text-xl"></i>
+                    <i class="ri-mail-open-fill text-gray-100 text-xl"></i>
                     <a href="mailto:SherpaFoodnBar@gmail.com">SherpaFoodnBar@gmail.com</a>
                 </div>
             </div>
