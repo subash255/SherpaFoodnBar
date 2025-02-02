@@ -95,6 +95,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
    //order routes
     Route::get('order', [OrderController::class, 'index'])->name('admin.order.index');
     Route::delete('order/{id}', [OrderController::class, 'destroy'])->name('admin.order.destroy');
+    Route::get('order/view/{id}', [OrderController::class, 'show'])->name('admin.order.view');
+    Route::get('order/complete/{id}', [OrderController::class, 'complete'])->name('admin.order.complete');
+    Route::get('order/reject/{id}', [OrderController::class, 'reject'])->name('admin.order.reject');
+
 
     //meal routes
     Route::get('meal/index', [MealController::class, 'index'])->name('admin.meal.index');

@@ -45,4 +45,35 @@ class OrderController extends Controller
         $order->delete();
         return redirect()->route('admin.order.index')->with('success', 'Order deleted successfully');
     }
+
+    public function show($id)
+{
+    $order = Order::findOrFail($id);
+    // Ensure the items field is decoded to an array or object
+    $order->items = json_decode($order->items);
+
+    return view('admin.order.view', compact('order'), [
+        'title' => 'Order Details'
+    ]);
+}
+
+public function complete($id)
+{
+    $order = Order::findOrFail($id);
+    $order->status = 'completed';
+    $order->save();
+
+    return redirect()->route('admin.order.index')->with('success', 'Order is completed');
+
+}
+
+public function reject($id)
+{
+    $order = Order::findOrFail($id);
+    $order->status = 'declined';
+    $order->save();
+
+    return redirect()->route('admin.order.index')->with('success', 'Order is rejected');
+
+}
 }

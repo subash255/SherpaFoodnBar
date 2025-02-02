@@ -83,17 +83,36 @@
                                     </tbody>
                                 </table>
                             </td> --}}
-            
-                            <td class="px-2 py-2 text-center border border-gray-300">
+                            
+
+                            <td class="flex justify-center gap-2 px-2 py-2 text-center border border-gray-300">
+                                <!-- View Icon -->
+                                <a href="{{route('admin.order.view',$order->id)}}" class="bg-blue-500 hover:bg-blue-700 p-2 w-8 h-8 rounded-full flex items-center justify-center">
+                                    <i class="ri-eye-line text-white"></i>
+                                </a>
+                                
+                                @if($order->status == 'pending')
+                                <!-- Right Icon -->
+                                <a href="{{route('admin.order.complete',$order->id)}}" class="bg-green-500 hover:bg-green-700 p-2 w-8 h-8 rounded-full flex items-center justify-center">
+                                    <i class="ri-check-line text-white"></i>
+                                </a>
+                                
+                                <!-- Cross Icon -->
+                                <a href="{{route('admin.order.reject',$order->id)}}" class="bg-gray-500 hover:bg-gray-700 p-2 w-8 h-8 rounded-full flex items-center justify-center">
+                                    <i class="ri-close-line text-white"></i>
+                                </a>
+                                @endif
                                 <!-- Delete Icon -->
                                 <form action="{{ route('admin.order.destroy', ['id' => $order->id]) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this order?');">
                                     @csrf
                                     @method('delete')
-                                    <button class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full">
+                                    <button class="bg-red-500 hover:bg-red-700 p-2 w-8 h-8 rounded-full flex items-center justify-center">
                                         <i class="ri-delete-bin-line text-white"></i>
                                     </button>
                                 </form>
                             </td>
+                            
+                            
                         </tr>
                     @endforeach
                 </tbody>

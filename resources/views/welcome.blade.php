@@ -194,10 +194,18 @@
                         <p class="text-lg text-gray-600 mb-4">€{{ number_format($fooditem->price, 2) }}</p>
 
                         <!-- Order button -->
-                        <button
-                            class="bg-indigo-600 text-white py-3 px-8 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:bg-indigo-700 hover:scale-105">
-                            Order Now
-                        </button>
+                        <form action="{{ route('cart.add', $fooditem->id) }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="fooditem_id" value="{{ $fooditem->id }}">
+                            <input type="hidden" name="fooditem_name" value="{{ $fooditem->name }}">
+                            <input type="hidden" name="fooditem_price" value="{{ $fooditem->price }}">
+                            <input type="hidden" name="fooditem_image" value="{{ $fooditem->image }}">
+
+                            <button type="submit"
+                                class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded">Order
+                                Now</button>
+
+                        </form>
                     </div>
                 @endif
             @endforeach
