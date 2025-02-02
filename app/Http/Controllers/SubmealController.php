@@ -14,7 +14,7 @@ class SubmealController extends Controller
         $meal = Meal::findOrFail($id);
 
         // Fetch related submeals with pagination
-        $submeals = $meal->submeals()->paginate(10); // 10 items per page
+        $submeals = $meal->submeals()->get;
 
         // Pass both variables to the view
         return view('admin.submeal.index', compact('meal', 'submeals'), [

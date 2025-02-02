@@ -10,7 +10,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         // Get the number of entries per page from the request or default to 5
-        $perPage = $request->get('entries', 5);
+        $perPage = $request->get;
         
         // Get the selected status from the request (if any)
         $status = $request->get('status');

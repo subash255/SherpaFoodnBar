@@ -23,12 +23,12 @@
                 class="border-2 {{ request('status') == 'pending' ? 'bg-blue-500 text-white' : 'border-blue-500 text-blue-500' }} font-bold px-6 py-1 rounded-lg hover:bg-blue-500 hover:text-white">
                 Pending
             </a>
-            <a href="{{ route('admin.order.index', ['status' => 'delivered', 'entries' => request('entries')]) }}"
-                class="border-2 {{ request('status') == 'delivered' ? 'bg-green-500 text-white' : 'border-green-500 text-green-500' }} font-bold px-6 py-1 rounded-lg hover:bg-green-500 hover:text-white">
+            <a href="{{ route('admin.order.index', ['status' => 'completed', 'entries' => request('entries')]) }}"
+                class="border-2 {{ request('status') == 'completed' ? 'bg-green-500 text-white' : 'border-green-500 text-green-500' }} font-bold px-6 py-1 rounded-lg hover:bg-green-500 hover:text-white">
                 Delivered
             </a>
-            <a href="{{ route('admin.order.index', ['status' => 'rejected', 'entries' => request('entries')]) }}"
-                class="border-2 {{ request('status') == 'rejected' ? 'bg-red-500 text-white' : 'border-red-500 text-red-500' }} font-bold px-6 py-1 rounded-lg hover:bg-red-500 hover:text-white">
+            <a href="{{ route('admin.order.index', ['status' => 'declined', 'entries' => request('entries')]) }}"
+                class="border-2 {{ request('status') == 'declined' ? 'bg-red-500 text-white' : 'border-red-500 text-red-500' }} font-bold px-6 py-1 rounded-lg hover:bg-red-500 hover:text-white">
                 Rejected
             </a>
         </div>
@@ -42,7 +42,6 @@
                         <th class="border border-gray-300 px-4 py-2">S.N</th>
                         <th class="border border-gray-300 px-4 py-2">Name</th>
                         <th class="border border-gray-300 px-4 py-2">Email</th>
-                        <th class="border border-gray-300 px-4 py-2">Contact</th>
                         <th class="border border-gray-300 px-4 py-2">Payment Method</th>
                         <th class="border border-gray-300 px-4 py-2">Price</th>
                         <th class="border border-gray-300 px-4 py-2">Order Num</th>
@@ -56,36 +55,13 @@
                             <td class="border border-gray-300 px-4 py-2 text-center">{{ $loop->iteration }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->email }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $order->phone }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ ucfirst($order->payment_method) }}</td>
                             <td class="border border-gray-300 px-4 py-2">€{{ number_format($order->total, 2) }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->order_number }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ ucfirst($order->status) }}</td>
-            
-                            {{-- <td class="py-3 px-4 border-b">
-                                <!-- Loop through the items array to display each item in separate rows -->
-                                <table class="min-w-full">
-                                    <thead>
-                                        <tr>
-                                            <th class="border border-gray-300 px-4 py-2">Name</th>
-                                            <th class="border border-gray-300 px-4 py-2">Price</th>
-                                            <th class="border border-gray-300 px-4 py-2">Description</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($order->items as $item)
-                                            <tr>
-                                                <td class="border border-gray-300 px-4 py-2">{{ $item['name'] }}</td>
-                                                <td class="border border-gray-300 px-4 py-2">${{ number_format($item['price'], 2) }}</td>
-                                                <td class="border border-gray-300 px-4 py-2">{{ $item['description'] }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </td> --}}
                             
 
-                            <td class="flex justify-center gap-2 px-2 py-2 text-center border border-gray-300">
+                            <td class="flex justify-center gap-2 px-2 py-2 border border-gray-300">
                                 <!-- View Icon -->
                                 <a href="{{route('admin.order.view',$order->id)}}" class="bg-blue-500 hover:bg-blue-700 p-2 w-8 h-8 rounded-full flex items-center justify-center">
                                     <i class="ri-eye-line text-white"></i>
