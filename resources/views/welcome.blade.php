@@ -132,6 +132,8 @@
                 <input type="datetime-local" name="booking_date"
                     class="w-full p-3 border border-gray-300 rounded-md text-gray-700" required>
             </div>
+        <div id="errorMessage" class="hidden text-red-500 text-lg my-2"></div>
+
             <button type="button" id="openPopupButton"
                 class="bg-white hover:bg-gray-200 text-indigo-600 py-2 px-6 rounded-md text-lg">Book Now</button>
         </form>
@@ -215,56 +217,69 @@
     </section>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-          // Get elements
-          const openPopupButton = document.getElementById('openPopupButton');
-          const popupModal = document.getElementById('popupModal');
-          const cancelButton = document.getElementById('cancelButton');
-          const confirmButton = document.getElementById('confirmButton');
-          const popupContent = document.getElementById('popupContent');
-          const form = document.getElementById('reservationForm');
-          
-          // Show the popup with content when "Book Now" is clicked
-          openPopupButton.addEventListener('click', function (event) {
-              // Prevent the form from submitting
-              event.preventDefault();
-  
-              // Get form data
-              const name = form.elements['name'].value;
-              const email = form.elements['email'].value;
-              const phone = form.elements['phone'].value;
-              const people = form.elements['number_of_people'].value;
-              const bookingDateTime = form.elements['booking_date'].value;
-  
-              // Split the booking date and time
-              const [bookingDate, bookingTime] = bookingDateTime.split('T');
-              const formattedBookingDate = `${bookingDate.replaceAll('-', '/')} ${bookingTime}`;
-  
-              // Update popup content
-              popupContent.innerHTML = `
-                  <div class="mb-4"><strong>Name:</strong> ${name}</div>
-                  <div class="mb-4"><strong>Email:</strong> ${email}</div>
-                  <div class="mb-4"><strong>Phone:</strong> ${phone}</div>
-                  <div class="mb-4"><strong>Number of People:</strong> ${people}</div>
-                  <div class="mb-4"><strong>Booking Date:</strong> ${formattedBookingDate}</div>
-              `;
-  
-              // Show the modal
-              popupModal.classList.remove('opacity-0', 'pointer-events-none');
-              popupModal.classList.add('opacity-100', 'pointer-events-auto');
-          });
-  
-          // Cancel button - closes the modal
-          cancelButton.addEventListener('click', function () {
-              popupModal.classList.remove('opacity-100', 'pointer-events-auto');
-              popupModal.classList.add('opacity-0', 'pointer-events-none');
-          });
-  
-          // Confirm button - submits the form
-          confirmButton.addEventListener('click', function () {
-              form.submit();  // Submit the form to the backend
-          });
-      });
+document.addEventListener('DOMContentLoaded', function () {
+    // Get elements
+    const openPopupButton = document.getElementById('openPopupButton');
+    const popupModal = document.getElementById('popupModal');
+    const cancelButton = document.getElementById('cancelButton');
+    const confirmButton = document.getElementById('confirmButton');
+    const popupContent = document.getElementById('popupContent');
+    const form = document.getElementById('reservationForm');
+    const errorMessage = document.getElementById('errorMessage');  // Added error message element
+
+    // Show the popup with content when "Book Now" is clicked
+    openPopupButton.addEventListener('click', function (event) {
+        // Prevent the form from submitting
+        event.preventDefault();
+
+        // Get form data
+        const name = form.elements['name'].value;
+        const email = form.elements['email'].value;
+        const phone = form.elements['phone'].value;
+        const people = form.elements['number_of_people'].value;
+        const bookingDateTime = form.elements['booking_date'].value;
+
+        // Check if any of the required fields are empty
+        if (!name || !email || !phone || !people || !bookingDateTime) {
+            // Display an error message
+            errorMessage.classList.remove('hidden');
+            errorMessage.textContent = "Please fill out all fields before proceeding.";
+            return;  // Stop further execution
+        }
+
+        // Hide error message if all fields are filled
+        errorMessage.classList.add('hidden');
+
+        // Split the booking date and time
+        const [bookingDate, bookingTime] = bookingDateTime.split('T');
+        const formattedBookingDate = `${bookingDate.replaceAll('-', '/')} ${bookingTime}`;
+
+        // Update popup content
+        popupContent.innerHTML = `
+            <div class="mb-4"><strong>Name:</strong> ${name}</div>
+            <div class="mb-4"><strong>Email:</strong> ${email}</div>
+            <div class="mb-4"><strong>Phone:</strong> ${phone}</div>
+            <div class="mb-4"><strong>Number of People:</strong> ${people}</div>
+            <div class="mb-4"><strong>Booking Date:</strong> ${formattedBookingDate}</div>
+        `;
+
+        // Show the modal
+        popupModal.classList.remove('opacity-0', 'pointer-events-none');
+        popupModal.classList.add('opacity-100', 'pointer-events-auto');
+    });
+
+    // Cancel button - closes the modal
+    cancelButton.addEventListener('click', function () {
+        popupModal.classList.remove('opacity-100', 'pointer-events-auto');
+        popupModal.classList.add('opacity-0', 'pointer-events-none');
+    });
+
+    // Confirm button - submits the form
+    confirmButton.addEventListener('click', function () {
+        form.submit();  // Submit the form to the backend
+    });
+});
+
   </script>
   
   

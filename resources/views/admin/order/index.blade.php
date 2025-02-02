@@ -1,6 +1,13 @@
 @extends('layouts.app')
 @section('content')
 
+<style>
+    #orderTable.dataTable > tbody > tr > th, 
+#orderTable.dataTable > tbody > tr > td {
+    padding: 0 !important; /* Removes padding completely */
+}
+
+</style>
     {{-- Flash Message --}}
     @if (session('success'))
         <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
@@ -36,7 +43,7 @@
 
         <div class="overflow-x-auto">
             <!-- Table Section -->
-            <table id="orderTable" class="min-w-full border-separate border-spacing-0 border border-gray-300">
+            <table id="orderTable" class="min-w-full border-separate border-spacing-0">
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="border border-gray-300 px-4 py-2">S.N</th>
@@ -60,8 +67,8 @@
                             <td class="border border-gray-300 px-4 py-2">{{ $order->order_number }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ ucfirst($order->status) }}</td>
                             
-
-                            <td class="flex justify-center gap-2 px-2 py-2 border border-gray-300">
+                            
+                            <td class="flex justify-center gap-2 px-2 py-4 border border-gray-300">
                                 <!-- View Icon -->
                                 <a href="{{route('admin.order.view',$order->id)}}" class="bg-blue-500 hover:bg-blue-700 p-2 w-8 h-8 rounded-full flex items-center justify-center">
                                     <i class="ri-eye-line text-white"></i>
@@ -87,7 +94,6 @@
                                     </button>
                                 </form>
                             </td>
-                            
                             
                         </tr>
                     @endforeach

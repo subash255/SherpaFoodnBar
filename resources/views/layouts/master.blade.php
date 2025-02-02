@@ -237,6 +237,7 @@ document.querySelectorAll('#mobile-menu a').forEach(anchor => {
 <script>
     // Initialize Swiper
     var swiper = new Swiper('.swiper-container', {
+        loop: true,                // Loop the slides
       slidesPerView: 3,          // Default for larger screens
       spaceBetween: 20,          // Space between slides
       autoplay: {
