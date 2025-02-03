@@ -108,7 +108,7 @@ class CategoryController extends Controller
     }
 
     // Update Category Status (Toggle Visibility)
-    public function updateToggleStatus(Request $request, $categoryId)
+    public function updateToggle(Request $request, $categoryId)
     {
         // Retrieve the food item by ID from the database
         $category = Category::findOrFail($categoryId);

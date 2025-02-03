@@ -31,11 +31,7 @@ Route::get('/cart/success/{orderNumber}', [CartController::class, 'paymentSucces
 Route::get('cart/cancel/{orderNumber}', [CartController::class, 'paymentCancel'])->name('cart.cancel');
 
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+
 
 Route::post('/', [BookingController::class, 'store'])->name('booking.store');
 //order
@@ -47,7 +43,9 @@ Route::post('order/{id}', [MenuController::class, 'store'])->name('menu.store');
 
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     // Admin routes
     Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 

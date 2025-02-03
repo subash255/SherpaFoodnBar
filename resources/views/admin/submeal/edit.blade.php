@@ -18,7 +18,7 @@
     }, 3000);
 </script>
 
-<div class="max-w-4xl mx-auto bg-white p-10 rounded-xl shadow-lg mt-[7rem] relative z-10">
+    <div class="p-4 bg-white shadow-lg -mt-12 mx-4 z-20  rounded-lg">
 
     <!-- Form -->
     <form action="{{ route('admin.submeal.update', $submeals->id) }}" method="POST"  class="space-y-8" enctype="multipart/form-data"> 

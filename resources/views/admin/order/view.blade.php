@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="p-4 bg-white shadow-lg -mt-11 mx-4 z-20 rounded-lg">
+<div class="p-4 bg-white shadow-lg -mt-12 mx-4 z-20  rounded-lg">
+
     <!-- Order Header -->
     <div class="flex justify-between items-center mb-8">
         <h2 class="text-3xl font-semibold text-gray-800">Order #{{ $order->order_number }}</h2>

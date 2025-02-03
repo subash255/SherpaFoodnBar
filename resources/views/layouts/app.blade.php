@@ -80,11 +80,11 @@
           <i class="ri-layout-masonry-fill"></i>
           <span class="ml-4 font-semibold">Dashboard</span>
         </a>
-        <a href="{{route('admin.category.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.category.index') ? 'bg-red-600 text-white' : 'hover:bg-red-500 hover:text-white' }} transition-colors duration-200">
+        <a href="{{route('admin.category.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.category.index','admin.category.edit') ? 'bg-red-600 text-white' : 'hover:bg-red-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-grid-line"></i>
           <span class="ml-4 font-semibold">Category</span>
         </a>
-        <a href="{{route('admin.fooditems.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.fooditems.index') ? 'bg-red-600 text-white' : 'hover:bg-red-500 hover:text-white' }} transition-colors duration-200">
+        <a href="{{route('admin.fooditems.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.fooditems.index','admin.fooditems.edit') ? 'bg-red-600 text-white' : 'hover:bg-red-500 hover:text-white' }} transition-colors duration-200">
             <i class="ri-cup-fill"></i>
           <span class="ml-4 font-semibold">Food Items</span>
         </a>
@@ -92,11 +92,11 @@
           <i class="ri-restaurant-fill"></i>
         <span class="ml-4 font-semibold">Meals</span>
       </a>
-        <a href="{{route('admin.booking.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.booking.index') ? 'bg-red-600 text-white' : 'hover:bg-red-500 hover:text-white' }} transition-colors duration-200">
+        <a href="{{route('admin.booking.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.booking.index') ?'bg-red-600 text-white' : 'hover:bg-red-500 hover:text-white' }} transition-colors duration-200">
             <i class="ri-calendar-check-fill"></i>
             <span class="ml-4 font-semibold">Reservations</span>
           </a>
-        <a href="{{route('admin.order.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.order.index') ? 'bg-red-600 text-white' : 'hover:bg-red-500 hover:text-white' }} transition-colors duration-200">
+        <a href="{{route('admin.order.index')}}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.order.index','admin.order.view') ? 'bg-red-600 text-white' : 'hover:bg-red-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-shopping-cart-2-fill"></i>
           <span class="ml-4 font-semibold">Orders</span>
         </a>
@@ -123,7 +123,7 @@
   
             <!-- Dropdown Menu -->
             <div class="absolute right-0 w-40 bg-white text-gray-800 rounded-md shadow-lg hidden group-hover:block z-[50]">
-              <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
+              <a href="{{route('profile.edit')}}" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
               <form action="{{ route('logout') }}" method="POST" class="w-full">
                 @csrf
                 <button type="submit" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
