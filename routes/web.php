@@ -30,6 +30,11 @@ Route::delete('/cart/remove/{fooditemId}', [CartController::class, 'removeFromCa
 Route::get('/cart/success/{orderNumber}', [CartController::class, 'paymentSuccess'])->name('cart.success');
 Route::get('cart/cancel/{orderNumber}', [CartController::class, 'paymentCancel'])->name('cart.cancel');
 
+//Reservation
+Route::get('Booking',[BookingController::class,'completed'])->name('booking.complete');
+Route::get('Booking',[BookingController::class,'Rejected'])->name('booking.rejected');
+
+
 
 
 

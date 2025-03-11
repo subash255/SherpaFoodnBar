@@ -50,4 +50,6 @@ foreach ($orders as $order) {
         ], compact('totalvisits', 'visitdate', 'visits','totalorder','totalorderPending','totalorderCompleted','totalreservation','revenue', 'categoryLabels', 'categoryData','orderLabels', 'orderData'));
 
     }
+
+  
 }

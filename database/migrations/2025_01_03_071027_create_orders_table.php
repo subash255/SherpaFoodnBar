@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone');
             $table->enum('status', ['pending', 'processing', 'completed', 'declined', 'canceled'])->default('pending');
             $table->decimal('total', 10, 2);
-            $table->enum('payment_method', ['online', 'cash_on_pickup']);
+           
             $table->json('items'); 
             $table->timestamps();
         });

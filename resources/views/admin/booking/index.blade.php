@@ -30,6 +30,7 @@
                         <th class="border border-gray-300 px-4 py-2">Phone number</th>
                         <th class="border border-gray-300 px-4 py-2">Total people</th>
                         <th class="border border-gray-300 px-4 py-2">Booking Date</th>
+                        <th class="border border-gray-300 px-4 py-2">Status</th>
                         <th class="border border-gray-300 px-4 py-2">Actions</th>
                     </tr>
                 </thead>
@@ -43,6 +44,15 @@
                             <td class="border border-gray-300 px-4 py-2">{{ $booking->number_of_people }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $booking->booking_date }}</td>
                             <td class="px-2 py-2 flex justify-center space-x-4">
+                            <a href="{{ route('admin.booking.completed', ['id' => $booking->id]) }}"
+                                    class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                                    <i class="ri-check-line text-green-500"></i>
+                                </a>
+                                <a href="{{ route('admin.booking.Rejected', ['id' => $booking->id]) }}"
+                                    class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                                    <i class="ri-close-line text-red-500"></i>
+                                </a>
+                                
                                 <!-- Delete Icon -->
                                 <form action="{{ route('admin.booking.destroy', ['id' => $booking->id]) }}" method="post"
                                     onsubmit="return confirm('Are you sure you want to delete this reservation item?');">
